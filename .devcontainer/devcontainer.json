@@ -1,0 +1,17 @@
+{
+  "name": "Next.js Dev Container",
+  "build": { "dockerfile": "Dockerfile" },
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "usernamehw.errorlens",
+        "Gruntfuggly.todo-tree",
+        "christian-kohler.path-intellisense",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "forwardPorts": []
+}
