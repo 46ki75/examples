@@ -45,8 +45,8 @@ aws ecr get-login-password --region ap-northeast-1 [--profile] \
 Push the image to ECR. You can find the login and push commands in the AWS Management Console under "View push commands."
 
 ```bash
-docker tag ts-lambda:latest 381491991044.dkr.ecr.ap-northeast-1.amazonaws.com/ts-lambda:latest
-docker push 381491991044.dkr.ecr.ap-northeast-1.amazonaws.com/ts-lambda:latest
+docker tag ts-lambda:latest ${ACCOUNT}.dkr.ecr.ap-northeast-1.amazonaws.com/ts-lambda:latest
+docker push ${ACCOUNT}.dkr.ecr.ap-northeast-1.amazonaws.com/ts-lambda:latest
 ```
 
 ### Deploy Lambda Function
