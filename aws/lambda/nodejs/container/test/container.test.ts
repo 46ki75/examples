@@ -10,7 +10,8 @@ test('ECR Repository Created', () => {
   const template = Template.fromStack(stack)
 
   template.hasResourceProperties('AWS::ECR::Repository', {
-    RepositoryName: 'ts-lambda'
+    RepositoryName: 'ts-lambda',
+    EmptyOnDelete: true
   })
 })
 
