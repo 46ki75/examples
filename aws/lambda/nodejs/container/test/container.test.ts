@@ -1,14 +1,27 @@
-import * as cdk from "aws-cdk-lib";
-import { Template } from "aws-cdk-lib/assertions";
-import { ContainerStack } from "../lib/container-stack";
+import * as cdk from 'aws-cdk-lib'
+import { Template } from 'aws-cdk-lib/assertions'
+import { ECRStack } from '../lib/ecr'
+import { LambdaStack } from '../lib/lambda'
 
-test("Lambda Function Created", () => {
-  const app = new cdk.App();
-  const stack = new ContainerStack(app, "MyTestStack");
-  const template = Template.fromStack(stack);
+test('ECR Repository Created', () => {
+  const app = new cdk.App()
 
-  template.hasResourceProperties("AWS::Lambda::Function", {
-    FunctionName: "node-container-function",
-    PackageType: "Image",
-  });
-});
+  const stack = new ECRStack(app, 'ECR')
+  const template = Template.fromStack(stack)
+
+  template.hasResourceProperties('AWS::ECR::Repository', {
+    RepositoryName: 'ts-lambda'
+  })
+})
+
+test('Lambda Function Created', () => {
+  const app = new cdk.App()
+  const ecr = new ECRStack(app, 'ECR')
+  const stack = new LambdaStack(app, 'Lambda', { repository: ecr.repository })
+  const template = Template.fromStack(stack)
+
+  template.hasResourceProperties('AWS::Lambda::Function', {
+    FunctionName: 'node-container-function',
+    PackageType: 'Image'
+  })
+})
