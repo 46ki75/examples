@@ -1,14 +1,19 @@
-# Welcome to your CDK TypeScript project
+# TypeScript (Node.js) on AWS Lambda with Docker
 
-This is a blank project for CDK development with TypeScript.
+This is a CDK project for deploying a TypeScript container to an AWS Lambda function.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Requirements
 
-## Useful commands
+- docker.io
+- Node.js
+- AWS CDK
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+## How to Deploy
+
+By running the following command, the container image will be built automatically (including the TypeScript compilation process within the Dockerfile). Furthermore, the image will be pushed to ECR, and the Lambda function will reference that image.
+
+```bash
+cdk deploy
+```
+
+Note: Images pushed to ECR are not automatically deleted.
