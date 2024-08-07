@@ -1,7 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as ecr from "aws-cdk-lib/aws-ecr";
 import * as path from "path";
 
 export class ContainerStack extends cdk.Stack {
