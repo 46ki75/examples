@@ -16,8 +16,17 @@ export class LambdaStack extends cdk.Stack {
       runtime: lambda.Runtime.PROVIDED_AL2023
     })
 
+    const lambdaVersion = new lambda.Version(this, 'LambdaVersion', {
+      lambda: lambdaFunction
+    })
+
+    const lambdaAlias = new lambda.Alias(this, 'LambdaAlias', {
+      aliasName: 'latest',
+      version: lambdaVersion.latestVersion
+    })
+
     const lambdaFunctionURL = new lambda.FunctionUrl(this, 'FunctionURL', {
-      function: lambdaFunction,
+      function: lambdaAlias,
       authType: lambda.FunctionUrlAuthType.NONE
     })
 
