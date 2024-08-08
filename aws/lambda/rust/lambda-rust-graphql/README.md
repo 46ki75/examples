@@ -1,4 +1,4 @@
-# Using GraphQL with Rust on AWS Lambda
+# lambda-rust-graphql
 
 You can deploy a GraphQL API server on AWS Lambda, supporting both Lambda Function URLs and API Gateway.
 

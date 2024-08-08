@@ -10,7 +10,7 @@ export class LambdaStack extends cdk.Stack {
     const lambdaFunction = new lambda.Function(this, 'LambdaFunction', {
       functionName: 'rust-graphql-function-url',
       code: lambda.Code.fromAsset(
-        path.resolve(__dirname, '../../target/lambda/graphql/')
+        path.resolve(__dirname, '../../target/lambda/lambda-rust-graphql/')
       ),
       handler: 'main',
       runtime: lambda.Runtime.PROVIDED_AL2023
