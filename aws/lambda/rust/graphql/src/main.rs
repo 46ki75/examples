@@ -30,8 +30,8 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
             .map_err(Box::new)?)
     } else {
         Ok(Response::builder()
-            .status(404)
-            .body(Body::Text("Not Found".to_string()))
+            .status(405)
+            .body(Body::Text("Method Not Allowed".to_string()))
             .map_err(Box::new)?)
     }
 }
