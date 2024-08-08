@@ -6,9 +6,9 @@ pub(crate) struct GreetQuery {
 }
 
 impl GreetQuery {
-    pub(crate) fn new() -> Self {
+    pub(crate) fn new(name: Option<String>) -> Self {
         GreetQuery {
-            message: String::from("Hello, GraphQL!"),
+            message: format!("Hello, {}!", name.unwrap_or("GraphQL".to_string())),
             language: String::from("Rust"),
         }
     }
