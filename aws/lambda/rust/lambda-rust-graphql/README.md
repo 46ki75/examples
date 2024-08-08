@@ -27,11 +27,15 @@ cargo lambda build --release
 
 ### For Function URL
 
+The `Lambda` stack utilizes AWS Lambda's Function URL feature.
+
 ```bash
 cdk deploy Lambda [--profile]
 ```
 
 ### For API Gateway
+
+The `APIGW` stack uses Amazon API Gateway's Lambda integration.
 
 ```bash
 cdk deploy APIGW [--profile]
