@@ -18,6 +18,10 @@ export class APIGWStack extends cdk.Stack {
       runtime: lambda.Runtime.PROVIDED_AL2023
     })
 
+    const lambdaVersion = new lambda.Version(this, 'LambdaVersion', {
+      lambda: lambdaFunction
+    })
+
     const api = new apigwv2.HttpApi(this, 'APIGW', {
       apiName: 'rust-graphql-apigw'
     })
@@ -25,7 +29,7 @@ export class APIGWStack extends cdk.Stack {
     api.addRoutes({
       integration: new HttpLambdaIntegration(
         'APILambdaIntegration',
-        lambdaFunction
+        lambdaVersion.latestVersion
       ),
       path: '/{all+}'
     })
