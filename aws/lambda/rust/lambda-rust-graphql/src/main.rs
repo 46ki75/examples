@@ -1,4 +1,4 @@
-use juniper::{http::playground::playground_source, EmptySubscription, RootNode};
+use juniper::{http::graphiql::graphiql_source, EmptySubscription, RootNode};
 use lambda_http::{http::Method, run, service_fn, tracing, Body, Error, Request, Response};
 
 mod query;
@@ -11,7 +11,7 @@ type Schema = RootNode<'static, Query, Mutation, EmptySubscription<()>>;
 
 async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
     if event.method() == Method::GET {
-        let html = playground_source("", None);
+        let html = graphiql_source("", None);
         Ok(Response::builder()
             .status(200)
             .header("content-type", "text/html")
