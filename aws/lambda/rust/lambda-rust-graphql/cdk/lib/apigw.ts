@@ -22,6 +22,11 @@ export class APIGWStack extends cdk.Stack {
       lambda: lambdaFunction
     })
 
+    const lambdaAlias = new lambda.Alias(this, 'LambdaAlias', {
+      aliasName: 'latest',
+      version: lambdaVersion.latestVersion
+    })
+
     const api = new apigwv2.HttpApi(this, 'APIGW', {
       apiName: 'rust-graphql-apigw'
     })
@@ -29,7 +34,7 @@ export class APIGWStack extends cdk.Stack {
     api.addRoutes({
       integration: new HttpLambdaIntegration(
         'APILambdaIntegration',
-        lambdaVersion.latestVersion
+        lambdaAlias
       ),
       path: '/{all+}'
     })
