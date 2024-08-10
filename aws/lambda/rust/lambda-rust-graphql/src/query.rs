@@ -10,7 +10,7 @@ impl QueryRoot {
     pub async fn greet(
         &self,
         ctx: &async_graphql::Context<'_>,
-    ) -> Result<resolvers::greet::Greet, async_graphql::FieldError> {
+    ) -> Result<resolvers::greet::Greet, async_graphql::Error> {
         resolvers::greet::Greet::new(ctx)
     }
 }

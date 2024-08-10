@@ -7,7 +7,7 @@ pub struct Greet {
 }
 
 impl Greet {
-    pub fn new(ctx: &async_graphql::Context) -> Result<Self, async_graphql::FieldError> {
+    pub fn new(ctx: &async_graphql::Context) -> Result<Self, async_graphql::Error> {
         Ok(Greet {
             message: "Hello, GraphQL!".to_string(),
             language: "Rust".to_string(),
