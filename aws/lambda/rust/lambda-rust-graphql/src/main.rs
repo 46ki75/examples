@@ -1,46 +1,30 @@
-use juniper::{http::graphiql::graphiql_source, EmptySubscription, RootNode};
-use lambda_http::{http::Method, run, service_fn, tracing, Body, Error, Request, Response};
+use lambda_http::{run, service_fn, tracing, Body, Error, Request, RequestExt, Response};
 
-mod query;
-use query::Query;
-
-mod mutation;
-use mutation::Mutation;
-
-type Schema = RootNode<'static, Query, Mutation, EmptySubscription<()>>;
-
+/// This is the main body for the function.
+/// Write your code inside it.
+/// There are some code example in the following URLs:
+/// - https://github.com/awslabs/aws-lambda-rust-runtime/tree/main/examples
 async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
-    if event.method() == Method::GET {
-        let html = graphiql_source("", None);
-        Ok(Response::builder()
-            .status(200)
-            .header("content-type", "text/html")
-            .body(Body::Text(html))
-            .map_err(Box::new)?)
-    } else if event.method() == Method::POST {
-        let schema = Schema::new(Query, Mutation, EmptySubscription::new());
-        let context = ();
-        let request_body = event.body().as_ref();
-        let request: juniper::http::GraphQLRequest = serde_json::from_slice(request_body)?;
+    // Extract some useful information from the request
+    let who = event
+        .query_string_parameters_ref()
+        .and_then(|params| params.first("name"))
+        .unwrap_or("world");
+    let message = format!("Hello {who}, this is an AWS Lambda HTTP request");
 
-        let response = request.execute_sync(&schema, &context);
-        let response_body = serde_json::to_string(&response)?;
-
-        Ok(Response::builder()
-            .status(200)
-            .header("content-type", "application/json")
-            .body(Body::Text(response_body))
-            .map_err(Box::new)?)
-    } else {
-        Ok(Response::builder()
-            .status(405)
-            .body(Body::Text("Method Not Allowed".to_string()))
-            .map_err(Box::new)?)
-    }
+    // Return something that implements IntoResponse.
+    // It will be serialized to the right response event automatically by the runtime
+    let resp = Response::builder()
+        .status(200)
+        .header("content-type", "text/html")
+        .body(message.into())
+        .map_err(Box::new)?;
+    Ok(resp)
 }
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     tracing::init_default_subscriber();
+
     run(service_fn(function_handler)).await
 }
