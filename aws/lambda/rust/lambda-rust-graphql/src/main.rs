@@ -6,7 +6,9 @@ mod query;
 mod resolvers;
 
 async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
-    let schema = Schema::build(query::QueryRoot, EmptyMutation, EmptySubscription).finish();
+    let schema = Schema::build(query::QueryRoot, EmptyMutation, EmptySubscription)
+        .data(event.headers().clone())
+        .finish();
 
     if event.method() == "GET" {
         let playground_html = GraphiQLSource::build().finish();
