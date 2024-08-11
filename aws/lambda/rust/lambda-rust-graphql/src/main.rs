@@ -1,5 +1,5 @@
 use async_graphql::{http::GraphiQLSource, EmptyMutation, EmptySubscription, Schema};
-use lambda_http::{run, service_fn, tracing, Body, Error, Request, Response};
+use lambda_http::{http::Method, run, service_fn, tracing, Body, Error, Request, Response};
 use serde_json::json;
 
 mod query;
@@ -10,7 +10,7 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
         .data(event.headers().clone())
         .finish();
 
-    if event.method() == "GET" {
+    if event.method() == Method::GET {
         let playground_html = GraphiQLSource::build().finish();
         let response = Response::builder()
             .status(200)
@@ -18,7 +18,7 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
             .body(playground_html.into())
             .map_err(Box::new)?;
         Ok(response)
-    } else if event.method() == "POST" {
+    } else if event.method() == Method::POST {
         let request_body = event.body();
 
         let gql_request = match serde_json::from_slice::<async_graphql::Request>(request_body) {
