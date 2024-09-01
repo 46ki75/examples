@@ -1,0 +1,8 @@
+type Greet {
+  message: String!
+  language: String!
+}
+
+type Query {
+  greet: Greet
+}
