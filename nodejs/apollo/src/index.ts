@@ -2,18 +2,12 @@ import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
 import { readFileSync } from 'fs'
 
+import { queryResolvers } from './resolvers/index.js'
+
 const typeDefs = readFileSync('./schema.graphql', 'utf-8')
 
 const resolvers = {
-  Query: {
-    greet: () => ({
-      message: () => 'Hello, GraphQL!',
-      language: async () => {
-        await new Promise((resolve) => setTimeout(resolve, 3000))
-        return 'typescript'
-      }
-    })
-  }
+  Query: { ...queryResolvers }
 }
 
 const server = new ApolloServer({
