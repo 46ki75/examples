@@ -1,17 +1,8 @@
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
+import { readFileSync } from 'fs'
 
-const typeDefs = `#graphql
-
-type Greet{
-    message: String!
-    language: String!
-}
-
-type Query {
-    greet: Greet
-}
-`
+const typeDefs = readFileSync('./schema.graphql', 'utf-8')
 
 const resolvers = {
   Query: {
