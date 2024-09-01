@@ -1,0 +1,26 @@
+{
+  "name": "supergraph",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write .",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node dist/local.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.5.2",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.0",
+    "@as-integrations/aws-lambda": "^3.1.0",
+    "graphql": "^16.9.0"
+  }
+}

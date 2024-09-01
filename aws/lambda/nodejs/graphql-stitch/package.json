@@ -1,21 +1,24 @@
 {
-  "name": "yoga-stitch",
+  "name": "graphql-stitch",
   "version": "0.1.0",
   "bin": {
-    "yoga-stitch": "bin/yoga-stitch.js"
+    "graphql-stitch": "bin/graphql-stitch.js"
   },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "20.14.9",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.5",
     "aws-cdk": "2.151.0",
+    "esbuild": "^0.23.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2",
     "typescript": "~5.5.3"
   },
