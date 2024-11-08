@@ -2,18 +2,29 @@ import * as cdk from 'aws-cdk-lib'
 import { Construct } from 'constructs'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
+import { existsSync } from 'fs'
 
 export class LambdaStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
 
+    if (
+      !existsSync(
+        path.resolve(
+          __dirname,
+          '../../../target/lambda/rust-lambda-graphql/bootstrap'
+        )
+      )
+    ) {
+      throw new Error(
+        'Please run `cargo build --release` in the `crates/rust-lambda-graphql` directory before deploying the CDK stack'
+      )
+    }
+
     const lambdaFunction = new lambda.Function(this, 'LambdaFunction', {
       functionName: 'rust-graphql-function-url',
       code: lambda.Code.fromAsset(
-        path.resolve(
-          __dirname,
-          '../../../target/lambda/lambda-graphql/bootstrap'
-        )
+        path.resolve(__dirname, '../../../target/lambda/rust-lambda-graphql/')
       ),
       handler: 'main',
       runtime: lambda.Runtime.PROVIDED_AL2023
