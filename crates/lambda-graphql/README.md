@@ -9,3 +9,5 @@ cargo lambda watch
 ```
 
 Then, try to access [http://localhost:9000](http://localhost:9000).
+
+For further infomation, please refer [this documentation (Cargo Lambda)](https://www.cargo-lambda.info/).
