@@ -1,5 +1,5 @@
 {
-  "name": "cdk",
+  "name": "rust-lambda-graphql",
   "version": "0.1.0",
   "bin": {
     "cdk": "bin/cdk.js"
