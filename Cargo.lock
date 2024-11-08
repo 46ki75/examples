@@ -747,17 +747,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b"
 
 [[package]]
-name = "lambda-graphql"
-version = "0.1.0"
-dependencies = [
- "async-graphql",
- "lambda_http",
- "serde",
- "serde_json",
- "tokio",
-]
-
-[[package]]
 name = "lambda_http"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1110,6 +1099,17 @@ name = "regex-syntax"
 version = "0.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2b15c43186be67a4fd63bee50d0303afffcef381492ebe2c5d87f324e1b8815c"
+
+[[package]]
+name = "rust-lambda-graphql"
+version = "0.0.0"
+dependencies = [
+ "async-graphql",
+ "lambda_http",
+ "serde",
+ "serde_json",
+ "tokio",
+]
 
 [[package]]
 name = "rustc-demangle"
