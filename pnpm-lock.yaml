@@ -46,7 +46,9 @@ importers:
         specifier: ~5.5.3
         version: 5.5.4
 
-  packages/rust-lambda-graphql: {}
+  packages/cdk-glue-data-catalog: {}
+
+  packages/cdk-rust-lambda-graphql: {}
 
 packages:
 
