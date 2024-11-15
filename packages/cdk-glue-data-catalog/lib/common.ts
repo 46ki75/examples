@@ -6,7 +6,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3'
 
 export class CommonStack extends cdk.Stack {
   private readonly bucket: s3.Bucket
-  private readonly workgroup: athena.CfnWorkGroup
+  readonly workgroup: athena.CfnWorkGroup
   readonly database: glue.CfnDatabase
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {

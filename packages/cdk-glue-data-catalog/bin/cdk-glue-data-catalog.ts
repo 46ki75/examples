@@ -9,5 +9,6 @@ const app = new cdk.App()
 const common = new CommonStack(app, 'Common')
 
 new CloudTrailStack(app, 'CloudTrail', {
-  database: common.database
+  database: common.database,
+  workgroup: common.workgroup
 })

@@ -1,9 +1,11 @@
 import * as cdk from 'aws-cdk-lib'
 import { Construct } from 'constructs'
 import * as glue from 'aws-cdk-lib/aws-glue'
+import * as athena from 'aws-cdk-lib/aws-athena'
 
 interface CloudTrailStackProps extends cdk.StackProps {
   database: glue.CfnDatabase
+  workgroup: athena.CfnWorkGroup
 }
 
 export class CloudTrailStack extends cdk.Stack {
@@ -115,7 +117,7 @@ export class CloudTrailStack extends cdk.Stack {
       }
     ]
 
-    new glue.CfnTable(this, 'CloudTrailTable', {
+    const table = new glue.CfnTable(this, 'CloudTrailTable', {
       catalogId: this.account,
       databaseName: props.database.ref,
       tableInput: {
@@ -182,6 +184,19 @@ export class CloudTrailStack extends cdk.Stack {
         //   'storage.location.template': `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/\${region}/\${year}/\${month}/\${day}/`
         // }
       }
+    })
+
+    new athena.CfnNamedQuery(this, 'NamedQuery', {
+      name: 'cloudtrail-example',
+      description: 'Example query for CloudTrail',
+      database: props.database.ref,
+      workGroup: props.workgroup.name,
+      queryString: `
+      SELECT * FROM "${props.database.ref}"."${table.ref}"
+      WHERE region = 'ap-northeast-1'
+      AND timestamp > '2024-11-10'
+      LIMIT 10;
+      `.trim()
     })
   }
 }
