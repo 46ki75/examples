@@ -135,16 +135,23 @@ export class CloudTrailStack extends cdk.Stack {
           {
             name: 'timestamp',
             type: 'string'
+          },
+          {
+            name: 'region',
+            type: 'string'
           }
         ],
+        // @see https://docs.aws.amazon.com/ja_jp/athena/latest/ug/partition-projection-supported-types.html
         parameters: {
           'projection.enabled': 'true',
           'projection.timestamp.format': 'yyyy/MM/dd',
           'projection.timestamp.interval': '1',
           'projection.timestamp.interval.unit': 'DAYS',
-          'projection.timestamp.range': '2020/01/01,NOW',
+          'projection.timestamp.range': '2024/11/10,NOW',
           'projection.timestamp.type': 'date',
-          'storage.location.template': `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/${this.region}/\${timestamp}`
+          'projection.region.type': 'enum',
+          'projection.region.values': 'ap-northeast-1,us-east-1',
+          'storage.location.template': `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/\${region}/\${timestamp}`
         }
       }
     })
