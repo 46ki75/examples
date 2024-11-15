@@ -133,48 +133,53 @@ export class CloudTrailStack extends cdk.Stack {
         tableType: 'EXTERNAL_TABLE',
         partitionKeys: [
           {
-            name: 'year',
-            type: 'string'
-          },
-          {
-            name: 'month',
-            type: 'string'
-          },
-          {
-            name: 'day',
-            type: 'string'
-          },
-          {
             name: 'region',
             type: 'string'
+          },
+          {
+            name: 'timestamp',
+            type: 'string'
           }
+
+          // {
+          //   name: 'year',
+          //   type: 'number'
+          // },
+          // {
+          //   name: 'month',
+          //   type: 'number'
+          // },
+          // {
+          //   name: 'day',
+          //   type: 'number'
+          // }
         ],
         // @see https://docs.aws.amazon.com/ja_jp/athena/latest/ug/partition-projection-supported-types.html
         parameters: {
           'projection.enabled': 'true',
-          'projection.year.type': 'integer',
-          'projection.year.range': '2024,2030',
-          'projection.month.type': 'integer',
-          'projection.month.range': '1,12',
-          'projection.day.type': 'integer',
-          'projection.day.range': '1,31',
+          'projection.timestamp.format': 'yyyy/MM/dd',
+          'projection.timestamp.interval': '1',
+          'projection.timestamp.interval.unit': 'DAYS',
+          'projection.timestamp.range': '2024/11/10,NOW',
+          'projection.timestamp.type': 'date',
           'projection.region.type': 'enum',
           'projection.region.values': 'ap-northeast-1,us-east-1',
-          'storage.location.template': `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/\${region}/\${year}/\${month}/\${day}/`
+          'storage.location.template': `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/\${region}/\${timestamp}`
         }
         // # ------------------------------------------------------------
         // Alternative way to define parameters
         // # ------------------------------------------------------------
         // parameters: {
         //   'projection.enabled': 'true',
-        //   'projection.timestamp.format': 'yyyy/MM/dd',
-        //   'projection.timestamp.interval': '1',
-        //   'projection.timestamp.interval.unit': 'DAYS',
-        //   'projection.timestamp.range': '2024/11/10,NOW',
-        //   'projection.timestamp.type': 'date',
+        //   'projection.year.type': 'integer',
+        //   'projection.year.range': '2024,2030',
+        //   'projection.month.type': 'integer',
+        //   'projection.month.range': '1,12',
+        //   'projection.day.type': 'integer',
+        //   'projection.day.range': '1,31',
         //   'projection.region.type': 'enum',
         //   'projection.region.values': 'ap-northeast-1,us-east-1',
-        //   'storage.location.template': s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/\${region}/\${timestamp}
+        //   'storage.location.template': `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/\${region}/\${year}/\${month}/\${day}/`
         // }
       }
     })
