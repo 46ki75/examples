@@ -2,16 +2,15 @@ import * as cdk from 'aws-cdk-lib'
 import { Construct } from 'constructs'
 import * as glue from 'aws-cdk-lib/aws-glue'
 
+interface CloudTrailStackProps extends cdk.StackProps {
+  database: glue.CfnDatabase
+}
+
 export class CloudTrailStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: CloudTrailStackProps) {
     super(scope, id, props)
 
     const bucketName = `aws-cloudtrail-logs-${this.account}`
-
-    const database = new glue.CfnDatabase(this, 'Database', {
-      databaseInput: { name: 'poc' },
-      catalogId: this.account
-    })
 
     const schema: glue.CfnTable.ColumnProperty[] = [
       {
@@ -118,7 +117,7 @@ export class CloudTrailStack extends cdk.Stack {
 
     new glue.CfnTable(this, 'CloudTrailTable', {
       catalogId: this.account,
-      databaseName: database.ref,
+      databaseName: props.database.ref,
       tableInput: {
         name: `cloudtrail`,
         storageDescriptor: {
