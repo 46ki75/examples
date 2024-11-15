@@ -130,7 +130,22 @@ export class CloudTrailStack extends cdk.Stack {
             serializationLibrary: 'org.apache.hive.hcatalog.data.JsonSerDe'
           }
         },
-        tableType: 'EXTERNAL_TABLE'
+        tableType: 'EXTERNAL_TABLE',
+        partitionKeys: [
+          {
+            name: 'timestamp',
+            type: 'string'
+          }
+        ],
+        parameters: {
+          'projection.enabled': 'true',
+          'projection.timestamp.format': 'yyyy/MM/dd',
+          'projection.timestamp.interval': '1',
+          'projection.timestamp.interval.unit': 'DAYS',
+          'projection.timestamp.range': '2020/01/01,NOW',
+          'projection.timestamp.type': 'date',
+          'storage.location.template': `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/${this.region}/\${timestamp}`
+        }
       }
     })
   }
