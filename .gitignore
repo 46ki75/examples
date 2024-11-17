@@ -10,3 +10,8 @@ node_modules
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# terraform
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
