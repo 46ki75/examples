@@ -47,20 +47,18 @@ resource "aws_route_table_association" "route_table_association" {
 resource "aws_iam_role" "ssm_role" {
   name = "46ki75-ssm-role"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : "sts:AssumeRole",
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "ec2.amazonaws.com"
+        }
       }
-    }
-  ]
-}
-EOF
+    ]
+  })
 }
 
 resource "aws_iam_policy_attachment" "ssm_role_policy" {
@@ -83,19 +81,22 @@ resource "aws_instance" "instance" {
 
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
-  user_data = <<-EOF
-    #cloud-config
-    package_update: true
-    package_upgrade: true
-    packages:
-      - amazon-ssm-agent
-
-    runcmd:
-      - systemctl enable amazon-ssm-agent
-      - systemctl start amazon-ssm-agent
-  EOF
+  user_data = yamlencode({
+    package_update : true
+    package_upgrade : true
+    packages : [
+      "amazon-ssm-agent"
+    ]
+    runcmd : [
+      "systemctl enable amazon-ssm-agent",
+      "systemctl start amazon-ssm-agent"
+    ]
+    }
+  )
 
   tags = {
     "Name" = "46ki75-aws-ec2-instance"
   }
 }
+
+
