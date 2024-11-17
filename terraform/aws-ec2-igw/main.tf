@@ -84,9 +84,15 @@ resource "aws_instance" "instance" {
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
   user_data = <<-EOF
-    #!/bin/bash
-    dnf update -y
-    dnf install -y amazon-ssm-agent
+    #cloud-config
+    package_update: true
+    package_upgrade: true
+    packages:
+      - amazon-ssm-agent
+
+    runcmd:
+      - systemctl enable amazon-ssm-agent
+      - systemctl start amazon-ssm-agent
   EOF
 
   tags = {
