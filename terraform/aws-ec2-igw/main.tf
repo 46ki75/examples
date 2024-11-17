@@ -72,12 +72,25 @@ resource "aws_iam_instance_profile" "ssm_instance_profile" {
   role = aws_iam_role.ssm_role.name
 }
 
+resource "aws_security_group" "sg" {
+  name   = "46ki75-aws-ec2-sg"
+  vpc_id = aws_vpc.vpc.id
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "instance" {
   availability_zone           = "ap-northeast-1a"
   instance_type               = "t3.micro"
   ami                         = "ami-094dc5cf74289dfbc"
   subnet_id                   = aws_subnet.subnet.id
   associate_public_ip_address = true
+  security_groups             = [aws_security_group.sg.id]
 
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
