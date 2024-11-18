@@ -12,7 +12,6 @@ resource "aws_vpc" "vpc" {
 
 
 resource "aws_subnet" "subnet" {
-
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-northeast-1a"
@@ -22,21 +21,8 @@ resource "aws_subnet" "subnet" {
   }
 }
 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.vpc.id
-
-  tags = {
-    "Name" = "46ki75-aws-ec2-igw"
-  }
-}
-
 resource "aws_route_table" "route_table" {
   vpc_id = aws_vpc.vpc.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
-  }
 }
 
 resource "aws_route_table_association" "route_table_association" {
@@ -87,12 +73,11 @@ resource "aws_security_group" "instance" {
 resource "aws_instance" "instance" {
   depends_on = [aws_vpc_endpoint.s3]
 
-  availability_zone           = "ap-northeast-1a"
-  instance_type               = "t3.micro"
-  ami                         = "ami-094dc5cf74289dfbc"
-  subnet_id                   = aws_subnet.subnet.id
-  associate_public_ip_address = true
-  security_groups             = [aws_security_group.instance.id]
+  availability_zone = "ap-northeast-1a"
+  instance_type     = "t3.micro"
+  ami               = "ami-094dc5cf74289dfbc"
+  subnet_id         = aws_subnet.subnet.id
+  security_groups   = [aws_security_group.instance.id]
 
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
