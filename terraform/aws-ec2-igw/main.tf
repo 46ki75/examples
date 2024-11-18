@@ -12,7 +12,6 @@ resource "aws_vpc" "vpc" {
 
 
 resource "aws_subnet" "subnet" {
-
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-northeast-1a"
@@ -32,11 +31,12 @@ resource "aws_internet_gateway" "igw" {
 
 resource "aws_route_table" "route_table" {
   vpc_id = aws_vpc.vpc.id
+}
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
-  }
+resource "aws_route" "igw_route" {
+  route_table_id         = aws_route_table.route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.igw.id
 }
 
 resource "aws_route_table_association" "route_table_association" {
@@ -85,8 +85,6 @@ resource "aws_security_group" "instance" {
 }
 
 resource "aws_instance" "instance" {
-  depends_on = [aws_vpc_endpoint.s3]
-
   availability_zone           = "ap-northeast-1a"
   instance_type               = "t3.micro"
   ami                         = "ami-094dc5cf74289dfbc"
