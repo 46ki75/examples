@@ -94,18 +94,7 @@ resource "aws_instance" "instance" {
 
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
-  user_data = yamlencode({
-    package_update : true
-    package_upgrade : true
-    packages : [
-      "amazon-ssm-agent"
-    ]
-    runcmd : [
-      "systemctl enable amazon-ssm-agent",
-      "systemctl start amazon-ssm-agent"
-    ]
-    }
-  )
+  user_data = file("./cloud-init.yaml")
 
   tags = {
     "Name" = "46ki75-aws-ec2-instance"
