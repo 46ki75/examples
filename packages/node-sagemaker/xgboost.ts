@@ -75,7 +75,7 @@ const createTrainingJobCommand = new CreateTrainingJobCommand({
   HyperParameters: {
     max_depth: '5',
     eta: '0.2',
-    objective: 'reg:squarederror',
+    objective: 'multi:softprob',
     num_round: '50'
   }
 })
