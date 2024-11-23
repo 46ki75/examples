@@ -3,18 +3,42 @@ import {
   PutRecordCommand,
   FeatureValue
 } from '@aws-sdk/client-sagemaker-featurestore-runtime'
+import { parse } from 'csv-parse'
 import { nanoid } from 'nanoid'
+
+interface Iris {
+  'sepal.length': string
+  'sepal.width': string
+  'petal.length': string
+  'petal.width': string
+  variety: 'Versicolor' | 'Setosa' | 'Virginica'
+}
+
+const rawData = await fetch(
+  'https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv',
+  { headers: { 'Content-Type': 'text/csv' } }
+)
+
+const data = await rawData.text()
+
+const csvData: Iris[] = await new Promise((resolve, reject) => {
+  parse(data, { columns: true }, (err, output) => {
+    if (err) {
+      reject(err)
+    } else {
+      resolve(output)
+    }
+  })
+})
 
 const client = new SageMakerFeatureStoreRuntimeClient()
 
 const featureGroupName = 'iris-feature-group'
 
-const id = nanoid()
-
-const recordData: FeatureValue[] = [
+const recordData: FeatureValue[][] = csvData.map((row) => [
   {
     FeatureName: 'id',
-    ValueAsString: id
+    ValueAsString: nanoid()
   },
   {
     FeatureName: 'time',
@@ -22,32 +46,33 @@ const recordData: FeatureValue[] = [
   },
   {
     FeatureName: 'petal_length',
-    ValueAsString: '1.4'
+    ValueAsString: row['petal.length']
   },
   {
     FeatureName: 'petal_width',
-    ValueAsString: '0.2'
+    ValueAsString: row['petal.width']
   },
   {
     FeatureName: 'sepal_length',
-    ValueAsString: '5.1'
+    ValueAsString: row['sepal.length']
   },
   {
     FeatureName: 'sepal_width',
-    ValueAsString: '3.5'
+    ValueAsString: row['sepal.width']
   },
   {
     FeatureName: 'variety',
-    ValueAsString: 'setosa'
+    ValueAsString: row.variety
   }
-]
+])
 
-const command = new PutRecordCommand({
-  FeatureGroupName: featureGroupName,
-  Record: recordData
-})
+for (const record of recordData) {
+  const command = new PutRecordCommand({
+    FeatureGroupName: featureGroupName,
+    Record: record
+  })
 
-const response = await client.send(command)
+  const response = await client.send(command)
 
-console.log(`ID: ${id}`)
-console.log(response)
+  console.log(response)
+}
