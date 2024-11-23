@@ -53,12 +53,14 @@ const createTrainingJobCommand = new CreateTrainingJobCommand({
       ChannelName: 'train',
       DataSource: {
         S3DataSource: {
+          /// @see https://docs.aws.amazon.com/ja_jp/sagemaker/latest/dg/cdf-training.html#cdf-csv-format
           S3Uri: `s3://${BUCKET_NAME}/data/iris.csv`,
           S3DataType: 'S3Prefix',
           S3DataDistributionType: 'FullyReplicated'
         }
       },
-      ContentType: 'text/csv'
+      ContentType: 'text/csv',
+      InputMode: 'File'
     }
   ],
   OutputDataConfig: {
@@ -73,10 +75,11 @@ const createTrainingJobCommand = new CreateTrainingJobCommand({
     MaxRuntimeInSeconds: 3600
   },
   HyperParameters: {
-    max_depth: '5',
-    eta: '0.2',
     objective: 'multi:softprob',
-    num_round: '50'
+    num_class: '3',
+    eta: '0.1',
+    max_depth: '5',
+    num_round: '10'
   }
 })
 

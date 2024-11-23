@@ -3,7 +3,7 @@ import {
   InvokeEndpointCommand
 } from '@aws-sdk/client-sagemaker-runtime'
 
-const ENDPOINT_NAME = 'MyEndpoint'
+const ENDPOINT_NAME = 'xgboost-iris-endpoint-1732347847602'
 
 const client = new SageMakerRuntimeClient()
 
