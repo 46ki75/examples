@@ -4,6 +4,7 @@
         "@aws-sdk/client-iam": "^3.696.0",
         "@aws-sdk/client-sagemaker": "^3.696.0",
         "@aws-sdk/client-sagemaker-featurestore-runtime": "^3.699.0",
-        "@aws-sdk/client-sagemaker-runtime": "^3.696.0"
+        "@aws-sdk/client-sagemaker-runtime": "^3.696.0",
+        "nanoid": "^5.0.8"
     }
 }

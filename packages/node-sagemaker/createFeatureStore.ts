@@ -37,6 +37,10 @@ const command = new CreateFeatureGroupCommand({
     {
       FeatureName: 'sepal_width',
       FeatureType: 'Fractional'
+    },
+    {
+      FeatureName: 'variety',
+      FeatureType: 'String'
     }
   ]
 })
