@@ -39,8 +39,8 @@ const command = new CreateFeatureGroupCommand({
       FeatureType: 'Fractional'
     },
     {
-      FeatureName: 'variety',
-      FeatureType: 'String'
+      FeatureName: 'label',
+      FeatureType: 'Integral'
     }
   ]
 })

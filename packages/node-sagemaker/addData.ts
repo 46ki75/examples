@@ -14,6 +14,12 @@ interface Iris {
   variety: 'Versicolor' | 'Setosa' | 'Virginica'
 }
 
+const LABEL_MAP = {
+  Versicolor: 0,
+  Setosa: 1,
+  Virginica: 2
+}
+
 const rawData = await fetch(
   'https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv',
   { headers: { 'Content-Type': 'text/csv' } }
@@ -61,8 +67,8 @@ const recordData: FeatureValue[][] = csvData.map((row) => [
     ValueAsString: row['sepal.width']
   },
   {
-    FeatureName: 'variety',
-    ValueAsString: row.variety
+    FeatureName: 'label',
+    ValueAsString: LABEL_MAP[row.variety].toString()
   }
 ])
 
