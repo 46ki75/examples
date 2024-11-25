@@ -17,6 +17,14 @@ resource "aws_s3_object" "file" {
   etag         = md5(file("./index.html"))
 }
 
+resource "aws_s3_object" "error" {
+  bucket       = aws_s3_bucket.web.bucket
+  key          = "error.html"
+  content      = file("./error.html")
+  content_type = "text/html"
+  etag         = md5(file("./error.html"))
+}
+
 resource "aws_s3_bucket_policy" "web" {
   bucket = aws_s3_bucket.web.id
   policy = jsonencode({
@@ -98,4 +106,11 @@ resource "aws_cloudfront_distribution" "web" {
   }
 
   default_root_object = "index.html"
+
+  custom_error_response {
+    error_code            = 403
+    response_code         = 404
+    response_page_path    = "/error.html"
+    error_caching_min_ttl = 0
+  }
 }
