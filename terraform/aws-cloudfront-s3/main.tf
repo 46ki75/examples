@@ -10,9 +10,11 @@ resource "aws_s3_bucket" "web" {
 }
 
 resource "aws_s3_object" "file" {
-  bucket  = aws_s3_bucket.web.bucket
-  key     = "index.html"
-  content = file("./index.html")
+  bucket       = aws_s3_bucket.web.bucket
+  key          = "index.html"
+  content      = file("./index.html")
+  content_type = "text/html"
+  etag         = md5(file("./index.html"))
 }
 
 resource "aws_s3_bucket_policy" "web" {
