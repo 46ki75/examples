@@ -91,11 +91,14 @@ resource "aws_cloudfront_distribution" "web" {
     viewer_protocol_policy = "redirect-to-https"
     target_origin_id       = "s3"
 
+    default_ttl = 3600 * 24 * 30
+
     forwarded_values {
       query_string = false
       cookies {
         forward = "none"
       }
+      headers = ["etag"]
     }
   }
 
