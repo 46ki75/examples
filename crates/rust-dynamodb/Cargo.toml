@@ -1,0 +1,5 @@
+[package]
+name = "rust-dynamodb"
+edition = "2021"
+
+[dependencies]
