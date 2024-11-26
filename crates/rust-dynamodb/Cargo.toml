@@ -1,0 +1,8 @@
+[package]
+name = "rust-dynamodb"
+edition = "2021"
+
+[dependencies]
+aws-config = "1.5.10"
+aws-sdk-dynamodb = "1.54.0"
+tokio = { version = "1.41.1", features = ["full"] }
