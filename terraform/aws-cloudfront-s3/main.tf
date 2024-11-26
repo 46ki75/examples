@@ -1,3 +1,6 @@
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
+
 // # --------------------------------------------------------------------------------
 //
 // S3
@@ -5,7 +8,7 @@
 // # --------------------------------------------------------------------------------
 
 resource "aws_s3_bucket" "web" {
-  bucket        = "46ki75-aws-cloudfront-s3"
+  bucket        = "${data.aws_caller_identity.current.account_id}-aws-cloudfront-s3"
   force_destroy = true
 }
 
@@ -89,9 +92,11 @@ resource "aws_cloudfront_distribution" "web" {
     ]
     cached_methods         = ["GET", "HEAD"]
     viewer_protocol_policy = "redirect-to-https"
-    target_origin_id       = "s3"
+    target_origin_id       = "s3-root"
 
     default_ttl = 3600 * 24 * 30
+    min_ttl     = 0
+    max_ttl     = 3600 * 24 * 30 * 12
 
     forwarded_values {
       query_string = false
@@ -104,7 +109,7 @@ resource "aws_cloudfront_distribution" "web" {
 
   origin {
     domain_name              = aws_s3_bucket.web.bucket_regional_domain_name
-    origin_id                = "s3"
+    origin_id                = "s3-root"
     origin_access_control_id = aws_cloudfront_origin_access_control.web.id
   }
 
