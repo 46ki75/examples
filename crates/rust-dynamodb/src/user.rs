@@ -117,4 +117,20 @@ impl User {
 
         Ok(response)
     }
+
+    pub async fn delete(self) -> Result<(), Box<dyn std::error::Error>> {
+        let config = aws_config::load_defaults(aws_config::BehaviorVersion::latest()).await;
+
+        let client = aws_sdk_dynamodb::Client::new(&config);
+
+        let request = client
+            .delete_item()
+            .table_name("rust-dynamodb")
+            .key("PK", aws_sdk_dynamodb::types::AttributeValue::S(self.pk))
+            .key("SK", aws_sdk_dynamodb::types::AttributeValue::S(self.sk));
+
+        let _response = request.send().await?;
+
+        Ok(())
+    }
 }
