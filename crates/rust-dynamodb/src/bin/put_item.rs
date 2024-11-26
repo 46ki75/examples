@@ -1,26 +1,15 @@
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let config = aws_config::load_defaults(aws_config::BehaviorVersion::latest()).await;
+    let user = rust_dynamodb::user::User {
+        pk: "PK-1".to_string(),
+        sk: "SK-1".to_string(),
+        id: "ID-1".to_string(),
+        name: "John Doe".to_string(),
+        email: "john@example.com".to_string(),
+        age: 30,
+    };
 
-    let client = aws_sdk_dynamodb::Client::new(&config);
-
-    let request = client
-        .put_item()
-        .table_name("rust-dynamodb")
-        .item(
-            "PK",
-            aws_sdk_dynamodb::types::AttributeValue::S("PK-1".to_string()),
-        )
-        .item(
-            "SK",
-            aws_sdk_dynamodb::types::AttributeValue::S("SK-1".to_string()),
-        )
-        .item(
-            "name",
-            aws_sdk_dynamodb::types::AttributeValue::S("John Doe".to_string()),
-        );
-
-    let response = request.send().await?;
+    let response = user.upsert().await?;
 
     println!("{:?}", response);
 
