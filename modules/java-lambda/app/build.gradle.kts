@@ -13,8 +13,8 @@ repositories {
 dependencies {
     testImplementation(libs.junit)
     implementation(libs.guava)
-    implementation("com.amazonaws:aws-lambda-java-core:1.2.2")
-    implementation("com.amazonaws:aws-lambda-java-events:3.11.0")
+    implementation(libs.aws.lambda.java.core)
+    implementation(libs.aws.lambda.java.events)
 }
 
 java {
