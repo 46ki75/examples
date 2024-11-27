@@ -1,42 +1,28 @@
-use lambda_http::RequestExt;
-
-#[derive(serde::Serialize, serde::Deserialize)]
-struct ResponseBody {
-    message: String,
-    path: String,
-    available_paths: Vec<String>,
-}
+mod route_handlers;
 
 async fn function_handler(
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    let who = event
-        .query_string_parameters_ref()
-        .and_then(|params| params.first("name"))
-        .unwrap_or("world");
-
     let path = event.uri().path();
 
-    let mut response_body = ResponseBody {
-        message: "".to_string(),
-        path: path.to_string(),
-        available_paths: vec!["/error".to_string()],
-    };
+    let response = match path {
+        "/error" => route_handlers::handle_error(event).await,
+        _ => route_handlers::handle_catch_all(event).await,
+    }?;
 
-    match path {
-        "/error" => {
-            response_body.message = "An error occurred".to_string();
-        }
-        _ => {
-            response_body.message = format!("Hello {who}, this is an AWS Lambda HTTP request");
-        }
+    let mut resp = lambda_http::Response::builder()
+        .status(response.status_code)
+        .header("content-type", "application/json")
+        .body(serde_json::to_string(&response).unwrap().into())
+        .map_err(Box::new)?;
+
+    for (key, value) in response.headers {
+        resp.headers_mut().insert(
+            lambda_http::http::HeaderName::from_bytes(key.as_bytes()).unwrap(),
+            value.parse().unwrap(),
+        );
     }
 
-    let resp = lambda_http::Response::builder()
-        .status(200)
-        .header("content-type", "application/json")
-        .body(serde_json::to_string(&response_body).unwrap().into())
-        .map_err(Box::new)?;
     Ok(resp)
 }
 
