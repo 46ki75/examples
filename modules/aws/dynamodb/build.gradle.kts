@@ -41,3 +41,13 @@ tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+tasks.register("deploy", Exec::class) {
+    group = "AWS"
+    commandLine("aws", "cloudformation", "create-stack", "--stack-name", "java-aws-dynamodb", "--template-body", "file://template.yaml", "--profile", "poc")
+}
+
+tasks.register("destroy", Exec::class) {
+    group = "AWS"
+    commandLine("aws", "cloudformation", "delete-stack", "--stack-name", "java-aws-dynamodb", "--profile", "poc")
+}
