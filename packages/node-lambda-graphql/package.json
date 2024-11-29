@@ -5,16 +5,16 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "prebuild": "rm -rf dist/*",
-    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.mjs --format=esm --tsconfig=tsconfig.json",
-    "postbuild": "cp graphiql.html dist/graphiql.html && cp schema.graphql dist/schema.graphql && cd dist && zip -r lambda.zip ."
+    "build": "tsx build.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/archiver": "^6.0.3",
     "@types/aws-lambda": "^8.10.146",
     "@types/node": "^22.10.1",
+    "archiver": "^7.0.1",
     "esbuild": "^0.24.0",
     "typescript": "^5.7.2"
   },
