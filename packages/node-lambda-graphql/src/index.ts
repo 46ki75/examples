@@ -6,16 +6,12 @@ import type {
 
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { graphql } from 'graphql'
+
 import { readFileSync } from 'fs'
-import { resolve } from 'path'
 
-const html = readFileSync(resolve(__dirname, '../graphiql.html'), 'utf8')
+const html = readFileSync('./graphiql.html', 'utf8')
 
-const typeDefs = `
-  type Query {
-    hello: String
-  }
-`
+const typeDefs = readFileSync('./schema.graphql', 'utf8')
 
 const resolvers = {
   Query: {

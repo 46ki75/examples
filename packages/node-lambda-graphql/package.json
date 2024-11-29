@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.mjs --format=esm --tsconfig=tsconfig.json"
+    "prebuild": "rm -rf dist/*",
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.mjs --format=esm --tsconfig=tsconfig.json",
+    "postbuild": "cp graphiql.html dist/graphiql.html && cp schema.graphql dist/schema.graphql && cd dist && zip -r lambda.zip ."
   },
   "keywords": [],
   "author": "",
