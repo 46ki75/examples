@@ -1,7 +1,12 @@
-import { LambdaFunctionURLEvent, Context } from 'aws-lambda'
+import {
+  LambdaFunctionURLEvent,
+  Context,
+  LambdaFunctionURLResult
+} from 'aws-lambda'
 
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { graphql } from 'graphql'
+import { renderPlaygroundPage } from 'graphql-playground-html'
 
 const typeDefs = `
   type Query {
@@ -20,22 +25,37 @@ const schema = makeExecutableSchema({ typeDefs, resolvers })
 export const handler = async (
   event: LambdaFunctionURLEvent,
   context: Context
-) => {
-  if (event.body == null) {
+): Promise<LambdaFunctionURLResult | ReturnType<typeof graphql>> => {
+  if (event.requestContext.http.method === 'GET') {
+    const html = renderPlaygroundPage({})
+
     return {
-      error: 'No body provided'
+      statusCode: 200,
+      headers: { 'Content-Type': 'text/html' },
+      body: html
+    }
+  } else {
+    try {
+      if (event.body == null) {
+        return {
+          body: JSON.stringify({ error: 'No body provided' })
+        }
+      }
+
+      const { query, variables } = JSON.parse(event.body)
+
+      const result = await graphql({
+        schema,
+        source: query,
+        variableValues: variables
+      })
+
+      return result
+    } catch (e) {
+      return {
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: JSON.stringify(e) })
+      }
     }
   }
-
-  let decodedBody = Buffer.from(event.body, 'base64').toString('utf-8')
-
-  const { query, variables } = JSON.parse(decodedBody)
-
-  const result = await graphql({
-    schema,
-    source: query,
-    variableValues: variables
-  })
-
-  return { result }
 }
