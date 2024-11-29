@@ -4,22 +4,19 @@ import type {
   LambdaFunctionURLResult
 } from 'aws-lambda'
 
-import { makeExecutableSchema } from '@graphql-tools/schema'
 import { graphql } from 'graphql'
+
+import { stitchSchemas } from '@graphql-tools/stitch'
+import { localSchema } from './local.js'
+import { remotesSubschema } from './remote.js'
 
 import { readFileSync } from 'fs'
 
-const html = readFileSync('./graphiql.html', 'utf8')
+const playground = readFileSync('./graphiql.html', 'utf8')
 
-const typeDefs = readFileSync('./schema.graphql', 'utf8')
-
-const resolvers = {
-  Query: {
-    hello: () => 'Hello from AWS Lambda!'
-  }
-}
-
-const schema = makeExecutableSchema({ typeDefs, resolvers })
+export const gatewaySchema = stitchSchemas({
+  subschemas: [localSchema, remotesSubschema]
+})
 
 export const handler = async (
   event: LambdaFunctionURLEvent,
@@ -29,7 +26,7 @@ export const handler = async (
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'text/html' },
-      body: html
+      body: playground
     }
   } else {
     try {
@@ -42,7 +39,7 @@ export const handler = async (
       const { query, variables } = JSON.parse(event.body)
 
       const result = await graphql({
-        schema,
+        schema: gatewaySchema,
         source: query,
         variableValues: variables
       })
