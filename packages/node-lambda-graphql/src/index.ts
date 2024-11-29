@@ -6,7 +6,30 @@ import {
 
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { graphql } from 'graphql'
-import { renderPlaygroundPage } from 'graphql-playground-html'
+
+const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Simple GraphiQL Example</title>
+  <link href="https://unpkg.com/graphiql/graphiql.min.css" rel="stylesheet" />
+</head>
+<body style="margin: 0;">
+  <script crossorigin src="https://unpkg.com/react/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/graphiql/graphiql.min.js"></script>
+  <div id="graphiql" style="height: 100vh;"></div>
+  <script>
+    const fetcher = GraphiQL.createFetcher({ url: '/' });
+    ReactDOM.render(
+      React.createElement(GraphiQL, { fetcher: fetcher }),
+      document.getElementById('graphiql'),
+    );
+  </script>
+</body>
+</html>
+`
 
 const typeDefs = `
   type Query {
@@ -27,8 +50,6 @@ export const handler = async (
   context: Context
 ): Promise<LambdaFunctionURLResult | ReturnType<typeof graphql>> => {
   if (event.requestContext.http.method === 'GET') {
-    const html = renderPlaygroundPage({})
-
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'text/html' },

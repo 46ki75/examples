@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.10",
-    "graphql": "^16.9.0",
-    "graphql-playground-html": "^1.6.30"
+    "graphql": "^16.9.0"
   }
 }
