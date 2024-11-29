@@ -1,0 +1,19 @@
+{
+  "name": "node-lambda-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.mjs --format=esm --tsconfig=tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.146",
+    "@types/node": "^22.10.1",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.2"
+  }
+}
