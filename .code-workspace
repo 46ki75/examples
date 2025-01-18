@@ -1,0 +1,17 @@
+{
+    "folders": [
+        {
+            "path": ".",
+            "name": "root"
+        },
+        {
+            "path": "terraform",
+            "name": "terraform"
+        }
+    ],
+    "settings": {
+        "terminal.integrated.env.linux": {
+            "AWS_PROFILE": "poc"
+        }
+    }
+}
