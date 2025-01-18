@@ -30,6 +30,16 @@ updates:
     reviewers:
       - '46ki75'
 
+  - package-ecosystem: 'gradle'
+    directory: '/java'
+    schedule:
+      interval: 'daily'
+    target-branch: 'main'
+    assignees:
+      - 'dependabot[bot]'
+    reviewers:
+      - '46ki75'
+
   - package-ecosystem: 'terraform'
     directory: '/terraform'
     schedule:
