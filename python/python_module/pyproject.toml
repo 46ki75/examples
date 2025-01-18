@@ -1,18 +1,12 @@
 [tool.poetry]
-name = "python-sagemaker"
+name = "python-module"
 version = "0.1.0"
 description = ""
-authors = ["shirayuki <shirayuki@46ki75.com>"]
-license = "MIT"
+authors = ["Shirayuki Chomolungma <shirayuki@46ki75.com>"]
 readme = "README.md"
-package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
-boto3 = "^1.35.63"
-sagemaker = "^2.233.0"
-pandas = "^2.2.3"
-scikit-learn = "^1.5.2"
 
 
 [build-system]
