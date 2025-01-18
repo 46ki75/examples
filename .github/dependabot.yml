@@ -1,7 +1,51 @@
 version: 2
 updates:
   - package-ecosystem: 'npm'
-    directory: '/'
+    directory: '/packages'
     schedule:
       interval: 'daily'
     target-branch: 'main'
+    assignees:
+      - 'dependabot[bot]'
+    reviewers:
+      - '46ki75'
+
+  - package-ecosystem: 'cargo'
+    directory: '/crates'
+    schedule:
+      interval: 'daily'
+    target-branch: 'main'
+    assignees:
+      - 'dependabot[bot]'
+    reviewers:
+      - '46ki75'
+
+  - package-ecosystem: 'gradle'
+    directory: '/java'
+    schedule:
+      interval: 'daily'
+    target-branch: 'main'
+    assignees:
+      - 'dependabot[bot]'
+    reviewers:
+      - '46ki75'
+
+  - package-ecosystem: 'gradle'
+    directory: '/java'
+    schedule:
+      interval: 'daily'
+    target-branch: 'main'
+    assignees:
+      - 'dependabot[bot]'
+    reviewers:
+      - '46ki75'
+
+  - package-ecosystem: 'terraform'
+    directory: '/terraform'
+    schedule:
+      interval: 'daily'
+    target-branch: 'main'
+    assignees:
+      - 'dependabot[bot]'
+    reviewers:
+      - '46ki75'

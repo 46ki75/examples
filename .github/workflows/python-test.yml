@@ -1,0 +1,43 @@
+name: Unit Test (Python)
+
+on:
+  push:
+    paths:
+      - 'python/python_module'
+  pull_request:
+    branches:
+      - main
+      - develop
+      - 'release/**'
+    paths:
+      - 'python/python_module'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: python/python_module
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install project
+        run: poetry install --no-interaction
+
+      - name: Run unit tests
+        run: poetry run python -m unittest tests/test_lib.py
