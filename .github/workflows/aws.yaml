@@ -1,7 +1,5 @@
 name: AWS example workflow
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 env:
@@ -12,7 +10,7 @@ permissions:
   contents: read # This is required for actions/checkout
 
 jobs:
-  S3PackageUpload:
+  list-buckets:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
