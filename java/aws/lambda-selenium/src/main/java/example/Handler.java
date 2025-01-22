@@ -6,13 +6,17 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import java.util.Map;
 
-public class Handler implements RequestHandler<Map<String, String>, String> {
+public class Handler implements RequestHandler<Map<String, String>, Response> {
 
   @Override
-  public String handleRequest(Map<String, String> event, Context context) {
+  public Response handleRequest(Map<String, String> event, Context context) {
+
     LambdaLogger logger = context.getLogger();
     logger.log("EVENT TYPE: " + event.getClass());
 
-    return event.toString();
+    Response response = new Response("Hello, world!", 200, event);
+
+    return response;
   }
+
 }

@@ -16,6 +16,8 @@
     "settings": {
         "terminal.integrated.env.linux": {
             "AWS_PROFILE": "poc"
-        }
+        },
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "java.compile.nullAnalysis.mode": "automatic"
     }
 }
