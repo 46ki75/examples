@@ -12,3 +12,4 @@ plugins {
 
 rootProject.name = "aws"
 include("dynamodb")
+include("lambda")
