@@ -19,8 +19,6 @@ dependencies {
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
 
-    implementation("org.seleniumhq.selenium:selenium-java:4.28.0")
-
     implementation("com.google.guava:guava:32.1.2-jre")
 }
 
@@ -32,7 +30,7 @@ java {
 
 application {
     // For local execution
-    mainClass = "example.Handler"
+    mainClass = "example.Local"
 }
 
 tasks {
@@ -41,7 +39,7 @@ tasks {
         archiveFileName.set("lambda-selenium.jar")
         manifest {
             // Main-Class: example.Local
-            attributes["Main-Class"] = "example.Handler" 
+            attributes["Main-Class"] = "example.Local" 
         }
     }
 
