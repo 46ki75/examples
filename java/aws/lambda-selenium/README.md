@@ -6,7 +6,7 @@
 ./gradlew lambda-selenium:clean lambda-selenium:shadowJar
 ```
 
-## Deploy
+## Deploy (Update)
 
 ```bash
 aws lambda update-function-code --function-name ${FUNCTION_NAME} \
