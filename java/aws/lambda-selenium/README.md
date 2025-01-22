@@ -6,6 +6,7 @@
 ## Build
 
 ```bash
+../gradlew clean shadowJar
 ./gradlew lambda-selenium:clean lambda-selenium:shadowJar
 ```
 
@@ -22,5 +23,6 @@ aws lambda update-function-code --function-name ${FUNCTION_NAME} \
 ## Invoke Locally
 
 ```bash
+../gradlew clean run
 ./gradlew lambda-selenium:clean lambda-selenium:run
 ```

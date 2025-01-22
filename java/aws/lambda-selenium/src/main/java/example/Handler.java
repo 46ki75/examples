@@ -4,6 +4,11 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.Map;
 
 public class Handler implements RequestHandler<Map<String, String>, Response> {
@@ -14,7 +19,27 @@ public class Handler implements RequestHandler<Map<String, String>, Response> {
     LambdaLogger logger = context.getLogger();
     logger.log("EVENT TYPE: " + event.getClass());
 
-    Response response = new Response("Hello, world!", 200, event);
+    WebDriver driver = new ChromeDriver();
+
+    driver.get("https://www.selenium.dev/selenium/web/web-form.html");
+
+    driver.getTitle();
+
+    driver.manage().timeouts().implicitlyWait(java.time.Duration.ofMillis(500));
+
+    WebElement textBox = driver.findElement(By.name("my-text"));
+    WebElement submitButton = driver.findElement(By.cssSelector("button"));
+
+    textBox.sendKeys("Selenium");
+    submitButton.click();
+
+    WebElement messageElement = driver.findElement(By.id("message"));
+
+    String message = messageElement.getText();
+
+    driver.quit();
+
+    Response response = new Response(message, 200, event);
 
     return response;
   }
