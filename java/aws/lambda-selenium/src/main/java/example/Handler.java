@@ -20,27 +20,29 @@ public class Handler implements RequestHandler<Map<String, String>, Response> {
     LambdaLogger logger = context.getLogger();
     logger.log("EVENT TYPE: " + event.getClass());
 
-    ChromeOptions options = new ChromeOptions();
-    options.addArguments("--headless=new");
-    WebDriver driver = new ChromeDriver(options);
+    // ChromeOptions options = new ChromeOptions();
+    // options.addArguments("--headless=new");
+    // WebDriver driver = new ChromeDriver(options);
 
-    driver.get("https://www.selenium.dev/selenium/web/web-form.html");
+    // driver.get("https://www.selenium.dev/selenium/web/web-form.html");
 
-    driver.getTitle();
+    // driver.getTitle();
 
-    driver.manage().timeouts().implicitlyWait(java.time.Duration.ofMillis(500));
+    // driver.manage().timeouts().implicitlyWait(java.time.Duration.ofMillis(500));
 
-    WebElement textBox = driver.findElement(By.name("my-text"));
-    WebElement submitButton = driver.findElement(By.cssSelector("button"));
+    // WebElement textBox = driver.findElement(By.name("my-text"));
+    // WebElement submitButton = driver.findElement(By.cssSelector("button"));
 
-    textBox.sendKeys("Selenium");
-    submitButton.click();
+    // textBox.sendKeys("Selenium");
+    // submitButton.click();
 
-    WebElement messageElement = driver.findElement(By.id("message"));
+    // WebElement messageElement = driver.findElement(By.id("message"));
 
-    String message = messageElement.getText();
+    // String message = messageElement.getText();
 
-    driver.quit();
+    // driver.quit();
+
+    String message = "Hello, world!";
 
     Response response = new Response(message, 200, event);
 

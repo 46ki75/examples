@@ -32,7 +32,7 @@ java {
 
 application {
     // For local execution
-    mainClass = "example.Local"
+    mainClass = "example.Handler"
 }
 
 tasks {
@@ -41,7 +41,7 @@ tasks {
         archiveFileName.set("lambda-selenium.jar")
         manifest {
             // Main-Class: example.Local
-            attributes["Main-Class"] = "example.Local" 
+            attributes["Main-Class"] = "example.Handler" 
         }
     }
 
