@@ -1,5 +1,8 @@
 # Selenium on Lambda
 
+- **handler(lambda)**: `example.Handler::handleRequest`
+- **Runtime**: `Java 21`
+
 ## Build
 
 ```bash
@@ -7,6 +10,8 @@
 ```
 
 ## Deploy (Update)
+
+You can deploy jar file directly.
 
 ```bash
 aws lambda update-function-code --function-name ${FUNCTION_NAME} \
