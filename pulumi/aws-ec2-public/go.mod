@@ -1,4 +1,4 @@
-module poc
+module aws-ec2-public
 
 go 1.21
 
