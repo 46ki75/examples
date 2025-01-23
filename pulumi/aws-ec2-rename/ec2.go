@@ -12,6 +12,7 @@ type Ec2Component struct {
 }
 
 type Ec2ComponentArgs struct {
+	VpcId    pulumi.IDOutput
 	SubnetId pulumi.IDOutput
 }
 
@@ -24,6 +25,7 @@ func NewEc2Component(ctx *pulumi.Context, name string, args *Ec2ComponentArgs, o
 	}
 
 	sg, err := ec2.NewSecurityGroup(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-security_group-main", ctx.Stack()), &ec2.SecurityGroupArgs{
+		VpcId: args.VpcId,
 		Egress: ec2.SecurityGroupEgressArray{
 			&ec2.SecurityGroupEgressArgs{
 				FromPort: pulumi.Int(0),

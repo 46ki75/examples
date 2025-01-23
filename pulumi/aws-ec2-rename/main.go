@@ -14,6 +14,7 @@ func main() {
 
 		_, err = NewEc2Component(ctx, "Ec2Component", &Ec2ComponentArgs{
 			SubnetId: vpcComponent.SubnetId,
+			VpcId:    vpcComponent.VpcId,
 		})
 		if err != nil {
 			return err

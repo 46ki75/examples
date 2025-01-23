@@ -9,6 +9,7 @@ import (
 
 type VpcComponent struct {
 	pulumi.ResourceState
+	VpcId    pulumi.IDOutput `pulumi:"VpcId"`
 	SubnetId pulumi.IDOutput `pulumi:"SubnetId"`
 }
 
@@ -36,6 +37,7 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 	if err != nil {
 		return nil, err
 	}
+	component.VpcId = vpc.ID()
 
 	subnet, err := ec2.NewSubnet(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-subnet-main", ctx.Stack()), &ec2.SubnetArgs{
 		VpcId:            vpc.ID(),
