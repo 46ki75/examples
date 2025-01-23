@@ -12,9 +12,15 @@ func main() {
 			return err
 		}
 
+		iamComponent, err := NewIamComponent(ctx, "IamComponent", &IamComponentArgs{})
+		if err != nil {
+			return err
+		}
+
 		_, err = NewEc2Component(ctx, "Ec2Component", &Ec2ComponentArgs{
-			SubnetId: vpcComponent.SubnetId,
-			VpcId:    vpcComponent.VpcId,
+			SubnetId:           vpcComponent.SubnetId,
+			VpcId:              vpcComponent.VpcId,
+			IamInstanceProfile: iamComponent.IamInstanceProfile,
 		})
 		if err != nil {
 			return err

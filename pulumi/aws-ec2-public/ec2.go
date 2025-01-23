@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ec2"
-	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/iam"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -13,59 +12,15 @@ type Ec2Component struct {
 }
 
 type Ec2ComponentArgs struct {
-	VpcId    pulumi.IDOutput
-	SubnetId pulumi.IDOutput
+	VpcId              pulumi.IDOutput
+	SubnetId           pulumi.IDOutput
+	IamInstanceProfile pulumi.Input
 }
 
 func NewEc2Component(ctx *pulumi.Context, name string, args *Ec2ComponentArgs, opts ...pulumi.ResourceOption) (*Ec2Component, error) {
 	component := &Ec2Component{}
 
 	err := ctx.RegisterComponentResource("46ki75:component:EC2", name, component, opts...)
-	if err != nil {
-		return nil, err
-	}
-
-	instanceAssumeRolePolicy, err := iam.GetPolicyDocument(ctx, &iam.GetPolicyDocumentArgs{
-		Statements: []iam.GetPolicyDocumentStatement{
-			{
-				Actions: []string{
-					"sts:AssumeRole",
-				},
-				Principals: []iam.GetPolicyDocumentStatementPrincipal{
-					{
-						Type: "Service",
-						Identifiers: []string{
-							"ec2.amazonaws.com",
-						},
-					},
-				},
-			},
-		},
-	}, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	role, err := iam.NewRole(ctx, fmt.Sprintf("%s-46ki75-examples-iam-role-instance_profile", ctx.Stack()), &iam.RoleArgs{
-		Name:             pulumi.String(fmt.Sprintf("%s-46ki75-examples-iam-role-instance_profile", ctx.Stack())),
-		AssumeRolePolicy: pulumi.String(instanceAssumeRolePolicy.Json),
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	managedPolicyArn := "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-	_, err = iam.NewRolePolicyAttachment(ctx, fmt.Sprintf("%s-46ki75-examples-iam-role-policy-attachment", ctx.Stack()), &iam.RolePolicyAttachmentArgs{
-		Role:      role.Name,
-		PolicyArn: pulumi.String(managedPolicyArn),
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	instanceProfile, err := iam.NewInstanceProfile(ctx, fmt.Sprintf("%s-46ki75-examples-instance_profile", ctx.Stack()), &iam.InstanceProfileArgs{
-		Role: role.Name,
-	})
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +52,7 @@ func NewEc2Component(ctx *pulumi.Context, name string, args *Ec2ComponentArgs, o
 		AvailabilityZone:         pulumi.String("ap-northeast-1a"),
 		InstanceType:             pulumi.String("t3.micro"),
 		AssociatePublicIpAddress: pulumi.Bool(true),
-		IamInstanceProfile:       instanceProfile,
+		IamInstanceProfile:       args.IamInstanceProfile,
 		Tags: pulumi.StringMap{
 			"Name": pulumi.String(fmt.Sprintf("%s-46ki75-examples-ec2-instance-main", ctx.Stack())),
 		},
