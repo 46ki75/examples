@@ -76,7 +76,7 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 	}
 
 	_, err = ec2.NewRouteTableAssociation(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-route_table_association-main", ctx.Stack()), &ec2.RouteTableAssociationArgs{
-		GatewayId:    igw.ID(),
+		SubnetId:     subnet.ID(),
 		RouteTableId: rt.ID(),
 	})
 	if err != nil {
