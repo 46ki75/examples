@@ -9,6 +9,7 @@ import (
 
 type VpcComponent struct {
 	pulumi.ResourceState
+	SubnetId pulumi.IDOutput `pulumi:"SubnetId"`
 }
 
 type VpcComponentArgs struct {
@@ -32,12 +33,11 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 			"Environment": pulumi.String(fmt.Sprintf("%s-46ki75-examples-ec2-vpc-main", ctx.Stack())),
 		},
 	})
-
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = ec2.NewSubnet(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-subnet-main", ctx.Stack()), &ec2.SubnetArgs{
+	subnet, err := ec2.NewSubnet(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-subnet-main", ctx.Stack()), &ec2.SubnetArgs{
 		VpcId:            vpc.ID(),
 		CidrBlock:        pulumi.String("10.0.1.0/24"),
 		AvailabilityZone: pulumi.String("ap-northeast-1a"),
@@ -48,6 +48,7 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 	if err != nil {
 		return nil, err
 	}
+	component.SubnetId = subnet.ID()
 
 	igw, err := ec2.NewInternetGateway(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-internet_gateway-main", ctx.Stack()), &ec2.InternetGatewayArgs{
 		VpcId: vpc.ID(),

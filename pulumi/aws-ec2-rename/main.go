@@ -7,7 +7,14 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
-		_, err := NewVpcComponent(ctx, "MyComponent", &VpcComponentArgs{})
+		vpcComponent, err := NewVpcComponent(ctx, "VpcComponent", &VpcComponentArgs{})
+		if err != nil {
+			return err
+		}
+
+		_, err = NewEc2Component(ctx, "Ec2Component", &Ec2ComponentArgs{
+			SubnetId: vpcComponent.SubnetId,
+		})
 		if err != nil {
 			return err
 		}
