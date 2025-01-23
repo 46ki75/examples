@@ -1,33 +1,36 @@
-resource "aws_vpc" "vpc" {
+resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
 
   tags = {
-    "Name" = "46ki75-aws-ec2-vpc"
+    "Name" = "${local.prefix}-vpc-vpc-main"
   }
 }
 
 resource "aws_subnet" "subnet" {
-  vpc_id            = aws_vpc.vpc.id
+  vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-northeast-1a"
 
   tags = {
-    "Name" = "46ki75-aws-ec2-subnet"
+    "Name" = "${local.prefix}-vpc-subnet-main"
   }
 }
 
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = aws_vpc.main.id
 
   tags = {
-    "Name" = "46ki75-aws-ec2-igw"
+    "Name" = "${local.prefix}-vpc-internet_gateway-main"
   }
 }
 
 resource "aws_route_table" "route_table" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = aws_vpc.main.id
+  tags = {
+    "Name" = "${local.prefix}-vpc-route_table-main"
+  }
 }
 
 resource "aws_route" "igw_route" {

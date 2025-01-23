@@ -1,14 +1,14 @@
 data "aws_region" "current" {}
 
 resource "aws_security_group" "endpoint" {
-  name   = "46ki75-aws-ec2-sg-endpoint"
+  name   = "${local.prefix}-vpc-sg-endpoint"
   vpc_id = aws_vpc.vpc.id
 
   ingress {
     from_port       = 443
     to_port         = 443
     protocol        = "tcp"
-    security_groups = [aws_security_group.instance.id]
+    security_groups = [aws_security_group.ec2.id]
   }
 }
 
