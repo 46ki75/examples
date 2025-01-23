@@ -49,5 +49,28 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 		return nil, err
 	}
 
+	igw, err := ec2.NewInternetGateway(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-internet_gateway-main", ctx.Stack()), &ec2.InternetGatewayArgs{
+		VpcId: vpc.ID(),
+		Tags: pulumi.StringMap{
+			"Name": pulumi.String(fmt.Sprintf("%s-46ki75-examples-ec2-internet_gateway-main", ctx.Stack())),
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = ec2.NewRouteTable(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-route_table-main", ctx.Stack()), &ec2.RouteTableArgs{
+		VpcId: vpc.ID(),
+		Routes: ec2.RouteTableRouteArray{
+			ec2.RouteTableRouteArgs{
+				CidrBlock: pulumi.String("0.0.0.0/0"),
+				GatewayId: igw.ID(),
+			},
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	return component, nil
 }
