@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ec2"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
@@ -45,6 +46,11 @@ func NewEc2Component(ctx *pulumi.Context, name string, args *Ec2ComponentArgs, o
 		return nil, err
 	}
 
+	userData, err := os.ReadFile("cloud-init.yaml")
+	if err != nil {
+		return nil, err
+	}
+
 	_, err = ec2.NewInstance(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-instance-main", ctx.Stack()), &ec2.InstanceArgs{
 		Ami:                      pulumi.String("ami-094dc5cf74289dfbc"),
 		SubnetId:                 args.SubnetId,
@@ -53,6 +59,7 @@ func NewEc2Component(ctx *pulumi.Context, name string, args *Ec2ComponentArgs, o
 		InstanceType:             pulumi.String("t3.micro"),
 		AssociatePublicIpAddress: pulumi.Bool(true),
 		IamInstanceProfile:       args.IamInstanceProfile,
+		UserData:                 pulumi.String(string(userData)),
 		Tags: pulumi.StringMap{
 			"Name": pulumi.String(fmt.Sprintf("%s-46ki75-examples-ec2-instance-main", ctx.Stack())),
 		},
