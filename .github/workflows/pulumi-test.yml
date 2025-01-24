@@ -1,0 +1,36 @@
+name: Unit Test (Pulumi)
+
+on:
+  push:
+    paths:
+      - 'pulumi/'
+  pull_request:
+    branches:
+      - main
+      - develop
+      - 'release/**'
+    paths:
+      - 'pulumi/'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: pulumi/aws-ec2-public
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '^1.23.5'
+
+      - name: Run Unit test
+        run: go test ./...
