@@ -2,15 +2,11 @@ name: Unit Test (Pulumi)
 
 on:
   push:
-    paths:
-      - 'pulumi/**'
   pull_request:
     branches:
       - main
       - develop
       - 'release/**'
-    paths:
-      - 'pulumi/**'
   workflow_dispatch:
 
 jobs:
