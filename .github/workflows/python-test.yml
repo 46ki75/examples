@@ -2,15 +2,11 @@ name: Unit Test (Python)
 
 on:
   push:
-    paths:
-      - 'python/python_module'
   pull_request:
     branches:
       - main
       - develop
       - 'release/**'
-    paths:
-      - 'python/python_module'
   workflow_dispatch:
 
 jobs:
