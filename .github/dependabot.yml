@@ -9,6 +9,8 @@ updates:
       - 'dependabot[bot]'
     reviewers:
       - '46ki75'
+    labels:
+      - 'nodejs'
 
   - package-ecosystem: 'cargo'
     directory: '/crates'
@@ -19,6 +21,8 @@ updates:
       - 'dependabot[bot]'
     reviewers:
       - '46ki75'
+    labels:
+      - 'rust'
 
   - package-ecosystem: 'gradle'
     directory: '/java'
@@ -29,9 +33,11 @@ updates:
       - 'dependabot[bot]'
     reviewers:
       - '46ki75'
+    labels:
+      - 'java'
 
-  - package-ecosystem: 'gradle'
-    directory: '/java'
+  - package-ecosystem: 'gomod'
+    directory: '/pulumi'
     schedule:
       interval: 'daily'
     target-branch: 'main'
@@ -39,6 +45,8 @@ updates:
       - 'dependabot[bot]'
     reviewers:
       - '46ki75'
+    labels:
+      - 'go'
 
   - package-ecosystem: 'terraform'
     directory: '/terraform'
@@ -49,3 +57,5 @@ updates:
       - 'dependabot[bot]'
     reviewers:
       - '46ki75'
+    labels:
+      - 'terraform'
