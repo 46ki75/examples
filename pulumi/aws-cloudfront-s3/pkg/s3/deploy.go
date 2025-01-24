@@ -56,7 +56,7 @@ func NewS3ObjectComponent(
 		&s3.BucketObjectv2Args{
 			Bucket:             args.S3Bucket,
 			Source:             pulumi.NewFileAsset(filepath.Join(wd, "../assets/about/index.html")),
-			Key:                pulumi.String("index.html"),
+			Key:                pulumi.String("about/index.html"),
 			ContentDisposition: pulumi.String("inline"),
 			ContentType:        pulumi.String("text/html"),
 		},
