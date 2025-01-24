@@ -1,0 +1,8 @@
+name: aws-cloudfront-s3
+description: Static hosting using Amazon CloudFront and Amazon S3
+runtime: go
+main: ./cmd/main.go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-go

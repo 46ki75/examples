@@ -1,0 +1,2 @@
+secretsprovider: awskms://alias/shared/46ki75/examples/kms/key/pulumi-encryption?region=ap-northeast-1
+encryptedkey: AQICAHgGFIApgYOjtzN4e455hDez9Fi+Xr1cPEVVg7vTqlks/AEOb7k6gnQeA+bv+SO32nr7AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMjK51ADxkgYKgTvKmAgEQgDvLSucOuM1aXM5RK/n4DRMyVx0Kgg3IDFgo1ATaBDvCKIhOTr7g5s5/uTL57oCpWtgCWPaSaN9cCh3FHQ==
