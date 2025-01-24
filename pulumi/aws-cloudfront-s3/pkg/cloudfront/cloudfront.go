@@ -85,5 +85,7 @@ func NewCloudfrontComponent(
 		return nil, err
 	}
 
+	ctx.Export("url", component.CloudfrontDistribution.DomainName)
+
 	return component, nil
 }

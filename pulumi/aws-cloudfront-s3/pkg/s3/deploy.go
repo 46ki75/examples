@@ -40,9 +40,11 @@ func NewS3ObjectComponent(
 		ctx,
 		"shared-46ki75-examples-s3-object-index",
 		&s3.BucketObjectv2Args{
-			Bucket: args.S3Bucket,
-			Source: pulumi.NewFileAsset(path),
-			Key:    pulumi.String("index.html"),
+			Bucket:             args.S3Bucket,
+			Source:             pulumi.NewFileAsset(path),
+			Key:                pulumi.String("index.html"),
+			ContentDisposition: pulumi.String("inline"),
+			ContentType:        pulumi.String("text/html"),
 		},
 	)
 	if err != nil {
