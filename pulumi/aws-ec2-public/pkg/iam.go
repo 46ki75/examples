@@ -9,7 +9,9 @@ import (
 
 type IamComponent struct {
 	pulumi.ResourceState
-	IamInstanceProfile pulumi.Input
+	IamInstanceProfile      *iam.InstanceProfile
+	IamRole                 *iam.Role
+	IamRolePolicyAttachment *iam.RolePolicyAttachment
 }
 
 type IamComponentArgs struct {
@@ -44,7 +46,7 @@ func NewIamComponent(ctx *pulumi.Context, name string, args *IamComponentArgs, o
 		return nil, err
 	}
 
-	role, err := iam.NewRole(ctx, fmt.Sprintf("%s-46ki75-examples-iam-role-instance_profile", ctx.Stack()), &iam.RoleArgs{
+	component.IamRole, err = iam.NewRole(ctx, fmt.Sprintf("%s-46ki75-examples-iam-role-instance_profile", ctx.Stack()), &iam.RoleArgs{
 		Name:             pulumi.String(fmt.Sprintf("%s-46ki75-examples-iam-role-instance_profile", ctx.Stack())),
 		AssumeRolePolicy: pulumi.String(instanceAssumeRolePolicy.Json),
 	})
@@ -52,22 +54,21 @@ func NewIamComponent(ctx *pulumi.Context, name string, args *IamComponentArgs, o
 		return nil, err
 	}
 
-	managedPolicyArn := "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-	_, err = iam.NewRolePolicyAttachment(ctx, fmt.Sprintf("%s-46ki75-examples-iam-role_policy_attachment-ec2", ctx.Stack()), &iam.RolePolicyAttachmentArgs{
-		Role:      role.Name,
-		PolicyArn: pulumi.String(managedPolicyArn),
+	const MANAGED_POLICY_ARN = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+	component.IamRolePolicyAttachment, err = iam.NewRolePolicyAttachment(ctx, fmt.Sprintf("%s-46ki75-examples-iam-role_policy_attachment-ec2", ctx.Stack()), &iam.RolePolicyAttachmentArgs{
+		Role:      component.IamRole.Name,
+		PolicyArn: pulumi.String(MANAGED_POLICY_ARN),
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	instanceProfile, err := iam.NewInstanceProfile(ctx, fmt.Sprintf("%s-46ki75-examples-iam-instance_profile-ec2", ctx.Stack()), &iam.InstanceProfileArgs{
-		Role: role.Name,
+	component.IamInstanceProfile, err = iam.NewInstanceProfile(ctx, fmt.Sprintf("%s-46ki75-examples-iam-instance_profile-ec2", ctx.Stack()), &iam.InstanceProfileArgs{
+		Role: component.IamRole.Name,
 	})
 	if err != nil {
 		return nil, err
 	}
-	component.IamInstanceProfile = instanceProfile
 
 	return component, err
 }
