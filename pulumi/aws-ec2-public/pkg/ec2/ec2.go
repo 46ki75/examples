@@ -1,4 +1,4 @@
-package pkg
+package ec2
 
 import (
 	"fmt"
@@ -46,7 +46,7 @@ func NewEc2Component(ctx *pulumi.Context, name string, args *Ec2ComponentArgs, o
 		return nil, err
 	}
 
-	userData, err := os.ReadFile("./assets/cloud-init.yaml")
+	userData, err := os.ReadFile("../assets/cloud-init.yaml")
 	if err != nil {
 		return nil, err
 	}

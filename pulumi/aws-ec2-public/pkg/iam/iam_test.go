@@ -1,12 +1,29 @@
-package pkg
+package iam
 
 import (
 	"sync"
 	"testing"
 
+	gonanoid "github.com/matoous/go-nanoid/v2"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/stretchr/testify/assert"
 )
+
+type mocks int
+
+func (mocks) NewResource(args pulumi.MockResourceArgs) (string, resource.PropertyMap, error) {
+	id, err := gonanoid.New()
+	if err != nil {
+		return "", nil, err
+	}
+
+	return args.Name + id, args.Inputs, nil
+}
+
+func (mocks) Call(args pulumi.MockCallArgs) (resource.PropertyMap, error) {
+	return args.Args, nil
+}
 
 func TestIamComponent(t *testing.T) {
 	err := pulumi.RunErr(func(ctx *pulumi.Context) error {

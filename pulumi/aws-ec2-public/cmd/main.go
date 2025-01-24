@@ -1,7 +1,9 @@
 package main
 
 import (
-	"aws-ec2-public/pkg"
+	"aws-ec2-public/pkg/ec2"
+	"aws-ec2-public/pkg/iam"
+	"aws-ec2-public/pkg/vpc"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -9,17 +11,17 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
-		vpcComponent, err := pkg.NewVpcComponent(ctx, "VpcComponent", &pkg.VpcComponentArgs{})
+		vpcComponent, err := vpc.NewVpcComponent(ctx, "VpcComponent", &vpc.VpcComponentArgs{})
 		if err != nil {
 			return err
 		}
 
-		iamComponent, err := pkg.NewIamComponent(ctx, "IamComponent", &pkg.IamComponentArgs{})
+		iamComponent, err := iam.NewIamComponent(ctx, "IamComponent", &iam.IamComponentArgs{})
 		if err != nil {
 			return err
 		}
 
-		_, err = pkg.NewEc2Component(ctx, "Ec2Component", &pkg.Ec2ComponentArgs{
+		_, err = ec2.NewEc2Component(ctx, "Ec2Component", &ec2.Ec2ComponentArgs{
 			SubnetId:           vpcComponent.Subnet.ID(),
 			VpcId:              vpcComponent.Vpc.ID(),
 			IamInstanceProfile: iamComponent.IamInstanceProfile,

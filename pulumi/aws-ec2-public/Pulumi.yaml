@@ -1,6 +1,7 @@
 name: aws-ec2-public
 description: A minimal AWS Go Pulumi program
 runtime: go
+main: ./cmd
 config:
   pulumi:tags:
     value:
