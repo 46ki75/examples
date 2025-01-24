@@ -9,8 +9,11 @@ import (
 
 type VpcComponent struct {
 	pulumi.ResourceState
-	VpcId    pulumi.IDOutput `pulumi:"VpcId"`
-	SubnetId pulumi.IDOutput `pulumi:"SubnetId"`
+	Vpc                   *ec2.Vpc
+	Subnet                *ec2.Subnet
+	InternetGateway       *ec2.InternetGateway
+	RouteTable            *ec2.RouteTable
+	RouteTableAssociation *ec2.RouteTableAssociation
 }
 
 type VpcComponentArgs struct {
@@ -24,9 +27,7 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 		return nil, err
 	}
 
-	var vpc *ec2.Vpc
-
-	vpc, err = ec2.NewVpc(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-vpc-main", ctx.Stack()), &ec2.VpcArgs{
+	component.Vpc, err = ec2.NewVpc(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-vpc-main", ctx.Stack()), &ec2.VpcArgs{
 		CidrBlock:          pulumi.String("10.0.0.0/16"),
 		EnableDnsSupport:   pulumi.Bool(true),
 		EnableDnsHostnames: pulumi.Bool(true),
@@ -37,10 +38,9 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 	if err != nil {
 		return nil, err
 	}
-	component.VpcId = vpc.ID()
 
-	subnet, err := ec2.NewSubnet(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-subnet-main", ctx.Stack()), &ec2.SubnetArgs{
-		VpcId:            vpc.ID(),
+	component.Subnet, err = ec2.NewSubnet(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-subnet-main", ctx.Stack()), &ec2.SubnetArgs{
+		VpcId:            component.Vpc.ID(),
 		CidrBlock:        pulumi.String("10.0.1.0/24"),
 		AvailabilityZone: pulumi.String("ap-northeast-1a"),
 		Tags: pulumi.StringMap{
@@ -50,10 +50,9 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 	if err != nil {
 		return nil, err
 	}
-	component.SubnetId = subnet.ID()
 
-	igw, err := ec2.NewInternetGateway(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-internet_gateway-main", ctx.Stack()), &ec2.InternetGatewayArgs{
-		VpcId: vpc.ID(),
+	component.InternetGateway, err = ec2.NewInternetGateway(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-internet_gateway-main", ctx.Stack()), &ec2.InternetGatewayArgs{
+		VpcId: component.Vpc.ID(),
 		Tags: pulumi.StringMap{
 			"Name": pulumi.String(fmt.Sprintf("%s-46ki75-examples-ec2-internet_gateway-main", ctx.Stack())),
 		},
@@ -62,12 +61,12 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 		return nil, err
 	}
 
-	rt, err := ec2.NewRouteTable(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-route_table-main", ctx.Stack()), &ec2.RouteTableArgs{
-		VpcId: vpc.ID(),
+	component.RouteTable, err = ec2.NewRouteTable(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-route_table-main", ctx.Stack()), &ec2.RouteTableArgs{
+		VpcId: component.Vpc.ID(),
 		Routes: ec2.RouteTableRouteArray{
 			ec2.RouteTableRouteArgs{
 				CidrBlock: pulumi.String("0.0.0.0/0"),
-				GatewayId: igw.ID(),
+				GatewayId: component.InternetGateway.ID(),
 			},
 		},
 	})
@@ -75,9 +74,9 @@ func NewVpcComponent(ctx *pulumi.Context, name string, args *VpcComponentArgs, o
 		return nil, err
 	}
 
-	_, err = ec2.NewRouteTableAssociation(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-route_table_association-main", ctx.Stack()), &ec2.RouteTableAssociationArgs{
-		SubnetId:     subnet.ID(),
-		RouteTableId: rt.ID(),
+	component.RouteTableAssociation, err = ec2.NewRouteTableAssociation(ctx, fmt.Sprintf("%s-46ki75-examples-ec2-route_table_association-main", ctx.Stack()), &ec2.RouteTableAssociationArgs{
+		SubnetId:     component.Subnet.ID(),
+		RouteTableId: component.RouteTable.ID(),
 	})
 	if err != nil {
 		return nil, err

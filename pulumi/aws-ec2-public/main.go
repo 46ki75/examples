@@ -20,8 +20,8 @@ func main() {
 		}
 
 		_, err = pkg.NewEc2Component(ctx, "Ec2Component", &pkg.Ec2ComponentArgs{
-			SubnetId:           vpcComponent.SubnetId,
-			VpcId:              vpcComponent.VpcId,
+			SubnetId:           vpcComponent.Subnet.ID(),
+			VpcId:              vpcComponent.Vpc.ID(),
 			IamInstanceProfile: iamComponent.IamInstanceProfile,
 		})
 		if err != nil {
