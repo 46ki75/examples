@@ -1,6 +1,8 @@
 package s3
 
 import (
+	"fmt"
+
 	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/cloudfront"
 	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/iam"
 	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
@@ -22,6 +24,16 @@ func NewS3BucketPolicyComponent(
 	args *S3BucketPolicyComponentArgs,
 	opts ...pulumi.ResourceOption,
 ) (*S3BucketPolicyComponent, error) {
+	if args == nil {
+		return nil, fmt.Errorf("args cannot be nil")
+	}
+	if args.S3Bucket == nil {
+		return nil, fmt.Errorf("S3Bucket cannot be nil")
+	}
+	if args.CloudFrontDistribution == nil {
+		return nil, fmt.Errorf("CloudFrontDistribution cannot be nil")
+	}
+
 	component := &S3BucketPolicyComponent{}
 
 	err := ctx.RegisterComponentResource("46ki75:component:S3BucketPolicy", name, component, opts...)
@@ -29,7 +41,9 @@ func NewS3BucketPolicyComponent(
 		return nil, err
 	}
 
-	pulumi.All(args.S3Bucket.Arn, args.CloudFrontDistribution.Arn).ApplyT(func(arns []interface{}) error {
+	pulumi.All(
+		args.S3Bucket.Arn, args.CloudFrontDistribution.Arn,
+	).ApplyT(func(arns []interface{}) error {
 		bucketArn := arns[0].(string) + "/*"
 		cloudFrontArn := arns[1].(string)
 

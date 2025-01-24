@@ -18,6 +18,15 @@ func main() {
 			return err
 		}
 
+		cloudfrontFunctionComponent, err := cloudfront.NewCloudfrontFunctionComponent(
+			ctx,
+			"CloudfrontFunctionComponent",
+			&cloudfront.CloudfrontFunctionComponentArgs{},
+		)
+		if err != nil {
+			return err
+		}
+
 		s3Component, err := s3.NewS3Component(ctx, "S3Component", &s3.S3ComponentArgs{})
 		if err != nil {
 			return err
@@ -29,6 +38,7 @@ func main() {
 			&cloudfront.CloudfrontComponentArgs{
 				S3Bucket:                      s3Component.S3Bucket,
 				CloudfrontOriginAccessControl: oacComponent.CloudfrontOriginAccessControl,
+				CloudfrontFunction:            cloudfrontFunctionComponent.CloudfrontFunction,
 			},
 		)
 		if err != nil {
@@ -42,6 +52,7 @@ func main() {
 				S3Bucket:               s3Component.S3Bucket,
 				CloudFrontDistribution: cloudfrontComponent.CloudfrontDistribution,
 			},
+			pulumi.DependsOn([]pulumi.Resource{cloudfrontComponent.CloudfrontDistribution}),
 		)
 		if err != nil {
 			return err

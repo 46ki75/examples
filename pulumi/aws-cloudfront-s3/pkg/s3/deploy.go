@@ -34,15 +34,29 @@ func NewS3ObjectComponent(
 	if err != nil {
 		return nil, err
 	}
-	path := filepath.Join(wd, "../assets/index.html")
 
 	component.S3Object, err = s3.NewBucketObjectv2(
 		ctx,
 		"shared-46ki75-examples-s3-object-index",
 		&s3.BucketObjectv2Args{
 			Bucket:             args.S3Bucket,
-			Source:             pulumi.NewFileAsset(path),
+			Source:             pulumi.NewFileAsset(filepath.Join(wd, "../assets/index.html")),
 			Key:                pulumi.String("index.html"),
+			ContentDisposition: pulumi.String("inline"),
+			ContentType:        pulumi.String("text/html"),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = s3.NewBucketObjectv2(
+		ctx,
+		"shared-46ki75-examples-s3-object-about",
+		&s3.BucketObjectv2Args{
+			Bucket:             args.S3Bucket,
+			Source:             pulumi.NewFileAsset(filepath.Join(wd, "../assets/about/index.html")),
+			Key:                pulumi.String("about/index.html"),
 			ContentDisposition: pulumi.String("inline"),
 			ContentType:        pulumi.String("text/html"),
 		},
