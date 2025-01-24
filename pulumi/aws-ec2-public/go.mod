@@ -5,8 +5,10 @@ go 1.21
 toolchain go1.23.5
 
 require (
+	github.com/matoous/go-nanoid/v2 v2.1.0
 	github.com/pulumi/pulumi-aws/sdk/v6 v6.37.1
 	github.com/pulumi/pulumi/sdk/v3 v3.117.0
+	github.com/stretchr/testify v1.9.0
 )
 
 require (
@@ -26,6 +28,7 @@ require (
 	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.4 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/djherbis/times v1.5.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
@@ -58,6 +61,7 @@ require (
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/term v1.1.0 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
 	github.com/pulumi/esc v0.6.2 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
