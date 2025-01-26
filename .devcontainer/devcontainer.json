@@ -1,6 +1,9 @@
 {
   "name": "Next.js Dev Container",
-  "build": { "dockerfile": "Dockerfile" },
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "/bin/bash .devcontainer/setup.sh",
   "customizations": {
     "vscode": {
       "settings": {},
@@ -13,5 +16,6 @@
       ]
     }
   },
+  "workspaceFolder": "/workspaces",
   "forwardPorts": []
 }
