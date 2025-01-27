@@ -11,7 +11,8 @@
         "Gruntfuggly.todo-tree",
         "christian-kohler.path-intellisense",
         "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker"
       ]
     }
   },
