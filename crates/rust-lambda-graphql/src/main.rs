@@ -2,16 +2,24 @@ use async_graphql::{http::GraphiQLSource, EmptyMutation, EmptySubscription, Sche
 use lambda_http::{http::Method, run, service_fn, tracing, Body, Error, Request, Response};
 use serde_json::json;
 
-mod query;
-mod resolvers;
+mod error;
+mod model;
+mod resolver;
+mod service;
 
 async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
-    let schema = Schema::build(query::QueryRoot, EmptyMutation, EmptySubscription)
-        .data(event.headers().clone())
-        .finish();
+    let schema = Schema::build(
+        crate::resolver::query::QueryRoot,
+        EmptyMutation,
+        EmptySubscription,
+    )
+    .data(event.headers().clone())
+    .finish();
 
     if event.method() == Method::GET {
-        let playground_html = GraphiQLSource::build().finish();
+        let playground_html = GraphiQLSource::build()
+            .endpoint("lambda-url/rust-lambda-graphql")
+            .finish();
         let response = Response::builder()
             .status(200)
             .header("content-type", "text/html")

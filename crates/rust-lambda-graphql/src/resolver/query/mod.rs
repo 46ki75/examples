@@ -1,8 +1,8 @@
+pub mod greet;
+
 use async_graphql::*;
 
 pub struct QueryRoot;
-
-use crate::resolvers;
 
 #[async_graphql::Object]
 impl QueryRoot {
@@ -10,7 +10,9 @@ impl QueryRoot {
     pub async fn greet(
         &self,
         ctx: &async_graphql::Context<'_>,
-    ) -> Result<resolvers::greet::Greet, async_graphql::Error> {
-        resolvers::greet::Greet::new(ctx)
+    ) -> Result<crate::model::greet::Greet, async_graphql::Error> {
+        crate::resolver::query::greet::GreetResolver
+            .greet(ctx)
+            .await
     }
 }
