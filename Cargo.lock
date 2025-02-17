@@ -1805,6 +1805,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust-boilerplate"
+version = "0.1.0"
+
+[[package]]
 name = "rust-dynamodb"
 version = "0.0.0"
 dependencies = [

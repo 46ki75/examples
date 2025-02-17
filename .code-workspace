@@ -15,6 +15,10 @@
         {
             "path": "pulumi",
             "name": "pulumi"
+        },
+        {
+            "name": "rust",
+            "path": "crates"
         }
     ],
     "settings": {
