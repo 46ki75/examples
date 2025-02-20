@@ -5,6 +5,10 @@
             "name": "root"
         },
         {
+            "path": "packages",
+            "name": "Node.js"
+        },
+        {
             "path": "terraform",
             "name": "terraform"
         },
