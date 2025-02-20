@@ -16,22 +16,22 @@ impl QueryRoot {
 pub struct Greet {
     pub message: String,
     pub language: String,
-    pub content_type: String,
+    pub accept_encoding: Option<String>,
 }
 
 impl Greet {
     pub fn new(ctx: &async_graphql::Context) -> Result<Self, async_graphql::Error> {
+        let accept_encoding = ctx
+            .data::<lambda_http::http::HeaderMap<lambda_http::http::HeaderValue>>()
+            .ok()
+            .and_then(|headers| headers.get("accept-encoding"))
+            .and_then(|header| header.to_str().ok())
+            .map(|header| header.to_string());
+
         Ok(Greet {
             message: "Hello, GraphQL!".to_string(),
             language: "Rust".to_string(),
-            content_type: ctx
-                .data::<lambda_http::http::HeaderMap<lambda_http::http::HeaderValue>>()
-                .unwrap()
-                .get("content-type")
-                .unwrap()
-                .to_str()
-                .unwrap_or_default()
-                .to_string(),
+            accept_encoding,
         })
     }
 }
@@ -48,7 +48,7 @@ impl Greet {
         self.language.to_string()
     }
 
-    pub async fn content_type(&self) -> String {
-        self.content_type.to_string()
+    pub async fn accept_encoding(&self) -> Option<String> {
+        self.accept_encoding.clone()
     }
 }
