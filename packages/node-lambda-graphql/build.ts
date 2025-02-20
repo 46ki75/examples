@@ -8,7 +8,7 @@ if (existsSync("./dist")) {
 
 await build({
   entryPoints: ["./src/index.ts"],
-  outfile: "./dist/lambda/index.js",
+  outfile: "./dist/lambda/index.mjs",
   format: "esm",
   platform: "node",
   target: "esnext",
