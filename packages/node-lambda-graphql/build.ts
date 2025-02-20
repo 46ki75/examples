@@ -10,9 +10,9 @@ await build({
   entryPoints: ["./src/index.ts"],
   outfile: "./dist/lambda/index.js",
   format: "esm",
-  bundle: true,
   platform: "node",
   target: "esnext",
+  bundle: true,
   minify: true,
   keepNames: true,
 });
