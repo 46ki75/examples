@@ -502,11 +502,22 @@ checksum = "7319a086b79c3ff026a33a61e80f04fd3885fbb73237981ea080d21944e1cb1c"
 dependencies = [
  "base64 0.22.1",
  "bytes",
- "flate2",
  "http 1.1.0",
  "http-body 1.0.1",
  "http-serde",
  "query_map",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aws_lambda_events"
+version = "0.16.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "52ddb91585253ccc85be3f2e0d5635529efdeadaf8a1da3230b433d3bbe43648"
+dependencies = [
+ "base64 0.22.1",
+ "flate2",
  "serde",
  "serde_json",
  "serde_with",
@@ -1360,7 +1371,7 @@ version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "67fe279be7f89f5f72c97c3a96f45c43db8edab1007320ecc6a5741273b4d6db"
 dependencies = [
- "aws_lambda_events",
+ "aws_lambda_events 0.15.1",
  "base64 0.22.1",
  "bytes",
  "encoding_rs",
@@ -1838,7 +1849,7 @@ dependencies = [
 name = "rust-lambda-sqs"
 version = "0.1.0"
 dependencies = [
- "aws_lambda_events",
+ "aws_lambda_events 0.16.0",
  "lambda_runtime",
  "tokio",
 ]
@@ -1847,7 +1858,7 @@ dependencies = [
 name = "rust-lambda-subscription-filter"
 version = "0.1.0"
 dependencies = [
- "aws_lambda_events",
+ "aws_lambda_events 0.16.0",
  "lambda_runtime",
  "tokio",
 ]
