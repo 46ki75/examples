@@ -32,12 +32,20 @@ export const handler = async (
     try {
       if (event.body == null) {
         return {
-          body: JSON.stringify({ error: "No body provided" }),
           statusCode: 400,
+          body: JSON.stringify({ error: "No body provided" }),
         };
       }
 
       const { query, variables } = JSON.parse(event.body);
+
+      if (query == null) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: "No query provided" }),
+        };
+      }
+
       const headers = event.headers;
 
       const result = await graphql({
