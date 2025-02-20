@@ -2,14 +2,14 @@
 
 This source code example demonstrates how to run a GraphQL API on AWS Lambda.
 
-## Running Locally
+## Run Locally
 
 ### Requirements
 
 - Cargo
 - [Cargo Lambda](https://www.cargo-lambda.info/guide/installation.html)
 
-### Running AWS Lambda
+### Run AWS Lambda
 
 To run this codebase locally, you can use the following command:
 
