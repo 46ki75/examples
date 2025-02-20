@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: 'npm'
-    directory: '/packages'
+    directory: '/'
     schedule:
       interval: 'daily'
     target-branch: 'main'
@@ -13,7 +13,7 @@ updates:
       - 'nodejs'
 
   - package-ecosystem: 'cargo'
-    directory: '/crates'
+    directory: '/'
     schedule:
       interval: 'daily'
     target-branch: 'main'
