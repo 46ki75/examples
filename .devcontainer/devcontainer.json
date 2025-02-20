@@ -1,5 +1,5 @@
 {
-  "name": "Next.js Dev Container",
+  "name": "Example Dev Container",
   "build": {
     "dockerfile": "Dockerfile"
   },
