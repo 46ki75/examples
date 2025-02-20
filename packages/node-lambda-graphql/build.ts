@@ -1,9 +1,9 @@
 import { build } from 'esbuild'
-import { copyFileSync, createWriteStream, mkdirSync, rmdirSync } from 'node:fs'
+import { copyFileSync, createWriteStream, mkdirSync, rmSync } from 'node:fs'
 import archiver from 'archiver'
 
 try {
-  rmdirSync('./dist', { recursive: true })
+  rmSync('./dist', { recursive: true })
 } catch {
   // ignore
 }

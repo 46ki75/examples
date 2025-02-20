@@ -30,6 +30,9 @@
             "AWS_PROFILE": "poc"
         },
         "java.configuration.updateBuildConfiguration": "automatic",
-        "java.compile.nullAnalysis.mode": "automatic"
+        "java.compile.nullAnalysis.mode": "automatic",
+        "[typescript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
     }
 }
