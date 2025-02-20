@@ -33,6 +33,7 @@ export const handler = async (
       if (event.body == null) {
         return {
           body: JSON.stringify({ error: "No body provided" }),
+          statusCode: 400,
         };
       }
 
@@ -44,9 +45,14 @@ export const handler = async (
         variableValues: variables,
       });
 
-      return result;
+      return {
+        statusCode: 200,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(result),
+      };
     } catch (e) {
       return {
+        statusCode: 500,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ error: JSON.stringify(e) }),
       };
