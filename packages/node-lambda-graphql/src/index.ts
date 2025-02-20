@@ -38,11 +38,13 @@ export const handler = async (
       }
 
       const { query, variables } = JSON.parse(event.body);
+      const headers = event.headers;
 
       const result = await graphql({
         schema: gatewaySchema,
         source: query,
         variableValues: variables,
+        contextValue: { headers },
       });
 
       return {
