@@ -1,0 +1,28 @@
+{
+  "name": "node-lambda-graphql-stitch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsx build.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/aws-lambda": "^8.10.146",
+    "@types/node": "^22.10.1",
+    "archiver": "^7.0.1",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^10.0.10",
+    "@graphql-tools/stitch": "^9.4.3",
+    "@graphql-tools/utils": "^10.6.1",
+    "@graphql-tools/wrap": "^10.0.20",
+    "graphql": "^16.9.0"
+  }
+}
