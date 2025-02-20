@@ -12,9 +12,21 @@
         "christian-kohler.path-intellisense",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "rust-lang.rust-analyzer"
       ]
     }
   },
-  "forwardPorts": []
+  "forwardPorts": [],
+  "features": {
+    "ghcr.io/devcontainers-extra/features/poetry": {},
+    "ghcr.io/devcontainers/features/aws-cli": {},
+    "ghcr.io/devcontainers/features/terraform": {},
+    "ghcr.io/enricosecondulfo/devcontainer-features/volta": {},
+    "ghcr.io/devcontainers/features/rust": {},
+    "ghcr.io/devcontainers-extra/features/starship": {},
+    "ghcr.io/devcontainers/features/go": {},
+    "ghcr.io/devcontainers/features/java": {},
+    "ghcr.io/devcontainers-extra/features/gradle-sdkman": {}
+  }
 }
