@@ -16,7 +16,7 @@ impl QueryRoot {
 pub struct Greet {
     pub message: String,
     pub language: String,
-    pub accept_encoding: Option<String>,
+    pub accept_encoding: Option<Vec<String>>,
 }
 
 impl Greet {
@@ -26,7 +26,12 @@ impl Greet {
             .ok()
             .and_then(|headers| headers.get("accept-encoding"))
             .and_then(|header| header.to_str().ok())
-            .map(|header| header.to_string());
+            .map(|header| {
+                header
+                    .split(",")
+                    .map(|s| s.trim().to_string())
+                    .collect::<Vec<String>>()
+            });
 
         Ok(Greet {
             message: "Hello, GraphQL!".to_string(),
@@ -48,7 +53,7 @@ impl Greet {
         self.language.to_string()
     }
 
-    pub async fn accept_encoding(&self) -> Option<String> {
+    pub async fn accept_encoding(&self) -> Option<Vec<String>> {
         self.accept_encoding.clone()
     }
 }
