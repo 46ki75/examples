@@ -15,8 +15,7 @@ You can deploy jar file directly.
 
 ```bash
 aws lambda update-function-code --function-name ${FUNCTION_NAME} \
---zip-file fileb://./lambda-selenium/build/libs/${JAR_NAME}.jar \
---output text
+--zip-file fileb://./lambda/build/libs/lambda.jar 
 ```
 
 ## Invoke Locally
