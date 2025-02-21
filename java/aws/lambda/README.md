@@ -13,6 +13,8 @@
 
 You can deploy jar file (`./build/libs/lambda.jar`) directly.
 
+- Handler: `example.Handler::handleRequest`
+
 ## Invoke Locally
 
 ```bash
