@@ -1,4 +1,4 @@
-# Selenium on Lambda
+# Java on AWS Lambda
 
 - **handler(lambda)**: `example.Handler::handleRequest`
 - **Runtime**: `Java 21`
@@ -11,13 +11,9 @@
 
 ## Deploy (Update)
 
-You can deploy jar file directly.
+You can deploy jar file (`./build/libs/lambda.jar`) directly.
 
-```bash
-aws lambda update-function-code --function-name ${FUNCTION_NAME} \
---zip-file fileb://./lambda-selenium/build/libs/${JAR_NAME}.jar \
---output text
-```
+- Handler: `example.Handler::handleRequest`
 
 ## Invoke Locally
 

@@ -3,7 +3,6 @@ use lambda_http::{http::Method, run, service_fn, tracing, Body, Error, Request, 
 use serde_json::json;
 
 mod query;
-mod resolvers;
 
 async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
     let schema = Schema::build(query::QueryRoot, EmptyMutation, EmptySubscription)
@@ -11,7 +10,10 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
         .finish();
 
     if event.method() == Method::GET {
-        let playground_html = GraphiQLSource::build().finish();
+        // GraphiQL Playground
+        let playground_html = GraphiQLSource::build()
+            .endpoint("/lambda-url/rust-lambda-graphql")
+            .finish();
         let response = Response::builder()
             .status(200)
             .header("content-type", "text/html")
@@ -19,6 +21,7 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
             .map_err(Box::new)?;
         Ok(response)
     } else if event.method() == Method::POST {
+        // GraphQL Execution
         let request_body = event.body();
 
         let gql_request = match serde_json::from_slice::<async_graphql::Request>(request_body) {
@@ -59,6 +62,7 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
             .body(response_body.into())
             .map_err(Box::new)?)
     } else {
+        // Error Response - Method Not Allowed
         let response = Response::builder()
             .status(405)
             .header("content-type", "application/json")

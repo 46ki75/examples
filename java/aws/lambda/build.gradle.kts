@@ -36,7 +36,7 @@ application {
 tasks {
     shadowJar {
         // For AWS Lambda
-        archiveFileName.set("lambda-selenium.jar")
+        archiveFileName.set("lambda.jar")
         manifest {
             // Main-Class: example.Local
             attributes["Main-Class"] = "example.Local" 

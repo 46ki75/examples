@@ -5,6 +5,7 @@ target
 
 # Node.js
 node_modules
+.pnpm-store
 *.js
 !jest.config.js
 *.d.ts

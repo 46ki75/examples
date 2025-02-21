@@ -5,6 +5,10 @@
             "name": "root"
         },
         {
+            "path": "packages",
+            "name": "Node.js"
+        },
+        {
             "path": "terraform",
             "name": "terraform"
         },
@@ -22,10 +26,10 @@
         }
     ],
     "settings": {
-        "terminal.integrated.env.linux": {
-            "AWS_PROFILE": "poc"
-        },
         "java.configuration.updateBuildConfiguration": "automatic",
-        "java.compile.nullAnalysis.mode": "automatic"
+        "java.compile.nullAnalysis.mode": "automatic",
+        "[typescript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
     }
 }

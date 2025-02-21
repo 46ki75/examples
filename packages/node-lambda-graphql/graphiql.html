@@ -1,30 +1,61 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Simple GraphiQL Example</title>
-    <link href="https://unpkg.com/graphiql/graphiql.min.css" rel="stylesheet" />
-  </head>
-  <body style="margin: 0">
+    <title>GraphiQL</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      #graphiql {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+
     <script
       crossorigin
-      src="https://unpkg.com/react/umd/react.production.min.js"
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
     ></script>
     <script
       crossorigin
-      src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
     ></script>
     <script
-      crossorigin
       src="https://unpkg.com/graphiql/graphiql.min.js"
+      type="application/javascript"
     ></script>
-    <div id="graphiql" style="height: 100vh"></div>
+    <link rel="stylesheet" href="https://unpkg.com/graphiql/graphiql.min.css" />
+    <script
+      src="https://unpkg.com/@graphiql/plugin-explorer/dist/index.umd.js"
+      crossorigin
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@graphiql/plugin-explorer/dist/style.css"
+    />
+  </head>
+
+  <body>
+    <div id="graphiql"></div>
     <script>
-      const fetcher = GraphiQL.createFetcher({ url: '/' })
-      ReactDOM.render(
-        React.createElement(GraphiQL, { fetcher: fetcher }),
-        document.getElementById('graphiql')
-      )
+      const root = ReactDOM.createRoot(document.getElementById("graphiql"));
+      const fetcher = GraphiQL.createFetcher({
+        url: "/",
+      });
+      const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
+      root.render(
+        React.createElement(GraphiQL, {
+          fetcher,
+          defaultEditorToolsVisibility: true,
+          plugins: [explorerPlugin],
+        })
+      );
     </script>
   </body>
 </html>
