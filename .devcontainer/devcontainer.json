@@ -7,6 +7,8 @@
     "vscode": {
       "settings": {},
       "extensions": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
         "usernamehw.errorlens",
         "Gruntfuggly.todo-tree",
         "christian-kohler.path-intellisense",
@@ -14,7 +16,8 @@
         "esbenp.prettier-vscode",
         "ms-azuretools.vscode-docker",
         "rust-lang.rust-analyzer",
-        "GraphQL.vscode-graphql"
+        "GraphQL.vscode-graphql",
+        "fwcd.kotlin"
       ]
     }
   },
