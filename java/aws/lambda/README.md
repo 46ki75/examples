@@ -1,4 +1,4 @@
-# Selenium on Lambda
+# Java on AWS Lambda
 
 - **handler(lambda)**: `example.Handler::handleRequest`
 - **Runtime**: `Java 21`
