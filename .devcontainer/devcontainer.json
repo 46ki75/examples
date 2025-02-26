@@ -34,5 +34,11 @@
     "ghcr.io/devcontainers/features/java": {},
     "ghcr.io/devcontainers-extra/features/gradle-sdkman": {},
     "ghcr.io/devcontainers/features/docker-in-docker": {}
-  }
+  },
+  "containerEnv": {
+    "AWS_PROFILE": "poc"
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind"
+  ]
 }
