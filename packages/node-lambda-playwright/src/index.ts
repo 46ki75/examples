@@ -1,1 +1,3 @@
-console.log(0);
+export const handler = async (event: any) => {
+  return { message: "Hello from node-lambda-playwright" };
+};
