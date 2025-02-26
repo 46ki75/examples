@@ -4,15 +4,18 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN npm install
+RUN npm install -g pnpm && pnpm install
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
+
 
 #  https://gallery.ecr.aws/lambda/nodejs
 FROM public.ecr.aws/lambda/nodejs:22
 
 COPY --from=builder /app/dist .
+
+COPY package.json .
 
 CMD [ "index.handler" ]
