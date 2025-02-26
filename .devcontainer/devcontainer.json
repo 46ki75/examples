@@ -33,7 +33,7 @@
     "ghcr.io/devcontainers/features/go": {},
     "ghcr.io/devcontainers/features/java": {},
     "ghcr.io/devcontainers-extra/features/gradle-sdkman": {},
-    "ghcr.io/devcontainers/features/docker-in-docker": {}
+    "ghcr.io/devcontainers/features/docker-outside-of-docker": {}
   },
   "containerEnv": {
     "AWS_PROFILE": "poc"
