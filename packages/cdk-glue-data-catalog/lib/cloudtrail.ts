@@ -139,7 +139,7 @@ export class CloudTrailStack extends cdk.Stack {
             type: "string",
           },
           {
-            name: "timestamp",
+            name: "partition_date",
             type: "string",
           },
         ],
@@ -147,16 +147,16 @@ export class CloudTrailStack extends cdk.Stack {
         parameters: {
           "projection.enabled": "true",
 
-          "projection.timestamp.format": "yyyy/MM/dd",
-          "projection.timestamp.interval": "1",
-          "projection.timestamp.interval.unit": "DAYS",
-          "projection.timestamp.range": "2024/11/10,NOW",
-          "projection.timestamp.type": "date",
+          "projection.partition_date.format": "yyyy/MM/dd",
+          "projection.partition_date.interval": "1",
+          "projection.partition_date.interval.unit": "DAYS",
+          "projection.partition_date.range": "2024/11/10,NOW",
+          "projection.partition_date.type": "date",
 
           "projection.region.type": "enum",
           "projection.region.values": "ap-northeast-1,us-east-1",
 
-          "storage.location.template": `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/\${region}/\${timestamp}`,
+          "storage.location.template": `s3://${bucketName}/AWSLogs/${this.account}/CloudTrail/\${region}/\${partition_date}`,
         },
       },
     });
@@ -170,8 +170,8 @@ export class CloudTrailStack extends cdk.Stack {
       SELECT *
       FROM "${props.database.ref}"."${table.ref}"
       WHERE region = 'ap-northeast-1'
-        AND timestamp BETWEEN '2024/11/30' AND '2024/12/01'
-      ORDER BY timestamp ASC
+        AND partition_date BETWEEN '2024/11/30' AND '2024/12/01'
+      ORDER BY partition_date ASC
       LIMIT 20;
       `.trim(),
     });
