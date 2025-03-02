@@ -1,9 +1,10 @@
 import { build } from "esbuild";
 
 await build({
-  entryPoints: ["src/index.ts"],
-  outfile: "dist/index.mjs",
+  entryPoints: ["src/handlers/index.ts"],
+  outdir: "dist",
   format: "esm",
+  outExtension: { ".js": ".mjs" },
   bundle: true,
   keepNames: true,
 });
