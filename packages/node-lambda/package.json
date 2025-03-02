@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "exit 0",
-    "build": "tsx scripts/build.ts"
+    "build": "tsx scripts/build.ts",
+    "start": "tsx scripts/invoke.ts"
   },
   "keywords": [],
   "author": "",
