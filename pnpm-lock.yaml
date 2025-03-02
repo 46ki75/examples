@@ -51,6 +51,15 @@ importers:
 
   packages/cdk-glue-data-catalog: {}
 
+  packages/node-lambda:
+    devDependencies:
+      esbuild:
+        specifier: ^0.24.0
+        version: 0.24.2
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
+
   packages/node-lambda-graphql:
     dependencies:
       '@graphql-tools/schema':
