@@ -58,6 +58,7 @@ pub async fn function_handler(
         let response_body = match serde_json::to_string(&gql_response) {
             Ok(body) => body,
             Err(err) => {
+                lambda_http::tracing::error!("Failed to serialize response: {}", err);
                 return Ok(lambda_http::Response::builder()
                     .status(500)
                     .header("content-type", "application/json")
