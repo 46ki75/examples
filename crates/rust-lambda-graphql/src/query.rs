@@ -4,8 +4,8 @@ pub struct QueryRoot;
 
 #[async_graphql::Object]
 impl QueryRoot {
-    pub async fn factorial(&self, number: u64) -> u64 {
-        (1..=number).product()
+    pub async fn factorial(&self, number: u64) -> Result<u64, async_graphql::Error> {
+        Ok((1..=number).product())
     }
 
     /// Returns a greeting message along with the programming language.
