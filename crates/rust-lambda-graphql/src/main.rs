@@ -1,26 +1,25 @@
-use async_graphql::{http::GraphiQLSource, EmptyMutation, EmptySubscription, Schema};
+use async_graphql::{EmptyMutation, EmptySubscription, Schema};
 use lambda_http::{http::Method, run, service_fn, tracing, Body, Error, Request, Response};
 use serde_json::json;
 
 mod query;
 
-async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
-    let schema = Schema::build(query::QueryRoot, EmptyMutation, EmptySubscription)
-        .data(event.headers().clone())
-        .finish();
+static SCHEMA: tokio::sync::OnceCell<Schema<query::QueryRoot, EmptyMutation, EmptySubscription>> =
+    tokio::sync::OnceCell::const_new();
+async fn init_schema() -> &'static Schema<query::QueryRoot, EmptyMutation, EmptySubscription> {
+    SCHEMA
+        .get_or_init(|| async {
+            let schema: Schema<query::QueryRoot, EmptyMutation, EmptySubscription> =
+                Schema::build(query::QueryRoot, EmptyMutation, EmptySubscription).finish();
+            schema
+        })
+        .await
+}
 
-    if event.method() == Method::GET {
-        // GraphiQL Playground
-        let playground_html = GraphiQLSource::build()
-            .endpoint("/lambda-url/rust-lambda-graphql")
-            .finish();
-        let response = Response::builder()
-            .status(200)
-            .header("content-type", "text/html")
-            .body(playground_html.into())
-            .map_err(Box::new)?;
-        Ok(response)
-    } else if event.method() == Method::POST {
+async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
+    let schema = init_schema().await;
+
+    if event.method() == Method::POST {
         // GraphQL Execution
         let request_body = event.body();
 
