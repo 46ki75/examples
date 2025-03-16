@@ -4,5 +4,12 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.146",
+    "esbuild": "^0.24.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.767.0"
   }
 }
