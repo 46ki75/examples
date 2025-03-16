@@ -1,10 +1,9 @@
-import {
+import type {
   CloudFormationCustomResourceEvent,
   CloudFormationCustomResourceEventCommon,
-  CloudFormationCustomResourceFailedResponse,
   CloudFormationCustomResourceResponse,
-  CloudFormationCustomResourceHandler,
 } from "aws-lambda";
+
 import {
   DeleteItemCommand,
   DynamoDBClient,
@@ -64,7 +63,7 @@ export const handler = async (
 
     // @see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/crpg-ref-responses.html
     return {
-      Data: { TableName: tableName },
+      Data: { TableName: tableName, Items: JSON.stringify(ITEMS) },
       Status: "SUCCESS",
       Reason: "All good",
       PhysicalResourceId: UUID,

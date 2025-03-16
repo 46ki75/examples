@@ -79,5 +79,9 @@ export class CustomStackProviderStack extends cdk.NestedStack {
     new cdk.CfnOutput(this, "TableName", {
       value: customResource.getAttString("TableName"),
     });
+
+    new cdk.CfnOutput(this, "Items", {
+      value: customResource.getAttString("Items"),
+    });
   }
 }
