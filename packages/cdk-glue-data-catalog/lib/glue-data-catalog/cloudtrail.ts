@@ -3,12 +3,12 @@ import { Construct } from "constructs";
 import * as glue from "aws-cdk-lib/aws-glue";
 import * as athena from "aws-cdk-lib/aws-athena";
 
-interface CloudTrailStackProps extends cdk.StackProps {
+interface CloudTrailStackProps extends cdk.NestedStackProps {
   database: glue.CfnDatabase;
   workgroup: athena.CfnWorkGroup;
 }
 
-export class CloudTrailStack extends cdk.Stack {
+export class CloudTrailStack extends cdk.NestedStack {
   constructor(scope: Construct, id: string, props: CloudTrailStackProps) {
     super(scope, id, props);
 
