@@ -13,5 +13,35 @@ export class ApiGatewayStack extends cdk.NestedStack {
         name: "shared-46ki75-examples-apigw-rest-api",
       }
     );
+
+    const apiResource = new apigw.CfnResource(
+      this,
+      "shared-46ki75-examples-apigw-resource-api",
+      {
+        parentId: api.attrRootResourceId,
+        pathPart: "api",
+        restApiId: api.ref,
+      }
+    );
+
+    const v1Resource = new apigw.CfnResource(
+      this,
+      "shared-46ki75-examples-apigw-resource-v1",
+      {
+        parentId: apiResource.attrResourceId,
+        pathPart: "v1",
+        restApiId: api.ref,
+      }
+    );
+
+    const exampleResource = new apigw.CfnResource(
+      this,
+      "shared-46ki75-examples-apigw-resource-example",
+      {
+        parentId: v1Resource.attrResourceId,
+        pathPart: "example",
+        restApiId: api.ref,
+      }
+    );
   }
 }
