@@ -4,10 +4,10 @@ import * as cdk from "aws-cdk-lib";
 
 import { GlueDataCatalogStack } from "../lib/glue-data-catalog";
 import { CustomResourceStack } from "../lib/custom-resource";
-import { ApiGatewayRestStack } from "../lib/api-gateway-rest";
+import { ApiGatewayHttpStack } from "../lib/api-gateway-http";
 
 const app = new cdk.App();
 
-new ApiGatewayRestStack(app, "ApiGatewayRest");
+new ApiGatewayHttpStack(app, "ApiGatewayHttp");
 new GlueDataCatalogStack(app, "GlueDataCatalog");
 new CustomResourceStack(app, "CustomResource");
