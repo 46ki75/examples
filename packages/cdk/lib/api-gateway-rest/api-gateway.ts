@@ -43,5 +43,27 @@ export class ApiGatewayStack extends cdk.NestedStack {
         restApiId: api.ref,
       }
     );
+
+    new apigw.CfnMethod(
+      this,
+      "shared-46ki75-examples-apigw-method-example-get",
+      {
+        httpMethod: "GET",
+        resourceId: exampleResource.attrResourceId,
+        restApiId: api.ref,
+        authorizationType: "NONE",
+      }
+    );
+
+    new apigw.CfnMethod(
+      this,
+      "shared-46ki75-examples-apigw-method-example-post",
+      {
+        httpMethod: "POST",
+        resourceId: exampleResource.attrResourceId,
+        restApiId: api.ref,
+        authorizationType: "NONE",
+      }
+    );
   }
 }
