@@ -1,10 +1,22 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as apigw from "aws-cdk-lib/aws-apigatewayv2";
+import * as apigwIntegrations from "aws-cdk-lib/aws-apigatewayv2-integrations";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { join } from "node:path";
 
 export class ApiGatewayStack extends cdk.NestedStack {
   constructor(scope: Construct, id: string, props?: cdk.NestedStackProps) {
     super(scope, id, props);
+
+    let lambdaFunction = new NodejsFunction(
+      this,
+      "shared-46ki75-examples-lambda-function-nodejs",
+      {
+        entry: join(__dirname, "lambda-function.ts"),
+        handler: "handler",
+      }
+    );
 
     const api = new apigw.HttpApi(
       this,
@@ -27,5 +39,14 @@ export class ApiGatewayStack extends cdk.NestedStack {
         jwtIssuer: "https://token.actions.githubusercontent.com",
       }
     );
+
+    new apigw.HttpRoute(this, "shared-46ki75-examples-apigw-http-route", {
+      httpApi: api,
+      routeKey: apigw.HttpRouteKey.DEFAULT,
+      integration: new apigwIntegrations.HttpLambdaIntegration(
+        "shared-46ki75-examples-apigw-http-lambda-integration",
+        lambdaFunction
+      ),
+    });
   }
 }
