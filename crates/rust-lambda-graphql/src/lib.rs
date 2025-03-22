@@ -64,7 +64,10 @@ pub async fn execute_axum(
 
 async fn graphql_handler(
     body_bytes: axum::body::Bytes,
-) -> Result<axum::response::Response<axum::body::Body>, (axum::http::StatusCode, String)> {
+) -> Result<
+    axum::response::Response<axum::body::Body>,
+    (axum::http::StatusCode, axum::Json<serde_json::Value>),
+> {
     let schema = init_schema().await;
 
     let gql_request = match serde_json::from_slice::<async_graphql::Request>(&body_bytes) {
@@ -72,7 +75,9 @@ async fn graphql_handler(
         Err(err) => {
             return Err((
                 axum::http::StatusCode::BAD_REQUEST,
-                format!("Invalid request body: {}", err),
+                axum::Json::from(
+                    serde_json::json!({"message": format!("Invalid request body: {}", err)}),
+                ),
             ));
         }
     };
@@ -91,7 +96,9 @@ async fn graphql_handler(
                 Err(err) => {
                     return Err((
                         axum::http::StatusCode::INTERNAL_SERVER_ERROR,
-                        format!("Failed to serialize response: {}", err),
+                        axum::Json::from(
+                            serde_json::json!({"message": format!("Failed to serialize response: {}", err)}),
+                        ),
                     ))
                 }
             }
@@ -100,7 +107,9 @@ async fn graphql_handler(
             lambda_http::tracing::error!("Failed to serialize response: {}", err);
             return Err((
                 axum::http::StatusCode::INTERNAL_SERVER_ERROR,
-                format!("Failed to serialize response: {}", err),
+                axum::Json::from(
+                    serde_json::json!({"message": format!("Failed to serialize response: {}", err)}),
+                ),
             ));
         }
     };
@@ -109,9 +118,7 @@ async fn graphql_handler(
 pub async fn function_handler(
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    let app = axum::Router::new()
-        .route("/", axum::routing::get("Hello, World!"))
-        .route("/", axum::routing::post(graphql_handler));
+    let app = axum::Router::new().route("/", axum::routing::post(graphql_handler));
 
     let response = execute_axum(app, event).await?;
 
