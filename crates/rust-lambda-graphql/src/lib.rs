@@ -50,16 +50,21 @@ pub async fn execute_axum(
     let axum_response = app.oneshot(request).await?;
 
     let status = axum_response.status();
+    let headers = axum_response.headers().clone();
     let body = axum_response.into_body();
     let body_bytes = axum::body::to_bytes(body, 1024 * 1024).await?;
 
-    let lambda_response = lambda_http::Response::builder()
-        .status(status)
-        .header("content-type", "application/json")
-        .body(lambda_http::Body::Binary(body_bytes.to_vec()))
-        .map_err(Box::new)?;
+    let mut lambda_response = lambda_http::Response::builder().status(status);
 
-    Ok(lambda_response)
+    for (key, value) in headers {
+        if let Some(key) = key {
+            lambda_response = lambda_response.header(key.as_str(), value.to_str().unwrap());
+        }
+    }
+
+    Ok(lambda_response
+        .body(lambda_http::Body::Binary(body_bytes.to_vec()))
+        .map_err(Box::new)?)
 }
 
 async fn graphql_handler(
