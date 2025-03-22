@@ -1,3 +1,5 @@
+use lambda_http::tower::ServiceExt;
+
 pub(crate) mod query;
 
 static SCHEMA: tokio::sync::OnceCell<
@@ -29,64 +31,96 @@ async fn init_schema() -> &'static async_graphql::Schema<
         .await
 }
 
+pub async fn execute_axum(
+    app: axum::Router,
+    event: lambda_http::Request,
+) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
+    let mut axum_request = axum::extract::Request::builder()
+        .method(event.method())
+        .uri(event.uri());
+
+    for (key, value) in event.headers() {
+        axum_request = axum_request.header(key.as_str(), value.as_bytes());
+    }
+
+    let request = axum_request
+        .body(axum::body::Body::from(event.body().to_vec()))
+        .unwrap();
+
+    let axum_response = app.oneshot(request).await?;
+
+    let status = axum_response.status();
+    let body = axum_response.into_body();
+    let body_bytes = axum::body::to_bytes(body, 1024 * 1024).await?;
+
+    let lambda_response = lambda_http::Response::builder()
+        .status(status)
+        .header("content-type", "application/json")
+        .body(lambda_http::Body::Binary(body_bytes.to_vec()))
+        .map_err(Box::new)?;
+
+    Ok(lambda_response)
+}
+
+async fn graphql_handler(
+    body_bytes: axum::body::Bytes,
+) -> Result<
+    axum::response::Response<axum::body::Body>,
+    (axum::http::StatusCode, axum::Json<serde_json::Value>),
+> {
+    let schema = init_schema().await;
+
+    let gql_request = match serde_json::from_slice::<async_graphql::Request>(&body_bytes) {
+        Ok(request) => request,
+        Err(err) => {
+            return Err((
+                axum::http::StatusCode::BAD_REQUEST,
+                axum::Json::from(
+                    serde_json::json!({"message": format!("Invalid request body: {}", err)}),
+                ),
+            ));
+        }
+    };
+
+    let gql_response = schema.execute(gql_request).await;
+
+    match serde_json::to_string(&gql_response) {
+        Ok(body) => {
+            let response = axum::response::Response::builder()
+                .status(200)
+                .header("content-type", "application/json")
+                .body(axum::body::Body::from(body));
+
+            match response {
+                Ok(r) => return Ok(r),
+                Err(err) => {
+                    return Err((
+                        axum::http::StatusCode::INTERNAL_SERVER_ERROR,
+                        axum::Json::from(
+                            serde_json::json!({"message": format!("Failed to serialize response: {}", err)}),
+                        ),
+                    ))
+                }
+            }
+        }
+        Err(err) => {
+            lambda_http::tracing::error!("Failed to serialize response: {}", err);
+            return Err((
+                axum::http::StatusCode::INTERNAL_SERVER_ERROR,
+                axum::Json::from(
+                    serde_json::json!({"message": format!("Failed to serialize response: {}", err)}),
+                ),
+            ));
+        }
+    };
+}
+
 pub async fn function_handler(
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    let schema = init_schema().await;
+    let app = axum::Router::new().route("/", axum::routing::post(graphql_handler));
 
-    if event.method() == lambda_http::http::Method::POST {
-        // GraphQL Execution
-        let request_body = event.body();
+    let response = execute_axum(app, event).await?;
 
-        let gql_request = match serde_json::from_slice::<async_graphql::Request>(request_body) {
-            Ok(request) => request,
-            Err(err) => {
-                return Ok(lambda_http::Response::builder()
-                    .status(400)
-                    .header("content-type", "application/json")
-                    .body(
-                        serde_json::json!({"error": format!("Invalid request body: {}", err)})
-                            .to_string()
-                            .into(),
-                    )
-                    .map_err(Box::new)?);
-            }
-        };
-
-        let gql_response = schema.execute(gql_request).await;
-
-        let response_body = match serde_json::to_string(&gql_response) {
-            Ok(body) => body,
-            Err(err) => {
-                lambda_http::tracing::error!("Failed to serialize response: {}", err);
-                return Ok(lambda_http::Response::builder()
-                    .status(500)
-                    .header("content-type", "application/json")
-                    .body(
-                        serde_json::json!({"error": format!("Failed to serialize response: {}", err)})
-                            .to_string()
-                            .into(),
-                    )
-                    .map_err(Box::new)?);
-            }
-        };
-
-        Ok(lambda_http::Response::builder()
-            .status(200)
-            .header("content-type", "application/json")
-            .body(response_body.into())
-            .map_err(Box::new)?)
-    } else {
-        // Error Response - Method Not Allowed
-        let response = lambda_http::Response::builder()
-            .status(405)
-            .header("content-type", "application/json")
-            .body(
-                serde_json::json!({"error":"Method Not Allowed"})
-                    .to_string()
-                    .into(),
-            )
-            .map_err(Box::new)?;
-        Ok(response)
-    }
+    Ok(response)
 }
