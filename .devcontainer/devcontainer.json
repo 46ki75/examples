@@ -31,7 +31,9 @@
     "ghcr.io/devcontainers/features/rust": {},
     "ghcr.io/devcontainers-extra/features/starship": {},
     "ghcr.io/devcontainers/features/go": {},
-    "ghcr.io/devcontainers/features/java": {},
-    "ghcr.io/devcontainers-extra/features/gradle-sdkman": {}
+    "ghcr.io/devcontainers/features/java": {
+      "version": "21",
+      "gradleVersion": "8.5"
+    }
   }
 }
