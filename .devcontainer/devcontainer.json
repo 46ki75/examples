@@ -7,29 +7,40 @@
     "vscode": {
       "settings": {},
       "extensions": [
+        "GitHub.vscode-pull-request-github",
         "GitHub.copilot",
         "GitHub.copilot-chat",
+        "github.vscode-github-actions",
         "usernamehw.errorlens",
         "Gruntfuggly.todo-tree",
         "christian-kohler.path-intellisense",
+        "ms-azuretools.vscode-docker",
+        "DavidAnson.vscode-markdownlint",
+        "yzhang.markdown-all-in-one",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "ms-azuretools.vscode-docker",
-        "rust-lang.rust-analyzer",
+
+        "stylelint.vscode-stylelint",
         "GraphQL.vscode-graphql",
+
+        // Rust
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "fill-labs.dependi",
+
+        // Kotlin
         "fwcd.kotlin"
       ]
     }
   },
   "forwardPorts": [],
   "features": {
-    "ghcr.io/devcontainers-extra/features/poetry": {},
+    "ghcr.io/devcontainers-extra/features/starship": {},
     "ghcr.io/devcontainers/features/aws-cli": {},
+    "ghcr.io/devcontainers-extra/features/poetry": {},
     "ghcr.io/devcontainers/features/terraform": {},
     "ghcr.io/devcontainers/features/node": {},
-    "ghcr.io/devcontainers-extra/features/pnpm": {},
     "ghcr.io/devcontainers/features/rust": {},
-    "ghcr.io/devcontainers-extra/features/starship": {},
     "ghcr.io/devcontainers/features/go": {},
     "ghcr.io/devcontainers/features/java": {
       "version": "21",
