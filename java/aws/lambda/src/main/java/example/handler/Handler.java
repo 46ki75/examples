@@ -3,6 +3,7 @@ package example.handler;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.logging.LogLevel;
 
 import example.response.Response;
 
@@ -14,7 +15,7 @@ public class Handler implements RequestHandler<Map<String, String>, Response> {
   public Response handleRequest(Map<String, String> event, Context context) {
 
     LambdaLogger logger = context.getLogger();
-    logger.log("EVENT TYPE: " + event.getClass());
+    logger.log("EVENT TYPE: " + event.getClass(), LogLevel.INFO);
 
     String message = "Hello, world!";
 
