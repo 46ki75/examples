@@ -1,19 +1,19 @@
 import type {
   LambdaFunctionURLEvent,
   Context,
-  LambdaFunctionURLResult,
+  APIGatewayProxyStructuredResultV2,
 } from "aws-lambda";
-import { parseQueryParams as parseQueryParams } from "./lib.js";
+import { parseQueryParams } from "./lib.js";
 
 export const handler = async (
   event: LambdaFunctionURLEvent,
   context: Context
-): Promise<LambdaFunctionURLResult> => {
+): Promise<APIGatewayProxyStructuredResultV2> => {
   const { name } = await parseQueryParams(event.queryStringParameters);
 
   return {
     statusCode: 200,
-    headers: { "Contetn-Type": "application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message: `Hello, ${name}!` }),
   };
 };
