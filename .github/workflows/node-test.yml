@@ -5,8 +5,38 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  NODE_VERSION: "22.x"
+
 jobs:
   test:
+    name: Unit Test (Node.js)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Run Unit Test in all packages
+        run: pnpm -r run test
+
+  lint:
+    name: Lint (Node.js)
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,14 +54,14 @@ jobs:
         with:
           version: 9
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm i
 
-      - name: Run Unit Test
-        run: pnpm test --recursive
+      - name: Run Lint in all packages
+        run: pnpm -r run lint
