@@ -6,6 +6,8 @@ settings:
 
 importers:
 
+  .: {}
+
   packages/cdk:
     dependencies:
       '@aws-sdk/client-dynamodb':
@@ -31,8 +33,8 @@ importers:
         specifier: 22.10.1
         version: 22.10.1
       aws-cdk:
-        specifier: 2.1004.0
-        version: 2.1004.0
+        specifier: 2.1007.0
+        version: 2.1007.0
       aws-lambda:
         specifier: ^1.0.7
         version: 1.0.7
@@ -1185,8 +1187,8 @@ packages:
       - yaml
       - mime-types
 
-  aws-cdk@2.1004.0:
-    resolution: {integrity: sha512-3E5ICmSc7ZCZCwLX7NY+HFmmdUYgRaL+67h/BDoDQmkhx9StC8wG4xgzHFY9k8WQS0+ib/MP28f2d9yzHtQLlQ==}
+  aws-cdk@2.1007.0:
+    resolution: {integrity: sha512-/UOYOTGWUm+pP9qxg03tID5tL6euC+pb+xo0RBue+xhnUWwj/Bbsw6DbqbpOPMrNzTUxmM723/uMEQmM6S26dw==}
     engines: {node: '>= 14.15.0'}
     hasBin: true
 
@@ -3855,7 +3857,7 @@ snapshots:
       '@aws-cdk/cloud-assembly-schema': 40.7.0
       constructs: 10.4.2
 
-  aws-cdk@2.1004.0:
+  aws-cdk@2.1007.0:
     optionalDependencies:
       fsevents: 2.3.2
 
