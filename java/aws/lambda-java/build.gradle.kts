@@ -9,16 +9,14 @@ repositories {
 }
 
 dependencies {
-    implementation("com.amazonaws:aws-lambda-java-core:1.2.3")
-    implementation("com.amazonaws:aws-lambda-java-events:3.14.0")
+    implementation(libs.aws.lambda.java.core)
+    implementation(libs.aws.lambda.java.events)
 
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation(libs.jackson)
+
+    testImplementation(platform(libs.junit.bom))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
-
-    implementation("com.google.guava:guava:32.1.2-jre")
+    testImplementation("org.junit.platform:junit-platform-launcher")
 }
 
 java {
