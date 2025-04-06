@@ -97,6 +97,30 @@ importers:
         specifier: ^5.7.2
         version: 5.7.3
 
+  packages/node-lambda-template:
+    devDependencies:
+      '@types/archiver':
+        specifier: ^6.0.3
+        version: 6.0.3
+      '@types/aws-lambda':
+        specifier: ^8.10.146
+        version: 8.10.147
+      '@types/node':
+        specifier: ^22.14.0
+        version: 22.14.0
+      archiver:
+        specifier: ^7.0.1
+        version: 7.0.1
+      esbuild:
+        specifier: ^0.24.0
+        version: 0.24.2
+      tsx:
+        specifier: ^4.19.2
+        version: 4.19.3
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.3
+
 packages:
 
   '@ampproject/remapping@2.3.0':
