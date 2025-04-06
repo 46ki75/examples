@@ -1,0 +1,55 @@
+plugins {
+    kotlin("jvm") version "1.9.22" 
+
+    id("java")
+    id("application")
+    id("com.github.johnrengelman.shadow") version "8.1.1" 
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(kotlin("stdlib"))
+
+    implementation(libs.aws.lambda.java.core)
+    implementation(libs.aws.lambda.java.events)
+
+    testImplementation(libs.jackson)
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.platform:junit-platform-launcher")
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+application {
+    mainClass = "example.handler.HandlerKt"
+}
+
+tasks {
+    shadowJar {
+        // For AWS Lambda
+        archiveFileName.set("lambda-kotlin.jar")
+    }
+
+    named<Test>("test") {
+        useJUnitPlatform()
+    }
+
+    register<Test>("invoke") {
+        useJUnitPlatform {
+            includeTags("invoke")
+        }
+        testLogging {
+            showStandardStreams = true
+        }
+    }
+}
+
