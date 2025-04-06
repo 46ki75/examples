@@ -18,5 +18,5 @@ You can deploy jar file (`./build/libs/lambda-java.jar`) directly.
 ## Invoke Locally
 
 ```bash
-../gradlew clean run
+../gradlew clean invoke
 ```
