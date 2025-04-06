@@ -10,6 +10,7 @@ export const handler = async (
 ): Promise<LambdaFunctionURLResult> => {
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: "Hello, Lambda!" }),
+    body: JSON.stringify({ message: "Hello, Lambda!", event }),
+    headers: { "Contetn-Type": "application/json" },
   };
 };
