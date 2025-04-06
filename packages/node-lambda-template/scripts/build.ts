@@ -1,10 +1,6 @@
 import { build } from "esbuild";
 import { zipPlugin } from "./plugin";
 
-// if (existsSync("./dist")) {
-//   rmSync("./dist", { recursive: true });
-// }
-
 await build({
   entryPoints: ["./src/index.ts"],
   outfile: "./dist/lambda/index.mjs",
