@@ -7,9 +7,9 @@ describe("Lambda Function Handler", () => {
   it("should return a greeting message for valid query parameters", async () => {
     const event: LambdaFunctionURLEvent = {
       queryStringParameters: { name: "World" },
-    } as any;
+    } as never;
 
-    const result = await handler(event, {} as any);
+    const result = await handler(event, {} as never);
 
     assert.strictEqual(result.statusCode, 200);
     assert.strictEqual(result.headers?.["Content-Type"], "application/json");
@@ -22,9 +22,9 @@ describe("Lambda Function Handler", () => {
   it("should return a greeting message for missing query parameters", async () => {
     const event: LambdaFunctionURLEvent = {
       queryStringParameters: {},
-    } as any;
+    } as never;
 
-    const result = await handler(event, {} as any);
+    const result = await handler(event, {} as never);
 
     assert.strictEqual(result.statusCode, 200);
     assert.strictEqual(
@@ -36,9 +36,9 @@ describe("Lambda Function Handler", () => {
   it("should handle invalid query parameters gracefully", async () => {
     const event: LambdaFunctionURLEvent = {
       queryStringParameters: { name: null },
-    } as any;
+    } as never;
 
-    const result = await handler(event, {} as any);
+    const result = await handler(event, {} as never);
 
     assert.strictEqual(result.statusCode, 200);
     assert.strictEqual(
