@@ -36,6 +36,7 @@
   "forwardPorts": [],
   "features": {
     "ghcr.io/devcontainers-extra/features/starship": {},
+    "ghcr.io/devcontainers/features/github-cli": {},
     "ghcr.io/devcontainers/features/aws-cli": {},
     "ghcr.io/devcontainers-extra/features/poetry": {},
     "ghcr.io/devcontainers/features/terraform": {},
@@ -46,5 +47,6 @@
       "version": "21",
       "gradleVersion": "8.5"
     }
-  }
+  },
+  "postCreateCommand": "aws configure sso --profile default"
 }
