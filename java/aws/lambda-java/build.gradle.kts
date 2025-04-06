@@ -26,8 +26,7 @@ java {
 }
 
 application {
-    // For local execution
-    mainClass = "example.local.Local"
+    mainClass = "example.handler.Handler"
 }
 
 tasks {
