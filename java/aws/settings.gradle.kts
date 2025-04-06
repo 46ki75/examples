@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = "aws"
-include("lambda")
+include("lambda-java")
