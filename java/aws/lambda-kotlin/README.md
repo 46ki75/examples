@@ -11,7 +11,7 @@
 
 ## Deploy (Update)
 
-You can deploy jar file (`./build/libs/lambda-java.jar`) directly.
+You can deploy jar file (`./build/libs/lambda-kotlin.jar`) directly.
 
 - Handler: `example.handler.Handler::handleRequest`
 
