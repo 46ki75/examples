@@ -52,6 +52,3 @@ tasks {
     }
 }
 
-tasks.build {
-    dependsOn(tasks.shadowJar)
-}
