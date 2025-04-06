@@ -1,4 +1,4 @@
-package example;
+package example.local;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 

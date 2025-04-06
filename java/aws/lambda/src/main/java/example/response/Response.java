@@ -1,4 +1,4 @@
-package example;
+package example.response;
 
 import java.util.Map;
 

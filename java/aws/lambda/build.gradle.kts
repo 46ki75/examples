@@ -30,7 +30,7 @@ java {
 
 application {
     // For local execution
-    mainClass = "example.Local"
+    mainClass = "example.local.Local"
 }
 
 tasks {
@@ -39,7 +39,7 @@ tasks {
         archiveFileName.set("lambda.jar")
         manifest {
             // Main-Class: example.Local
-            attributes["Main-Class"] = "example.Local" 
+            attributes["Main-Class"] = "example.local.Local" 
         }
     }
 

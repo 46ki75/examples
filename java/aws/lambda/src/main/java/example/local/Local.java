@@ -1,10 +1,13 @@
-package example;
+package example.local;
 
 import java.io.File;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import example.handler.Handler;
+import example.response.Response;
 
 public class Local {
 

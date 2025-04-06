@@ -1,5 +1,10 @@
 {
   "editor.formatOnSave": true,
   "stylelint.validate": ["css", "postcss", "scss", "vue"],
-  "eslint.workingDirectories": [{ "mode": "auto" }]
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
