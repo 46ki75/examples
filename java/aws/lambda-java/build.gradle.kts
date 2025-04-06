@@ -36,10 +36,6 @@ tasks {
     shadowJar {
         // For AWS Lambda
         archiveFileName.set("lambda-java.jar")
-        manifest {
-            // Main-Class: example.Local
-            attributes["Main-Class"] = "example.local.Local" 
-        }
     }
 
     named<Test>("test") {
