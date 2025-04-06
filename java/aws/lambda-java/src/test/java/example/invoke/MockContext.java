@@ -1,4 +1,4 @@
-package example.local;
+package example.invoke;
 
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;

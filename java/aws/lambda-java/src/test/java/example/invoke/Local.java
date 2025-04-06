@@ -1,4 +1,4 @@
-package example.local;
+package example.invoke;
 
 import java.io.File;
 import java.util.Map;
@@ -9,11 +9,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import example.handler.Handler;
 import example.response.Response;
 
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
 public class Local {
 
     static final String pathname = "./event.json";
 
-    public static void main(String[] args) {
+    @Tag("invoke")
+    @Test
+    public void invokeHandler() {
 
         ObjectMapper objectMapper = new ObjectMapper();
 

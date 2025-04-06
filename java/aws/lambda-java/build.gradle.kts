@@ -41,6 +41,15 @@ tasks {
     named<Test>("test") {
         useJUnitPlatform()
     }
+
+    register<Test>("invoke") {
+        useJUnitPlatform {
+            includeTags("invoke")
+        }
+        testLogging {
+            showStandardStreams = true
+        }
+    }
 }
 
 tasks.build {

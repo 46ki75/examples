@@ -1,4 +1,4 @@
-package example.local;
+package example.invoke;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.logging.LogLevel;
