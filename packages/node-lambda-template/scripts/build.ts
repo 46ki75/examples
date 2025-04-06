@@ -1,5 +1,5 @@
 import { build } from "esbuild";
-import { zipPlugin } from "./plugin";
+import { zipPlugin } from "./plugin.js";
 
 await build({
   entryPoints: ["./src/index.ts"],

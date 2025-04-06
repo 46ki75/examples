@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "tsx --test tests/it/**/*.test.ts tests/it/**/*.spec.ts",
+    "test": "tsx --test tests/ut/**/*.test.ts tests/ut/**/*.spec.ts",
     "build": "tsx ./scripts/build.ts"
   },
   "keywords": [],
