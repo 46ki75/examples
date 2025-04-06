@@ -69,8 +69,8 @@ importers:
         specifier: ^9.4.3
         version: 9.4.18(graphql@16.10.0)
       '@graphql-tools/utils':
-        specifier: ^10.6.1
-        version: 10.8.1(graphql@16.10.0)
+        specifier: ^10.8.6
+        version: 10.8.6(graphql@16.10.0)
       '@graphql-tools/wrap':
         specifier: ^10.0.34
         version: 10.0.34(graphql@16.10.0)
@@ -751,12 +751,6 @@ packages:
   '@graphql-tools/stitch@9.4.18':
     resolution: {integrity: sha512-s7SnpPRSpTth6JJ9ygC/gYBqUwuBPniT+5+VvS7S0WTClC5xNL/UwiGjM+b4nhGAtHNWJOM8CbPYLOVBEvusGA==}
     engines: {node: '>=18.0.0'}
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-
-  '@graphql-tools/utils@10.8.1':
-    resolution: {integrity: sha512-fI5NNuqeEAHyp7NuCDjvxWR5PTUXM4AqY9BoC59ZcX4nePAJje27ZsFHbAMS6EKDosY1K/D4ADxsO0P5+FH07A==}
-    engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
@@ -3240,14 +3234,14 @@ snapshots:
 
   '@graphql-tools/merge@9.0.19(graphql@16.10.0)':
     dependencies:
-      '@graphql-tools/utils': 10.8.1(graphql@16.10.0)
+      '@graphql-tools/utils': 10.8.6(graphql@16.10.0)
       graphql: 16.10.0
       tslib: 2.8.1
 
   '@graphql-tools/schema@10.0.18(graphql@16.10.0)':
     dependencies:
       '@graphql-tools/merge': 9.0.19(graphql@16.10.0)
-      '@graphql-tools/utils': 10.8.1(graphql@16.10.0)
+      '@graphql-tools/utils': 10.8.6(graphql@16.10.0)
       graphql: 16.10.0
       tslib: 2.8.1
 
@@ -3258,16 +3252,8 @@ snapshots:
       '@graphql-tools/executor': 1.4.0(graphql@16.10.0)
       '@graphql-tools/merge': 9.0.19(graphql@16.10.0)
       '@graphql-tools/schema': 10.0.18(graphql@16.10.0)
-      '@graphql-tools/utils': 10.8.1(graphql@16.10.0)
+      '@graphql-tools/utils': 10.8.6(graphql@16.10.0)
       '@graphql-tools/wrap': 10.0.34(graphql@16.10.0)
-      graphql: 16.10.0
-      tslib: 2.8.1
-
-  '@graphql-tools/utils@10.8.1(graphql@16.10.0)':
-    dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@16.10.0)
-      cross-inspect: 1.0.1
-      dset: 3.1.4
       graphql: 16.10.0
       tslib: 2.8.1
 
