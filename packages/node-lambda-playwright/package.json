@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "test": "tsx --test tests/ut/**/*.test.ts tests/ut/**/*.spec.ts",
-    "test:integration": "tsx --test tests/it/**/*.test.ts tests/it/**/*.spec.ts",
     "build": "tsc",
     "lint": "eslint"
   },
