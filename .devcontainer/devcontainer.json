@@ -46,7 +46,8 @@
     "ghcr.io/devcontainers/features/java": {
       "version": "21",
       "gradleVersion": "8.5"
-    }
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker": {}
   },
   "postCreateCommand": "aws configure sso --profile default"
 }
