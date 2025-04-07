@@ -1,0 +1,30 @@
+{
+  "name": "node-lambda-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "tsx --test tests/ut/**/*.test.ts tests/ut/**/*.spec.ts",
+    "test:integration": "tsx --test tests/it/**/*.test.ts tests/it/**/*.spec.ts",
+    "build": "tsx ./scripts/build.ts",
+    "lint": "eslint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/aws-lambda": "^8.10.146",
+    "@types/node": "^22.14.0",
+    "archiver": "^7.0.1",
+    "esbuild": "^0.25.2",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.1",
+    "jiti": "^2.4.2",
+    "prettier": "^3.4.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.29.0"
+  }
+}
