@@ -1,12 +1,25 @@
-FROM docker.io/library/node:22 AS build
-
-WORKDIR /app
-COPY . .
-RUN npm i -g pnpm && pnpm i && pnpm run build
-
 FROM public.ecr.aws/lambda/nodejs:22
 
-COPY --from=build /app/dist/src/* ${LAMBDA_TASK_ROOT}
-COPY --from=build /app/package.json ${LAMBDA_TASK_ROOT}
+RUN dnf install -y \
+    atk \
+    cups-libs \
+    gtk3 \
+    libXcomposite \
+    libXcursor \
+    libXdamage \
+    libXext \
+    libXi \
+    libXrandr \
+    libXScrnSaver \
+    libXtst \
+    pango \
+    xorg-x11-fonts-Type1 \
+    xorg-x11-fonts-misc \
+    nss \
+    && dnf clean all
 
-CMD [ "index.handler" ]
+COPY . .
+
+RUN npm i -g pnpm && pnpm i && pnpm run build
+
+CMD [ "dist/src/index.handler" ]
