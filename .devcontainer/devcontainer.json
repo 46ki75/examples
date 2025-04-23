@@ -29,7 +29,12 @@
         "fill-labs.dependi",
 
         // Kotlin
-        "fwcd.kotlin"
+        "fwcd.kotlin",
+
+        // .NET
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.vscodeintellicode-csharp"
       ]
     }
   },
@@ -38,15 +43,29 @@
     "ghcr.io/devcontainers-extra/features/starship": {},
     "ghcr.io/devcontainers/features/github-cli": {},
     "ghcr.io/devcontainers/features/aws-cli": {},
+
+    // Python
     "ghcr.io/devcontainers-extra/features/poetry": {},
+
+    // Terraform
     "ghcr.io/devcontainers/features/terraform": {},
+
+    // Node.js
     "ghcr.io/devcontainers/features/node": {},
+
+    // Rust
     "ghcr.io/devcontainers/features/rust": {},
+
+    // Go
     "ghcr.io/devcontainers/features/go": {},
+
+    // Java
     "ghcr.io/devcontainers/features/java": {
       "version": "21",
       "gradleVersion": "8.5"
     },
+
+    // DinD
     "ghcr.io/devcontainers/features/docker-in-docker": {}
   },
   "postCreateCommand": "aws configure sso --profile default"
