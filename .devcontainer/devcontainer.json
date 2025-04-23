@@ -65,6 +65,9 @@
       "gradleVersion": "8.5"
     },
 
+    // .NET
+    "ghcr.io/devcontainers/features/dotnet": {},
+
     // DinD
     "ghcr.io/devcontainers/features/docker-in-docker": {}
   },
