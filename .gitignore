@@ -1,5 +1,8 @@
 .env
 
+# AWS SAM
+.aws-sam/
+
 # Rust
 target
 
