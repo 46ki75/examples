@@ -24,7 +24,7 @@ importers:
         version: 0.5.21
     devDependencies:
       '@types/aws-lambda':
-        specifier: ^8.10.148
+        specifier: ^8.10.149
         version: 8.10.149
       '@types/jest':
         specifier: ^29.5.12
@@ -82,7 +82,7 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       '@types/aws-lambda':
-        specifier: ^8.10.148
+        specifier: ^8.10.149
         version: 8.10.149
       '@types/node':
         specifier: ^22.15.1
@@ -110,8 +110,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       '@types/aws-lambda':
-        specifier: ^8.10.146
-        version: 8.10.147
+        specifier: ^8.10.149
+        version: 8.10.149
       '@types/node':
         specifier: ^22.15.1
         version: 22.15.1
@@ -143,7 +143,7 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       '@types/aws-lambda':
-        specifier: ^8.10.148
+        specifier: ^8.10.149
         version: 8.10.149
       '@types/node':
         specifier: ^22.15.1
@@ -1063,9 +1063,6 @@ packages:
 
   '@types/archiver@6.0.3':
     resolution: {integrity: sha512-a6wUll6k3zX6qs5KlxIggs1P1JcYJaTCx2gnlr+f0S1yd2DoaEwoIK10HmBaLnZwWneBz+JBm0dwcZu0zECBcQ==}
-
-  '@types/aws-lambda@8.10.147':
-    resolution: {integrity: sha512-nD0Z9fNIZcxYX5Mai2CTmFD7wX7UldCkW2ezCF8D1T5hdiLsnTWDGRpfRYntU6VjTdLQjOvyszru7I1c1oCQew==}
 
   '@types/aws-lambda@8.10.149':
     resolution: {integrity: sha512-NXSZIhfJjnXqJgtS7IwutqIF/SOy1Wz5Px4gUY1RWITp3AYTyuJS4xaXr/bIJY1v15XMzrJ5soGnPM+7uigZjA==}
@@ -4149,8 +4146,6 @@ snapshots:
   '@types/archiver@6.0.3':
     dependencies:
       '@types/readdir-glob': 1.1.5
-
-  '@types/aws-lambda@8.10.147': {}
 
   '@types/aws-lambda@8.10.149': {}
 
