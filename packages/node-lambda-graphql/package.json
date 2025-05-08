@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/archiver": "^6.0.3",
     "@types/aws-lambda": "^8.10.149",
-    "@types/node": "^22.15.14",
+    "@types/node": "^22.15.16",
     "archiver": "^7.0.1",
     "esbuild": "^0.25.4",
     "typescript": "^5.8.3"
