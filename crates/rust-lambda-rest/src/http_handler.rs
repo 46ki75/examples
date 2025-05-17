@@ -25,11 +25,10 @@ async fn handler(
     Ok(response)
 }
 
-pub(crate) async fn function_handler(
+async fn dispatch_request(
+    app: axum::Router,
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    let app = axum::Router::new().route("/hello", axum::routing::get(handler));
-
     let axum_response = app.oneshot(event).await?;
 
     let (axum_parts, axum_body) = axum_response.into_parts();
@@ -41,4 +40,15 @@ pub(crate) async fn function_handler(
     let lambda_response = lambda_http::Response::from_parts(axum_parts, lambda_body);
 
     Ok(lambda_response)
+}
+
+pub(crate) async fn function_handler(
+    event: lambda_http::Request,
+) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
+    // GET http://localhost:9000/lambda-url/rust-lambda-rest/hello
+    let app = axum::Router::new().route("/hello", axum::routing::get(handler));
+
+    let response = dispatch_request(app, event).await?;
+
+    Ok(response)
 }
