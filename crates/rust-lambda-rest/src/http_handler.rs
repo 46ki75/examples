@@ -1,5 +1,3 @@
-use tower::ServiceExt;
-
 #[derive(Debug, serde::Serialize)]
 pub struct Message {
     pub message: String,
@@ -29,6 +27,8 @@ async fn dispatch_request(
     app: axum::Router,
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
+    use tower::ServiceExt;
+
     let axum_response = app.oneshot(event).await?;
 
     let (axum_parts, axum_body) = axum_response.into_parts();
