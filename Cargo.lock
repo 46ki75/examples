@@ -1172,12 +1172,10 @@ version = "0.0.0"
 dependencies = [
  "async-graphql",
  "axum",
- "http",
  "lambda_http",
  "serde",
  "serde_json",
  "tokio",
- "tower 0.5.2",
 ]
 
 [[package]]
@@ -1185,12 +1183,10 @@ name = "rust-lambda-rest"
 version = "0.1.0"
 dependencies = [
  "axum",
- "http",
  "lambda_http",
  "serde",
  "serde_json",
  "tokio",
- "tower 0.5.2",
 ]
 
 [[package]]
