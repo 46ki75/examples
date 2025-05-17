@@ -1,16 +1,26 @@
-use lambda_http::{Body, Error, Request, RequestExt, Response};
+use tower::ServiceExt;
 
-pub(crate) async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
-    let who = event
-        .query_string_parameters_ref()
-        .and_then(|params| params.first("name"))
-        .unwrap_or("world");
-    let message = format!("Hello {who}, this is an AWS Lambda HTTP request");
+async fn handler() -> http::Response<axum::body::Body> {
+    http::Response::builder()
+        .status(http::StatusCode::OK)
+        .header(http::header::CONTENT_TYPE, "text/plain")
+        .body(axum::body::Body::from("Hello with headers"))
+        .unwrap()
+}
 
-    let resp = Response::builder()
-        .status(200)
-        .header("content-type", "text/html")
-        .body(message.into())
-        .map_err(Box::new)?;
-    Ok(resp)
+pub(crate) async fn function_handler(
+    event: lambda_http::Request,
+) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
+    let app = axum::Router::new().route("/hello", axum::routing::get(handler));
+
+    let axum_response = app.oneshot(event).await.unwrap();
+    let (axum_parts, axum_body) = axum_response.into_parts();
+
+    let axum_body_bytes = axum::body::to_bytes(axum_body, usize::MAX).await?;
+
+    let lambda_body = lambda_http::Body::Binary(axum_body_bytes.into());
+
+    let lambda_response = lambda_http::Response::from_parts(axum_parts, lambda_body);
+
+    Ok(lambda_response)
 }
