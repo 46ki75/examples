@@ -1,79 +1,33 @@
-use lambda_http::tower::ServiceExt;
+pub mod query;
+pub mod schema;
 
-pub(crate) mod query;
-
-static SCHEMA: tokio::sync::OnceCell<
-    async_graphql::Schema<
-        query::QueryRoot,
-        async_graphql::EmptyMutation,
-        async_graphql::EmptySubscription,
-    >,
-> = tokio::sync::OnceCell::const_new();
-async fn init_schema() -> &'static async_graphql::Schema<
-    query::QueryRoot,
-    async_graphql::EmptyMutation,
-    async_graphql::EmptySubscription,
-> {
-    SCHEMA
-        .get_or_init(|| async {
-            let schema: async_graphql::Schema<
-                query::QueryRoot,
-                async_graphql::EmptyMutation,
-                async_graphql::EmptySubscription,
-            > = async_graphql::Schema::build(
-                query::QueryRoot,
-                async_graphql::EmptyMutation,
-                async_graphql::EmptySubscription,
-            )
-            .finish();
-            schema
-        })
-        .await
-}
-
-pub async fn execute_axum(
+async fn dispatch_request(
     app: axum::Router,
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    let mut axum_request = axum::extract::Request::builder()
-        .method(event.method())
-        .uri(event.uri());
+    use tower::ServiceExt;
 
-    for (key, value) in event.headers() {
-        axum_request = axum_request.header(key.as_str(), value.as_bytes());
-    }
+    let axum_response = app.oneshot(event).await?;
 
-    let request = axum_request
-        .body(axum::body::Body::from(event.body().to_vec()))
-        .unwrap();
+    let (axum_parts, axum_body) = axum_response.into_parts();
 
-    let axum_response = app.oneshot(request).await?;
+    let axum_body_bytes = axum::body::to_bytes(axum_body, usize::MAX).await?;
 
-    let status = axum_response.status();
-    let headers = axum_response.headers().clone();
-    let body = axum_response.into_body();
-    let body_bytes = axum::body::to_bytes(body, 1024 * 1024).await?;
+    let lambda_body = lambda_http::Body::Binary(axum_body_bytes.into());
 
-    let mut lambda_response = lambda_http::Response::builder().status(status);
+    let lambda_response = lambda_http::Response::from_parts(axum_parts, lambda_body);
 
-    for (key, value) in headers {
-        if let Some(key) = key {
-            lambda_response = lambda_response.header(key.as_str(), value.to_str().unwrap());
-        }
-    }
-
-    Ok(lambda_response
-        .body(lambda_http::Body::Binary(body_bytes.to_vec()))
-        .map_err(Box::new)?)
+    Ok(lambda_response)
 }
 
 async fn graphql_handler(
+    parts: http::request::Parts,
     body_bytes: axum::body::Bytes,
 ) -> Result<
     axum::response::Response<axum::body::Body>,
     (axum::http::StatusCode, axum::Json<serde_json::Value>),
 > {
-    let schema = init_schema().await;
+    let schema = schema::init_schema().await;
 
     let gql_request = match serde_json::from_slice::<async_graphql::Request>(&body_bytes) {
         Ok(request) => request,
@@ -87,7 +41,9 @@ async fn graphql_handler(
         }
     };
 
-    let gql_response = schema.execute(gql_request).await;
+    let gql_response = schema
+        .execute(gql_request.data(std::sync::Arc::new(parts)))
+        .await;
 
     match serde_json::to_string(&gql_response) {
         Ok(body) => {
@@ -125,7 +81,7 @@ pub async fn function_handler(
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
     let app = axum::Router::new().route("/", axum::routing::post(graphql_handler));
 
-    let response = execute_axum(app, event).await?;
+    let response = dispatch_request(app, event).await?;
 
     Ok(response)
 }

@@ -15,6 +15,22 @@ impl QueryRoot {
             language: "Rust".to_string(),
         })
     }
+
+    pub async fn content_type(
+        &self,
+        ctx: &async_graphql::Context<'_>,
+    ) -> Result<String, async_graphql::Error> {
+        let parts = ctx.data::<std::sync::Arc<::http::request::Parts>>()?;
+
+        let content_type = parts
+            .headers
+            .get("content-type")
+            .unwrap()
+            .to_str()
+            .map(|s| s.to_string())?;
+
+        Ok(content_type)
+    }
 }
 
 #[derive(async_graphql::SimpleObject)]
