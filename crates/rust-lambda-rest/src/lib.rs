@@ -1,23 +1,11 @@
-async fn axum_route_handler(
-    _parts: http::request::Parts,
-    _body: axum::body::Body,
-) -> Result<http::Response<axum::body::Body>, http::StatusCode> {
-    let json = serde_json::json!({"message":"Hello, world!"}).to_string();
-
-    let response = http::Response::builder()
-        .status(http::StatusCode::OK)
-        .header(http::header::CONTENT_TYPE, "application/json")
-        .body(axum::body::Body::from(json))
-        .map_err(|_| http::StatusCode::INTERNAL_SERVER_ERROR)?;
-
-    Ok(response)
-}
+pub mod axum_handler;
+pub mod router;
 
 async fn dispatch_request(
     app: axum::Router,
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    use tower::ServiceExt;
+    use lambda_http::tower::ServiceExt;
 
     let axum_response = app.oneshot(event).await?;
 
@@ -35,10 +23,9 @@ async fn dispatch_request(
 pub async fn function_handler(
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    // GET http://localhost:9000/lambda-url/rust-lambda-rest/hello
-    let app = axum::Router::new().route("/hello", axum::routing::get(axum_route_handler));
+    let router = crate::router::init_router();
 
-    let response = dispatch_request(app, event).await?;
+    let response = dispatch_request(router, event).await?;
 
     Ok(response)
 }
