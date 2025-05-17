@@ -20,7 +20,7 @@ impl QueryRoot {
         &self,
         ctx: &async_graphql::Context<'_>,
     ) -> Result<String, async_graphql::Error> {
-        let parts = ctx.data::<std::sync::Arc<::http::request::Parts>>()?;
+        let parts = ctx.data::<std::sync::Arc<lambda_http::http::request::Parts>>()?;
 
         let content_type = parts
             .headers

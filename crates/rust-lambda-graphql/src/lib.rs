@@ -7,7 +7,7 @@ async fn dispatch_request(
     app: axum::Router,
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    use tower::ServiceExt;
+    use lambda_http::tower::ServiceExt;
 
     let axum_response = app.oneshot(event).await?;
 

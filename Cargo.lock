@@ -1172,12 +1172,10 @@ version = "0.0.0"
 dependencies = [
  "async-graphql",
  "axum",
- "http",
  "lambda_http",
  "serde",
  "serde_json",
  "tokio",
- "tower 0.5.2",
 ]
 
 [[package]]

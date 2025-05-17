@@ -1,5 +1,5 @@
 pub async fn graphql_handler(
-    parts: http::request::Parts,
+    parts: lambda_http::http::request::Parts,
     body_bytes: axum::body::Bytes,
 ) -> Result<
     axum::response::Response<axum::body::Body>,
