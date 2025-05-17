@@ -1,11 +1,25 @@
 use tower::ServiceExt;
 
-async fn handler() -> http::Response<axum::body::Body> {
-    http::Response::builder()
+#[derive(Debug, serde::Serialize)]
+pub struct Message {
+    pub message: String,
+}
+
+async fn handler() -> Result<http::Response<axum::body::Body>, http::StatusCode> {
+    let message = Message {
+        message: String::from("Hello, world!"),
+    };
+
+    let message_json =
+        serde_json::to_string(&message).map_err(|_| http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let response = http::Response::builder()
         .status(http::StatusCode::OK)
-        .header(http::header::CONTENT_TYPE, "text/plain")
-        .body(axum::body::Body::from("Hello with headers"))
-        .unwrap()
+        .header(http::header::CONTENT_TYPE, "application/json")
+        .body(axum::body::Body::from(message_json))
+        .map_err(|_| http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    Ok(response)
 }
 
 pub(crate) async fn function_handler(

@@ -1229,6 +1229,8 @@ dependencies = [
  "axum",
  "http",
  "lambda_http 0.13.0",
+ "serde",
+ "serde_json",
  "tokio",
  "tower 0.5.2",
 ]
