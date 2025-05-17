@@ -1,35 +1,7 @@
+pub mod query;
+pub mod schema;
+
 use lambda_http::tower::ServiceExt;
-
-pub(crate) mod query;
-
-static SCHEMA: tokio::sync::OnceCell<
-    async_graphql::Schema<
-        query::QueryRoot,
-        async_graphql::EmptyMutation,
-        async_graphql::EmptySubscription,
-    >,
-> = tokio::sync::OnceCell::const_new();
-async fn init_schema() -> &'static async_graphql::Schema<
-    query::QueryRoot,
-    async_graphql::EmptyMutation,
-    async_graphql::EmptySubscription,
-> {
-    SCHEMA
-        .get_or_init(|| async {
-            let schema: async_graphql::Schema<
-                query::QueryRoot,
-                async_graphql::EmptyMutation,
-                async_graphql::EmptySubscription,
-            > = async_graphql::Schema::build(
-                query::QueryRoot,
-                async_graphql::EmptyMutation,
-                async_graphql::EmptySubscription,
-            )
-            .finish();
-            schema
-        })
-        .await
-}
 
 pub async fn execute_axum(
     app: axum::Router,
@@ -73,7 +45,7 @@ async fn graphql_handler(
     axum::response::Response<axum::body::Body>,
     (axum::http::StatusCode, axum::Json<serde_json::Value>),
 > {
-    let schema = init_schema().await;
+    let schema = schema::init_schema().await;
 
     let gql_request = match serde_json::from_slice::<async_graphql::Request>(&body_bytes) {
         Ok(request) => request,
