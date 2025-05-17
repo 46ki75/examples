@@ -1,42 +1,23 @@
 pub mod query;
 pub mod schema;
 
-use lambda_http::tower::ServiceExt;
-
-pub async fn execute_axum(
+async fn dispatch_request(
     app: axum::Router,
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
-    let mut axum_request = axum::extract::Request::builder()
-        .method(event.method())
-        .uri(event.uri());
+    use tower::ServiceExt;
 
-    for (key, value) in event.headers() {
-        axum_request = axum_request.header(key.as_str(), value.as_bytes());
-    }
+    let axum_response = app.oneshot(event).await?;
 
-    let request = axum_request
-        .body(axum::body::Body::from(event.body().to_vec()))
-        .unwrap();
+    let (axum_parts, axum_body) = axum_response.into_parts();
 
-    let axum_response = app.oneshot(request).await?;
+    let axum_body_bytes = axum::body::to_bytes(axum_body, usize::MAX).await?;
 
-    let status = axum_response.status();
-    let headers = axum_response.headers().clone();
-    let body = axum_response.into_body();
-    let body_bytes = axum::body::to_bytes(body, 1024 * 1024).await?;
+    let lambda_body = lambda_http::Body::Binary(axum_body_bytes.into());
 
-    let mut lambda_response = lambda_http::Response::builder().status(status);
+    let lambda_response = lambda_http::Response::from_parts(axum_parts, lambda_body);
 
-    for (key, value) in headers {
-        if let Some(key) = key {
-            lambda_response = lambda_response.header(key.as_str(), value.to_str().unwrap());
-        }
-    }
-
-    Ok(lambda_response
-        .body(lambda_http::Body::Binary(body_bytes.to_vec()))
-        .map_err(Box::new)?)
+    Ok(lambda_response)
 }
 
 async fn graphql_handler(
@@ -97,7 +78,7 @@ pub async fn function_handler(
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
     let app = axum::Router::new().route("/", axum::routing::post(graphql_handler));
 
-    let response = execute_axum(app, event).await?;
+    let response = dispatch_request(app, event).await?;
 
     Ok(response)
 }
