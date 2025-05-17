@@ -5,7 +5,10 @@ pub struct Message {
     pub message: String,
 }
 
-async fn handler() -> Result<http::Response<axum::body::Body>, http::StatusCode> {
+async fn handler(
+    _parts: http::request::Parts,
+    _body: axum::body::Body,
+) -> Result<http::Response<axum::body::Body>, http::StatusCode> {
     let message = Message {
         message: String::from("Hello, world!"),
     };
