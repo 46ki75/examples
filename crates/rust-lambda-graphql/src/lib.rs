@@ -21,6 +21,7 @@ async fn dispatch_request(
 }
 
 async fn graphql_handler(
+    parts: http::request::Parts,
     body_bytes: axum::body::Bytes,
 ) -> Result<
     axum::response::Response<axum::body::Body>,
@@ -40,7 +41,9 @@ async fn graphql_handler(
         }
     };
 
-    let gql_response = schema.execute(gql_request).await;
+    let gql_response = schema
+        .execute(gql_request.data(std::sync::Arc::new(parts)))
+        .await;
 
     match serde_json::to_string(&gql_response) {
         Ok(body) => {
