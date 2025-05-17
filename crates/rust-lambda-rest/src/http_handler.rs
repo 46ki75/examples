@@ -1,23 +1,13 @@
-#[derive(Debug, serde::Serialize)]
-pub struct Message {
-    pub message: String,
-}
-
-async fn handler(
+async fn axum_route_handler(
     _parts: http::request::Parts,
     _body: axum::body::Body,
 ) -> Result<http::Response<axum::body::Body>, http::StatusCode> {
-    let message = Message {
-        message: String::from("Hello, world!"),
-    };
-
-    let message_json =
-        serde_json::to_string(&message).map_err(|_| http::StatusCode::INTERNAL_SERVER_ERROR)?;
+    let json = serde_json::json!({"message":"Hello, world!"}).to_string();
 
     let response = http::Response::builder()
         .status(http::StatusCode::OK)
         .header(http::header::CONTENT_TYPE, "application/json")
-        .body(axum::body::Body::from(message_json))
+        .body(axum::body::Body::from(json))
         .map_err(|_| http::StatusCode::INTERNAL_SERVER_ERROR)?;
 
     Ok(response)
@@ -46,7 +36,7 @@ pub(crate) async fn function_handler(
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
     // GET http://localhost:9000/lambda-url/rust-lambda-rest/hello
-    let app = axum::Router::new().route("/hello", axum::routing::get(handler));
+    let app = axum::Router::new().route("/hello", axum::routing::get(axum_route_handler));
 
     let response = dispatch_request(app, event).await?;
 
