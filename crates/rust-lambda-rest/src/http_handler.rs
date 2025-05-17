@@ -13,7 +13,8 @@ pub(crate) async fn function_handler(
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
     let app = axum::Router::new().route("/hello", axum::routing::get(handler));
 
-    let axum_response = app.oneshot(event).await.unwrap();
+    let axum_response = app.oneshot(event).await?;
+
     let (axum_parts, axum_body) = axum_response.into_parts();
 
     let axum_body_bytes = axum::body::to_bytes(axum_body, usize::MAX).await?;
