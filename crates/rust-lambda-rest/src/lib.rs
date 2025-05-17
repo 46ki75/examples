@@ -32,7 +32,7 @@ async fn dispatch_request(
     Ok(lambda_response)
 }
 
-pub(crate) async fn function_handler(
+pub async fn function_handler(
     event: lambda_http::Request,
 ) -> Result<lambda_http::Response<lambda_http::Body>, lambda_http::Error> {
     // GET http://localhost:9000/lambda-url/rust-lambda-rest/hello
