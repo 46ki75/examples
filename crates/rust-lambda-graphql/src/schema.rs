@@ -22,6 +22,7 @@ pub async fn init_schema() -> &'static async_graphql::Schema<
                 async_graphql::EmptyMutation,
                 async_graphql::EmptySubscription,
             )
+            .enable_federation()
             .finish();
             schema
         })
