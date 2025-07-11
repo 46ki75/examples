@@ -1,3 +1,4 @@
+pub mod controller;
 pub mod graphql;
 pub mod query;
 pub mod router;
