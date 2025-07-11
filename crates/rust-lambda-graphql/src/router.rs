@@ -12,6 +12,7 @@ pub fn init_router() -> axum::Router {
                 )
             }),
         )
-        .route("/", axum::routing::post(crate::graphql::execute_graphql));
+        .route("/", axum::routing::post(crate::graphql::execute_graphql))
+        .layer(tower_http::compression::CompressionLayer::new());
     router
 }
