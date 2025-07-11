@@ -28,3 +28,6 @@ terraform.tfstate.backup
 
 .gradle
 build
+
+# Python
+__pycache__/
