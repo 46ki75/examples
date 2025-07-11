@@ -21,6 +21,8 @@
         "esbenp.prettier-vscode",
         "stylelint.vscode-stylelint",
         "GraphQL.vscode-graphql",
+        // Python
+        "ms-python.mypy-type-checker",
         // Rust
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
