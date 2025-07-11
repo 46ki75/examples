@@ -12,9 +12,6 @@ pub fn init_router() -> axum::Router {
                 )
             }),
         )
-        .route(
-            "/",
-            axum::routing::post(crate::axum_handler::graphql_handler),
-        );
+        .route("/", axum::routing::post(crate::graphql::execute_graphql));
     router
 }

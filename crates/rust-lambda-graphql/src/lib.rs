@@ -1,7 +1,6 @@
-pub mod axum_handler;
+pub mod graphql;
 pub mod query;
 pub mod router;
-pub mod schema;
 
 pub async fn function_handler(
     event: lambda_http::Request,
