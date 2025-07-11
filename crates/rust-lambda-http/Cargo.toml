@@ -1,5 +1,5 @@
 [package]
-name = "rust-lambda-graphql"
+name = "rust-lambda-http"
 edition = "2021"
 
 

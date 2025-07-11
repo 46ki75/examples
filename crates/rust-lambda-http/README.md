@@ -17,6 +17,6 @@ To run this codebase locally, you can use the following command:
 cargo lambda watch
 ```
 
-Then, try to access [http://localhost:9000/lambda-url/rust-lambda-graphql](http://localhost:9000/lambda-url/rust-lambda-graphql).
+Then, try to access [http://localhost:9000/lambda-url/rust-lambda-http](http://localhost:9000/lambda-url/rust-lambda-http).
 
 For further infomation, please refer [this documentation (Cargo Lambda)](https://www.cargo-lambda.info/).
