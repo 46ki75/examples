@@ -12,6 +12,4 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "uvicorn>=0.35.0",
-]
+dev = ["uvicorn>=0.35.0"]
