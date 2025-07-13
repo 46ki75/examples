@@ -1,6 +1,9 @@
 use rmcp::{
-    Error, ServiceExt, handler::server::router::tool::ToolRouter, model::*, tool, tool_handler,
-    tool_router, transport::stdio,
+    Error, ServiceExt,
+    handler::server::{router::tool::ToolRouter, tool::Parameters},
+    model::*,
+    tool, tool_handler, tool_router,
+    transport::stdio,
 };
 use std::sync::Arc;
 use tokio::sync::Mutex;
@@ -9,6 +12,11 @@ use tokio::sync::Mutex;
 pub struct Counter {
     counter: Arc<Mutex<i32>>,
     tool_router: ToolRouter<Self>,
+}
+
+#[derive(Debug, serde::Deserialize, rmcp::schemars::JsonSchema)]
+pub struct AddParams {
+    pub value: i32,
 }
 
 #[tool_router]
@@ -24,6 +32,18 @@ impl Counter {
     async fn increment(&self) -> Result<CallToolResult, Error> {
         let mut counter = self.counter.lock().await;
         *counter += 1;
+        Ok(CallToolResult::success(vec![Content::text(
+            counter.to_string(),
+        )]))
+    }
+
+    #[tool(description = "Add a value to the counter")]
+    async fn add(
+        &self,
+        Parameters(AddParams { value }): Parameters<AddParams>,
+    ) -> Result<CallToolResult, Error> {
+        let mut counter = self.counter.lock().await;
+        *counter += value;
         Ok(CallToolResult::success(vec![Content::text(
             counter.to_string(),
         )]))
