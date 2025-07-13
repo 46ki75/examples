@@ -1,0 +1,12 @@
+[package]
+name = "rust-lambda-stream"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.8.4"
+bytes = "1.10.1"
+futures-util = "0.3.31"
+lambda_http = "0.15.0"
+
+tokio = { version = "1", features = ["macros"] }
