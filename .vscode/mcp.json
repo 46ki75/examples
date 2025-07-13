@@ -1,0 +1,7 @@
+{
+    "servers": {
+        "simple-counter": {
+            "command": "/workspaces/examples/target/release/rust-mcp"
+        }
+    }
+}
