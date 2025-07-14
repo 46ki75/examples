@@ -23,7 +23,8 @@ pub async fn greet_stream(
 pub async fn greet() -> Result<axum::response::Response<axum::body::Body>, axum::http::StatusCode> {
     let s = "Hello, world!".to_owned();
     let stream = futures_util::stream::once(async move {
-        Ok::<bytes::Bytes, std::convert::Infallible>(bytes::Bytes::from(s))
+        let result: Result<bytes::Bytes, std::convert::Infallible> = Ok(bytes::Bytes::from(s));
+        result
     });
 
     let body = axum::body::Body::from_stream(stream);
