@@ -1719,6 +1719,7 @@ dependencies = [
  "lambda_http",
  "reqwest",
  "tokio",
+ "tower-http",
 ]
 
 [[package]]

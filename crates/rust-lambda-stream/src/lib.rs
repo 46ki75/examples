@@ -1,4 +1,7 @@
-pub(crate) async fn function_handler(
+pub mod controller;
+pub mod router;
+
+pub async fn function_handler(
     _event: lambda_http::Request,
 ) -> Result<lambda_http::Response<axum::body::Body>, lambda_http::Error> {
     use futures_util::stream::{self, StreamExt};
@@ -13,7 +16,7 @@ pub(crate) async fn function_handler(
 
     let resp = lambda_http::Response::builder()
         .status(200)
-        .header("content-type", "text/html")
+        .header("content-type", "text/plain")
         .body(body)
         .map_err(Box::new)?;
 
