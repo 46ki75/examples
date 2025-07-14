@@ -1,24 +1,16 @@
+use lambda_http::tower::ServiceExt;
+
 pub mod controller;
 pub mod router;
 
 pub async fn function_handler(
-    _event: lambda_http::Request,
+    event: lambda_http::Request,
 ) -> Result<lambda_http::Response<axum::body::Body>, lambda_http::Error> {
-    use futures_util::stream::{self, StreamExt};
+    let router = router::init_router();
 
-    let chars: Vec<char> = "Hello, world!".chars().collect();
-    let stream = stream::iter(chars).then(|ch| async move {
-        tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
-        Ok::<bytes::Bytes, std::convert::Infallible>(bytes::Bytes::from(ch.to_string()))
-    });
+    let request = event;
 
-    let body = axum::body::Body::from_stream(stream);
+    let response = router.oneshot(request).await?;
 
-    let resp = lambda_http::Response::builder()
-        .status(200)
-        .header("content-type", "text/plain")
-        .body(body)
-        .map_err(Box::new)?;
-
-    Ok(resp)
+    Ok(response)
 }

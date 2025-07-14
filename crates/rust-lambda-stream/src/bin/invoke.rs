@@ -3,7 +3,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let client = reqwest::Client::new();
 
     let response = client
-        .get("http://localhost:9000/lambda-url/rust-lambda-stream")
+        .get("http://localhost:9000/lambda-url/rust-lambda-stream/greet")
+        .send()
+        .await?
+        .text()
+        .await?;
+
+    println!("{}", response);
+
+    let response = client
+        .get("http://localhost:9000/lambda-url/rust-lambda-stream/greet-stream")
         .send()
         .await?;
 
