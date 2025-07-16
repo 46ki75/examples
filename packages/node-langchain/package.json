@@ -15,7 +15,7 @@
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
     "@langchain/community": "^0.3.48",
-    "@langchain/core": "^0.3.62",
+    "@langchain/core": "^0.3.63",
     "@smithy/eventstream-codec": "^4.0.4",
     "chalk": "^5.4.1"
   },
