@@ -5,10 +5,6 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "main"
-    assignees:
-      - "46ki75"
-    reviewers:
-      - "46ki75"
     labels:
       - "nodejs"
 
@@ -17,10 +13,6 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "main"
-    assignees:
-      - "46ki75"
-    reviewers:
-      - "46ki75"
     labels:
       - "rust"
 
@@ -29,10 +21,6 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "main"
-    assignees:
-      - "46ki75"
-    reviewers:
-      - "46ki75"
     labels:
       - "java"
 
@@ -41,10 +29,6 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "main"
-    assignees:
-      - "46ki75"
-    reviewers:
-      - "46ki75"
     labels:
       - "go"
 
@@ -53,9 +37,5 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "main"
-    assignees:
-      - "46ki75"
-    reviewers:
-      - "46ki75"
     labels:
       - "terraform"
