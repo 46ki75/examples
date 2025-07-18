@@ -34,7 +34,8 @@ updates:
       - "go"
 
   - package-ecosystem: "terraform"
-    directory: "/terraform"
+    directories:
+      - "/terraform/**/*"
     schedule:
       interval: "daily"
     target-branch: "main"
