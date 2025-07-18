@@ -1,13 +1,15 @@
 const sleep = async (duration: number) =>
   new Promise((resolve) => setTimeout(resolve, duration));
 
-async function* random(): AsyncGenerator<number> {
+async function* streaming(): AsyncGenerator<string> {
+  yield "<ul>";
   let counter = 0;
   while (counter < 20) {
     await sleep(100);
-    yield Math.random();
+    yield `<li>${Math.random()}</li>`;
     counter++;
   }
+  yield "</ul>";
 }
 
 export default defineEventHandler((event) => {
@@ -15,22 +17,13 @@ export default defineEventHandler((event) => {
   setResponseHeader(event, "Cache-Control", "no-cache");
   setResponseHeader(event, "Transfer-Encoding", "chunked");
 
-  let interval: NodeJS.Timeout;
-
   const stream = new ReadableStream({
     async start(controller) {
-      controller.enqueue("<ul>");
-
-      for await (const value of random()) {
-        controller.enqueue("<li>" + value + "</li>");
+      for await (const value of streaming()) {
+        controller.enqueue(value);
       }
 
-      controller.enqueue("</ul>");
-
       controller.close();
-    },
-    cancel() {
-      clearInterval(interval);
     },
   });
 
