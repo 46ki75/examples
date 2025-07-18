@@ -40,9 +40,8 @@ while (true) {
 
   history.push(new HumanMessage(prompt));
 
-  const stream: IterableReadableStream<AIMessageChunk> = await chat.stream(
-    history
-  );
+  const stream: IterableReadableStream<AIMessageChunk> =
+    await chat.stream(history);
 
   console.log("\n" + chalk.green.bold("AI:"));
 

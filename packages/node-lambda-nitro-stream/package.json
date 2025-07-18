@@ -8,5 +8,10 @@
   },
   "devDependencies": {
     "nitropack": "latest"
+  },
+  "dependencies": {
+    "@langchain/community": "^0.3.49",
+    "@langchain/core": "^0.3.64",
+    "@smithy/eventstream-codec": "^4.0.4"
   }
 }
