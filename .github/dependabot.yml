@@ -25,7 +25,8 @@ updates:
       - "java"
 
   - package-ecosystem: "gomod"
-    directory: "/pulumi"
+    directories:
+      - "/pulumi/**/*"
     schedule:
       interval: "daily"
     target-branch: "main"
