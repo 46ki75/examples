@@ -1,3 +1,15 @@
+const sleep = async (duration: number) =>
+  new Promise((resolve) => setTimeout(resolve, duration));
+
+async function* random(): AsyncGenerator<number> {
+  let counter = 0;
+  while (counter < 20) {
+    await sleep(100);
+    yield Math.random();
+    counter++;
+  }
+}
+
 export default defineEventHandler((event) => {
   setResponseHeader(event, "Content-Type", "text/html");
   setResponseHeader(event, "Cache-Control", "no-cache");
@@ -6,17 +18,16 @@ export default defineEventHandler((event) => {
   let interval: NodeJS.Timeout;
 
   const stream = new ReadableStream({
-    start(controller) {
+    async start(controller) {
       controller.enqueue("<ul>");
 
-      interval = setInterval(() => {
-        controller.enqueue("<li>" + Math.random() + "</li>");
-      }, 100);
+      for await (const value of random()) {
+        controller.enqueue("<li>" + value + "</li>");
+      }
 
-      setTimeout(() => {
-        clearInterval(interval);
-        controller.close();
-      }, 1000);
+      controller.enqueue("</ul>");
+
+      controller.close();
     },
     cancel() {
       clearInterval(interval);
