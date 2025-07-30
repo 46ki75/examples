@@ -1,5 +1,5 @@
 use rmcp::{
-    Error, ServiceExt,
+    ServiceExt,
     handler::server::{router::tool::ToolRouter, tool::Parameters},
     model::*,
     tool, tool_handler, tool_router,
@@ -29,7 +29,7 @@ impl Counter {
     }
 
     #[tool(description = "Increment the counter by 1")]
-    async fn increment(&self) -> Result<CallToolResult, Error> {
+    async fn increment(&self) -> Result<CallToolResult, rmcp::ErrorData> {
         let mut counter = self.counter.lock().await;
         *counter += 1;
         Ok(CallToolResult::success(vec![Content::text(
@@ -41,7 +41,7 @@ impl Counter {
     async fn add(
         &self,
         Parameters(AddParams { value }): Parameters<AddParams>,
-    ) -> Result<CallToolResult, Error> {
+    ) -> Result<CallToolResult, rmcp::ErrorData> {
         let mut counter = self.counter.lock().await;
         *counter += value;
         Ok(CallToolResult::success(vec![Content::text(
@@ -50,7 +50,7 @@ impl Counter {
     }
 
     #[tool(description = "Get the current counter value")]
-    async fn get(&self) -> Result<CallToolResult, Error> {
+    async fn get(&self) -> Result<CallToolResult, rmcp::ErrorData> {
         let counter = self.counter.lock().await;
         Ok(CallToolResult::success(vec![Content::text(
             counter.to_string(),
