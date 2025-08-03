@@ -18,7 +18,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     let mut stream = response.bytes_stream();
 
-    use futures_util::StreamExt;
+    use futures::StreamExt;
 
     while let Some(chunk) = stream.next().await {
         let bytes = chunk?;
