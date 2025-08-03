@@ -1,7 +1,6 @@
 import { BedrockChat } from "@langchain/community/chat_models/bedrock";
 import {
   HumanMessage,
-  AIMessage,
   type BaseMessage,
   type AIMessageChunk,
   SystemMessage,
@@ -19,7 +18,7 @@ export default defineEventHandler(async (event) => {
   setResponseHeader(event, "Transfer-Encoding", "chunked");
 
   const history: BaseMessage[] = [
-    new SystemMessage("You are a AI assistant."),
+    new SystemMessage("You are an AI assistant."),
     new HumanMessage("Hi"),
   ];
 
