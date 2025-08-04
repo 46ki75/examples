@@ -7,6 +7,7 @@ pub fn init_router() -> axum::Router {
             axum::routing::get(crate::controller::greet_stream),
         )
         .route("/greet", axum::routing::get(crate::controller::greet))
+        .route("/chat", axum::routing::get(crate::controller::invoke))
         .layer(tower_http::compression::CompressionLayer::new());
     router
 }
