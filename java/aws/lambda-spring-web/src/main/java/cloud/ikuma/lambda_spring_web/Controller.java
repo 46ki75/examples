@@ -9,8 +9,11 @@ public class Controller {
 
     @GetMapping("/")
     public ResponseEntity<String> hello() {
-        ResponseEntity<String> response = ResponseEntity.ok().header("Content-Type", "text/plain")
+        ResponseEntity<String> response = ResponseEntity
+                .status(200)
+                .header("Content-Type", "text/plain")
                 .body("Hello, World!");
+
         return response;
     }
 }
