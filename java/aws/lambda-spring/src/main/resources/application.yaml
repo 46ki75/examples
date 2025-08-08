@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: lambda-spring
-app:
-  home: "${HOME}"
-  custom: "${CUSTOM:default value}"
