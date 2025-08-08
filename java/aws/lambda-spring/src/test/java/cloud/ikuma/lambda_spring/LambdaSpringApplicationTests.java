@@ -1,10 +1,10 @@
-package cloud.ikuma.lambda_spring_web;
+package cloud.ikuma.lambda_spring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LambdaSpringWebApplicationTests {
+class LambdaSpringApplicationTests {
 
 	@Test
 	void contextLoads() {
