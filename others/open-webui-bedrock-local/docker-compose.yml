@@ -1,0 +1,36 @@
+# docker-compose.yml
+version: "3.9"
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "8080:8080"
+    environment:
+      WEBUI_AUTH: "False"
+      OPENAI_API_BASE_URL: "http://litellm:4000"
+    volumes:
+      - open-webui:/app/backend/data
+
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    container_name: litellm
+    ports:
+      - "4000:4000"
+    environment:
+      AWS_PROFILE: examples
+      AWS_REGION: ap-northeast-1
+    volumes:
+      - ./litellm-config.yaml:/app/litellm-config.yaml:ro
+      - ~/.aws:/root/.aws:rw
+    command: ["--config", "/app/litellm-config.yaml"]
+
+  mcpo:
+    build:
+      context: ./mcpo
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+volumes:
+  open-webui:
