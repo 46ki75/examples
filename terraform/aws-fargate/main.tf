@@ -42,8 +42,12 @@ resource "aws_ecs_task_definition" "fargate" {
 
   container_definitions = jsonencode([{
     name      = "web-container"
-    image     = "nginx:latest"
+    image     = "caddy:latest"
     essential = true
+
+    linuxParameters = {
+      initProcessEnabled = true
+    }
 
     portMappings = [{
       containerPort = 80
@@ -82,5 +86,7 @@ resource "aws_ecs_service" "fargate_service" {
   }
 
   desired_count = 1
+
+  enable_execute_command = true
 }
 
