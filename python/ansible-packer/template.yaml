@@ -1,0 +1,153 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: VPC, Public Subnet, Private Subnet, IGW, NAT Gateway, Routes, and SG (all outbound allowed)
+
+Resources:
+  AnsiblePackerVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 192.168.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: AnsiblePacker
+
+  AnsiblePackerPublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AnsiblePackerVPC
+      CidrBlock: 192.168.1.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: ap-northeast-1a
+      Tags:
+        - Key: Name
+          Value: AnsiblePackerPublic
+
+  AnsiblePackerPrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AnsiblePackerVPC
+      CidrBlock: 192.168.2.0/24
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: ap-northeast-1a
+      Tags:
+        - Key: Name
+          Value: AnsiblePackerPrivate
+
+  AnsiblePackerInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: MyIGW
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref AnsiblePackerVPC
+      InternetGatewayId: !Ref AnsiblePackerInternetGateway
+
+  AnsiblePackerEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+
+  AnsiblePackerNATGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt AnsiblePackerEIP.AllocationId
+      SubnetId: !Ref AnsiblePackerPublicSubnet
+      Tags:
+        - Key: Name
+          Value: AnsiblePackerNAT
+
+  AnsiblePackerPublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AnsiblePackerVPC
+      Tags:
+        - Key: Name
+          Value: MyPublicRouteTable
+
+  AnsiblePackerPrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AnsiblePackerVPC
+      Tags:
+        - Key: Name
+          Value: MyPrivateRouteTable
+
+  AnsiblePackerPublicRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref AnsiblePackerPublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref AnsiblePackerInternetGateway
+
+  AnsiblePackerPrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref AnsiblePackerPrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref AnsiblePackerNATGateway
+
+  PublicSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AnsiblePackerPublicSubnet
+      RouteTableId: !Ref AnsiblePackerPublicRouteTable
+
+  PrivateSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AnsiblePackerPrivateSubnet
+      RouteTableId: !Ref AnsiblePackerPrivateRouteTable
+
+  AnsiblePackerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow all outbound traffic
+      VpcId: !Ref AnsiblePackerVPC
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: MyAllOutboundSG
+
+  AnsiblePackerInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Tags:
+        - Key: Name
+          Value: AnsiblePackerInstanceRole
+
+  AnsiblePackerInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles:
+        - !Ref AnsiblePackerInstanceRole
+      InstanceProfileName: AnsiblePackerInstanceProfile
+
+Outputs:
+  VPCId:
+    Value: !Ref AnsiblePackerVPC
+  PublicSubnetId:
+    Value: !Ref AnsiblePackerPublicSubnet
+  PrivateSubnetId:
+    Value: !Ref AnsiblePackerPrivateSubnet
+  SecurityGroupId:
+    Value: !Ref AnsiblePackerSecurityGroup
+  NatGatewayId:
+    Value: !Ref AnsiblePackerNATGateway
