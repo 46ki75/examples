@@ -26,7 +26,9 @@ source "amazon-ebs" "example" {
   security_group_id = "sg-017dc9d2489e366d7"
   source_ami = var.ami_id
 
-  ssh_username = "ec2-user"
+  ssh_username  = "ec2-user"
+  ssh_interface = "session_manager"
+  iam_instance_profile = "AnsiblePackerInstanceProfile"
 }
 
 build {

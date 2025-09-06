@@ -2,7 +2,11 @@
 - name: Test
   hosts: all
   tasks:
-    - name: Ping
+    - name: Check Python Version
+      ansible.builtin.debug:
+        msg: "Python version: {{ ansible_python_version }}"
+
+    - name: Update Packages
       ansible.builtin.dnf:
         update_cache: true
         update_only: true
