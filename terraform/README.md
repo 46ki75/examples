@@ -1,5 +1,20 @@
 # Terraform
 
+## Global Configuration
+
+First, create a cache directory to store terraform providers (plugins):
+
+```bash
+mkdir -p $HOME/.terraform.d/plugin-cache
+```
+
+Next, create a terraform runtime config file:
+
+```tf
+# ~/.terraformrc
+plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
+```
+
 ## Manually Managed Resources
 
 ### Amazon S3
