@@ -1,6 +1,11 @@
 {
   "editor.formatOnSave": true,
-  "stylelint.validate": ["css", "postcss", "scss", "vue"],
+  "stylelint.validate": [
+    "css",
+    "postcss",
+    "scss",
+    "vue"
+  ],
   "eslint.workingDirectories": [
     {
       "mode": "auto"

@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: VPC, Public Subnet, IGW, Route, and SG (all outbound allowed)
+
+Resources:
+  AnsiblePackerVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: AnsiblePacker
+
+  AnsiblePackerSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AnsiblePackerVPC
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: ap-northeast-1a
+      Tags:
+        - Key: Name
+          Value: AnsiblePacker
+
+  AnsiblePackerInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: MyIGW
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref AnsiblePackerVPC
+      InternetGatewayId: !Ref AnsiblePackerInternetGateway
+
+  AnsiblePackerRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AnsiblePackerVPC
+      Tags:
+        - Key: Name
+          Value: MyPublicRouteTable
+
+  AnsiblePackerRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref AnsiblePackerRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref AnsiblePackerInternetGateway
+
+  SubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AnsiblePackerSubnet
+      RouteTableId: !Ref AnsiblePackerRouteTable
+
+  AnsiblePackerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow all outbound traffic
+      VpcId: !Ref AnsiblePackerVPC
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          CidrIp: 0.0.0.0/0
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          CidrIp: 0.0.0.0/0
+          FromPort: 22
+          ToPort: 22
+        - IpProtocol: "icmp"
+          CidrIp: 0.0.0.0/0
+
+      Tags:
+        - Key: Name
+          Value: MyAllOutboundSG
+
+Outputs:
+  VPCId:
+    Value: !Ref AnsiblePackerVPC
+  SubnetId:
+    Value: !Ref AnsiblePackerSubnet
+  SecurityGroupId:
+    Value: !Ref AnsiblePackerSecurityGroup
