@@ -3,6 +3,18 @@ variable "ami_id" {
   default = "ami-07faa35bbd2230d90"
 }
 
+variable "vpc_id" {
+  type =  string
+}
+
+variable "subnet_id" {
+  type =  string
+}
+
+variable "security_group_id" {
+  type =  string
+}
+
 packer {
   required_plugins {
     amazon = {
@@ -17,18 +29,28 @@ packer {
 }
 
 source "amazon-ebs" "example" {
-  ami_name      = "packer-ansible-example"
+  ami_name      = "packer-ansible-example-{{timestamp}}"
   instance_type = "t3.small"
   region        = "ap-northeast-1"
 
-  vpc_id        = "vpc-0710ec673a3009d27"
-  subnet_id     = "subnet-09dfc0f1ca57d317e" 
-  security_group_id = "sg-017dc9d2489e366d7"
+  vpc_id        = var.vpc_id
+  subnet_id     = var.subnet_id
+  security_group_id = var.security_group_id
   source_ami = var.ami_id
 
   ssh_username  = "ec2-user"
   ssh_interface = "session_manager"
   iam_instance_profile = "AnsiblePackerInstanceProfile"
+
+  
+  launch_block_device_mappings  {
+    device_name = "/dev/xvda"
+    volume_size = 30
+    volume_type = "gp3"
+    delete_on_termination = true
+    encrypted = true
+    kms_key_id = "alias/aws/ebs"
+  }
 }
 
 build {
