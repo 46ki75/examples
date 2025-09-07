@@ -1,0 +1,24 @@
+provisioning_info:
+  aws_region:
+    primary: ap-northeast-1
+    global: us-east-1
+
+  cloudformation:
+    stack_name: AnsiblePacker
+
+  state:
+    name: /ansible/molecule/state/DO_NOT_DELETE
+    bucket_name: shared-46ki75-examples-s3-bucket-ansible-molecule
+    object_key: state.json
+
+  vpc:
+    name: AnsiblePacker
+    cidr_block: 10.128.0.0/24
+    dns_support: true
+    dns_hostnames: true
+
+  subnets:
+    - name: AnsiblePackerPublic
+      cidr_block: 10.128.0.0/27
+    - name: AnsiblePackerPrivate
+      cidr_block: 10.128.0.32/27

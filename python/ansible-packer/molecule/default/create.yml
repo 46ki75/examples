@@ -1,0 +1,20 @@
+---
+- name: Create
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Create or update stack
+      amazon.aws.cloudformation:
+        stack_name: "{{ provisioning_info.cloudformation.stack_name }}"
+        template_body: "{{ lookup('ansible.builtin.template', '../../template.yaml') }}"
+        capabilities:
+          - CAPABILITY_IAM
+          - CAPABILITY_NAMED_IAM
+        region: "{{ provisioning_info.aws_region.primary }}"
+        state: present
+      register: cfn_result
+
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ cfn_result.stack_outputs }}"

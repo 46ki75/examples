@@ -140,6 +140,18 @@ Resources:
         - !Ref AnsiblePackerInstanceRole
       InstanceProfileName: AnsiblePackerInstanceProfile
 
+  AnsiblePackerEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-07faa35bbd2230d90
+      InstanceType: t3.small
+      SubnetId: !Ref AnsiblePackerPrivateSubnet
+      SecurityGroupIds:
+        - !Ref AnsiblePackerSecurityGroup
+      Tags:
+        - Key: Name
+          Value: AnsiblePackerEC2Instance
+
 Outputs:
   VPCId:
     Value: !Ref AnsiblePackerVPC
@@ -151,3 +163,5 @@ Outputs:
     Value: !Ref AnsiblePackerSecurityGroup
   NatGatewayId:
     Value: !Ref AnsiblePackerNATGateway
+  EC2InstanceId:
+    Value: !Ref AnsiblePackerEC2Instance
