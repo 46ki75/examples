@@ -2,7 +2,14 @@
 - name: Converge
   hosts: all
   gather_facts: false
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_bucket_name: "{{ provisioning_info.state.bucket_name }}"
+    ansible_aws_ssm_region: "{{ provisioning_info.aws_region.primary }}"
   tasks:
+    - name: Wait for connection
+      ansible.builtin.wait_for_connection:
+
     - name: Replace this task with one that validates your content
       ansible.builtin.debug:
         msg: "This is the effective test"
