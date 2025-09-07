@@ -1,0 +1,15 @@
+---
+driver:
+  name: default
+
+platforms:
+  - name: instance
+    image_owner: 137112412989
+    image: ami-07faa35bbd2230d90
+    instance_type: t3.small
+    vpc_subnet_id: subnet-0d852671e6281ccd0
+    region: ap-northeast-1
+    security_groups: sg-0783dddbaa8890b5e
+
+provisioner:
+  name: ansible

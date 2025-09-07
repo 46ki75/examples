@@ -11,5 +11,6 @@
       "mode": "auto"
     }
   ],
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "ansible.python.interpreterPath": "/workspaces/examples/python/ansible-packer/.venv/bin/python"
 }
