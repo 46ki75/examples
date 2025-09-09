@@ -63,5 +63,10 @@
     // DinD
     "ghcr.io/devcontainers/features/docker-in-docker": {}
   },
-  "postCreateCommand": "aws configure sso --profile default"
+  "remoteEnv": {
+    "AWS_PROFILE": "examples"
+  },
+  "mounts": [
+    "type=bind,source=${localEnv:HOME}/.aws/,target=/home/vscode/.aws/"
+  ]
 }
