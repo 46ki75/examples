@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "name": "serde",
+        "description": "A generic serialization/deserialization framework"
+    },
+    {
+        "id": 2,
+        "name": "rustls",
+        "description": "Rustls is a modern TLS library written in Rust."
+    },
+    {
+        "id": 3,
+        "name": "time",
+        "description": "Date and time library. Fully interoperable with the standard library. Mostly compatible with #![no_std]."
+    },
+    {
+        "id": 4,
+        "name": "pkg-config",
+        "description": "A library to run the pkg-config system tool at build time in order to be used in Cargo build scripts."
+    },
+    {
+        "id": 5,
+        "name": "futures",
+        "description": "An implementation of futures and streams featuring zero allocations, composability, and iterator-like interfaces."
+    },
+    {
+        "id": 6,
+        "name": "pkg-config",
+        "description": "A library to run the pkg-config system tool at build time in order to be used in Cargo build scripts."
+    },
+    {
+        "id": 7,
+        "name": "syn",
+        "description": "Parser for Rust source code"
+    },
+    {
+        "id": 8,
+        "name": "syn",
+        "description": "Raw FFI bindings to platform libraries like libc."
+    },
+    {
+        "id": 9,
+        "name": "hashbrown",
+        "description": "A Rust port of Google's SwissTable hash map"
+    },
+    {
+        "id": 10,
+        "name": "tokio",
+        "description": "An event-driven, non-blocking I/O platform for writing asynchronous I/O backed applications."
+    }
+]
