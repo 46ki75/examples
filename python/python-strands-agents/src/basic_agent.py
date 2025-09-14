@@ -1,5 +1,6 @@
 from strands import Agent, tool
 from strands_tools import calculator, current_time
+from strands.models import BedrockModel
 
 
 @tool
@@ -23,9 +24,15 @@ def letter_counter(word: str, letter: str) -> int:
     return word.lower().count(letter.lower())
 
 
+bedrock_model = BedrockModel(model_id="apac.amazon.nova-pro-v1:0")
+
+
 # Create an agent with tools from the community-driven strands-tools package
 # as well as our custom letter_counter tool
-agent = Agent(tools=[calculator, current_time, letter_counter])
+agent = Agent(
+    tools=[calculator, current_time, letter_counter],
+    model=bedrock_model
+)
 
 # Ask the agent a question that uses the available tools
 message = """
