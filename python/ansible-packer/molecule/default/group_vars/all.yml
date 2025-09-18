@@ -7,9 +7,7 @@ provisioning_info:
     stack_name: AnsiblePacker
 
   state:
-    name: /ansible/molecule/state/DO_NOT_DELETE
     bucket_name: shared-46ki75-examples-s3-bucket-ansible-molecule
-    object_key: state.json
 
   vpc:
     name: AnsiblePacker
