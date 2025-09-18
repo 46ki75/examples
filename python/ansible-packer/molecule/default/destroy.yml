@@ -4,13 +4,13 @@
   connection: local
   gather_facts: false
   tasks:
-    - name: Delete stack
+    - name: Delete the stack
       amazon.aws.cloudformation:
         stack_name: "{{ provisioning_info.cloudformation.stack_name }}"
         template_body: "{{ lookup('ansible.builtin.template', '../../template.yaml') }}"
         capabilities:
           - CAPABILITY_IAM
           - CAPABILITY_NAMED_IAM
-        region: "{{ provisioning_info.aws_region.primary }}"
+        region: "ap-northeast-1"
         state: absent
       register: vpc_result
