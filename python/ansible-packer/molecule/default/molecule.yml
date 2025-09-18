@@ -1,9 +1,0 @@
----
-driver:
-  name: default
-
-platforms:
-  - name: ec2-instance
-
-provisioner:
-  name: ansible

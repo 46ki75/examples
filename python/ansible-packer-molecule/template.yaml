@@ -148,9 +148,17 @@ Resources:
       SubnetId: !Ref AnsiblePackerPrivateSubnet
       SecurityGroupIds:
         - !Ref AnsiblePackerSecurityGroup
+      IamInstanceProfile: !Ref AnsiblePackerInstanceProfile
       Tags:
         - Key: Name
           Value: AnsiblePackerEC2Instance
+
+  AnsiblePackerEC2InstanceIdParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/AnsiblePacker/instance-id"
+      Type: String
+      Value: !Ref AnsiblePackerEC2Instance
 
 Outputs:
   VPCId:
