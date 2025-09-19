@@ -1,0 +1,15 @@
+---
+- name: Install CloudWatch Agent
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - amazon-cloudwatch-agent
+    state: present
+
+- name: Enable Auto Start
+  become: true
+  ansible.builtin.systemd:
+    name: amazon-cloudwatch-agent.service
+    state: reloaded
+    enabled: true
+    masked: false
