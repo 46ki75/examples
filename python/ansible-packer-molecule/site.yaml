@@ -1,16 +1,5 @@
 ---
 - name: Test
   hosts: all
-  tasks:
-    - name: Check Python Version
-      ansible.builtin.debug:
-        msg: "Python version: {{ ansible_python_version }}"
-
-    - name: Update Packages
-      ansible.builtin.dnf:
-        update_cache: true
-        update_only: true
-
-    - name: CloudWatch Agent
-      ansible.builtin.import_role:
-        name: cloudwatch_agent
+  roles:
+    - cloudwatch_agent

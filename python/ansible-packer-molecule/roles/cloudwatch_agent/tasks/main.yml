@@ -5,11 +5,31 @@
     name:
       - amazon-cloudwatch-agent
     state: present
+  notify: Enable and Start CloudWatch Agent
 
-- name: Enable Auto Start
+- name: Create CloudWatch Agent Configuration File
   become: true
-  ansible.builtin.systemd:
-    name: amazon-cloudwatch-agent.service
-    state: reloaded
-    enabled: true
-    masked: false
+  ansible.builtin.copy:
+    content: "{{ cloudwatch_agent_config | to_json(indent=2) }}"
+    dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.d/config.json
+    mode: "0644"
+  notify: Restart CloudWatch Agent
+  vars:
+    cloudwatch_agent_config:
+      metrics:
+        metrics_collected:
+          cpu:
+            resources:
+              - "*"
+            measurement:
+              - "usage_active"
+            totalcpu: true
+          mem:
+            measurement:
+              - "used_percent"
+    logs:
+      logs_collected:
+        files:
+          collect_list:
+            - file_path: /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
+              log_group_name: amazon-cloudwatch-agent.log

@@ -1,0 +1,16 @@
+---
+- name: Enable and Start CloudWatch Agent
+  become: true
+  ansible.builtin.systemd:
+    name: amazon-cloudwatch-agent.service
+    state: started
+    enabled: true
+    masked: false
+
+- name: Restart CloudWatch Agent
+  become: true
+  ansible.builtin.systemd:
+    name: amazon-cloudwatch-agent.service
+    state: restarted
+    enabled: true
+    masked: false
