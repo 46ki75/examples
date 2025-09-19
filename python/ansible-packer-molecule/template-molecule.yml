@@ -2,39 +2,39 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: VPC, Public Subnet, Private Subnet, IGW, NAT Gateway, Routes, and SG (all outbound allowed)
 
 Resources:
-  AnsiblePackerVPC:
+  AnsibleMoleculeVPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: 192.168.0.0/16
+      CidrBlock: 192.168.200.0/24
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: AnsiblePacker
+          Value: AnsibleMolecule
 
-  AnsiblePackerPublicSubnet:
+  AnsibleMoleculePublicSubnet:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref AnsiblePackerVPC
-      CidrBlock: 192.168.1.0/24
+      VpcId: !Ref AnsibleMoleculeVPC
+      CidrBlock: 192.168.200.0/26
       MapPublicIpOnLaunch: true
       AvailabilityZone: ap-northeast-1a
       Tags:
         - Key: Name
-          Value: AnsiblePackerPublic
+          Value: AnsibleMoleculePublic
 
-  AnsiblePackerPrivateSubnet:
+  AnsibleMoleculePrivateSubnet:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref AnsiblePackerVPC
-      CidrBlock: 192.168.2.0/24
+      VpcId: !Ref AnsibleMoleculeVPC
+      CidrBlock: 192.168.200.64/26
       MapPublicIpOnLaunch: false
       AvailabilityZone: ap-northeast-1a
       Tags:
         - Key: Name
-          Value: AnsiblePackerPrivate
+          Value: AnsibleMoleculePrivate
 
-  AnsiblePackerInternetGateway:
+  AnsibleMoleculeInternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
@@ -44,70 +44,70 @@ Resources:
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      VpcId: !Ref AnsiblePackerVPC
-      InternetGatewayId: !Ref AnsiblePackerInternetGateway
+      VpcId: !Ref AnsibleMoleculeVPC
+      InternetGatewayId: !Ref AnsibleMoleculeInternetGateway
 
-  AnsiblePackerEIP:
+  AnsibleMoleculeEIP:
     Type: AWS::EC2::EIP
     Properties:
       Domain: vpc
 
-  AnsiblePackerNATGateway:
+  AnsibleMoleculeNATGateway:
     Type: AWS::EC2::NatGateway
     Properties:
-      AllocationId: !GetAtt AnsiblePackerEIP.AllocationId
-      SubnetId: !Ref AnsiblePackerPublicSubnet
+      AllocationId: !GetAtt AnsibleMoleculeEIP.AllocationId
+      SubnetId: !Ref AnsibleMoleculePublicSubnet
       Tags:
         - Key: Name
-          Value: AnsiblePackerNAT
+          Value: AnsibleMoleculeNAT
 
-  AnsiblePackerPublicRouteTable:
+  AnsibleMoleculePublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref AnsiblePackerVPC
+      VpcId: !Ref AnsibleMoleculeVPC
       Tags:
         - Key: Name
           Value: MyPublicRouteTable
 
-  AnsiblePackerPrivateRouteTable:
+  AnsibleMoleculePrivateRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref AnsiblePackerVPC
+      VpcId: !Ref AnsibleMoleculeVPC
       Tags:
         - Key: Name
           Value: MyPrivateRouteTable
 
-  AnsiblePackerPublicRoute:
+  AnsibleMoleculePublicRoute:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref AnsiblePackerPublicRouteTable
+      RouteTableId: !Ref AnsibleMoleculePublicRouteTable
       DestinationCidrBlock: 0.0.0.0/0
-      GatewayId: !Ref AnsiblePackerInternetGateway
+      GatewayId: !Ref AnsibleMoleculeInternetGateway
 
-  AnsiblePackerPrivateRoute:
+  AnsibleMoleculePrivateRoute:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref AnsiblePackerPrivateRouteTable
+      RouteTableId: !Ref AnsibleMoleculePrivateRouteTable
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref AnsiblePackerNATGateway
+      NatGatewayId: !Ref AnsibleMoleculeNATGateway
 
   PublicSubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref AnsiblePackerPublicSubnet
-      RouteTableId: !Ref AnsiblePackerPublicRouteTable
+      SubnetId: !Ref AnsibleMoleculePublicSubnet
+      RouteTableId: !Ref AnsibleMoleculePublicRouteTable
 
   PrivateSubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref AnsiblePackerPrivateSubnet
-      RouteTableId: !Ref AnsiblePackerPrivateRouteTable
+      SubnetId: !Ref AnsibleMoleculePrivateSubnet
+      RouteTableId: !Ref AnsibleMoleculePrivateRouteTable
 
-  AnsiblePackerSecurityGroup:
+  AnsibleMoleculeSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Allow all outbound traffic
-      VpcId: !Ref AnsiblePackerVPC
+      VpcId: !Ref AnsibleMoleculeVPC
       SecurityGroupEgress:
         - IpProtocol: "-1"
           CidrIp: 0.0.0.0/0
@@ -115,7 +115,7 @@ Resources:
         - Key: Name
           Value: MyAllOutboundSG
 
-  AnsiblePackerInstanceRole:
+  AnsibleMoleculeInstanceRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -131,84 +131,84 @@ Resources:
         - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
       Tags:
         - Key: Name
-          Value: AnsiblePackerInstanceRole
+          Value: AnsibleMoleculeInstanceRole
 
-  AnsiblePackerInstanceProfile:
+  AnsibleMoleculeInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties:
       Path: /
       Roles:
-        - !Ref AnsiblePackerInstanceRole
-      InstanceProfileName: AnsiblePackerInstanceProfile
+        - !Ref AnsibleMoleculeInstanceRole
+      InstanceProfileName: AnsibleMoleculeInstanceProfile
 
-  AnsiblePackerEC2InstanceWeb:
+  AnsibleMoleculeEC2InstanceWeb:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-07faa35bbd2230d90
       InstanceType: t3.small
-      SubnetId: !Ref AnsiblePackerPrivateSubnet
+      SubnetId: !Ref AnsibleMoleculePrivateSubnet
       SecurityGroupIds:
-        - !Ref AnsiblePackerSecurityGroup
-      IamInstanceProfile: !Ref AnsiblePackerInstanceProfile
+        - !Ref AnsibleMoleculeSecurityGroup
+      IamInstanceProfile: !Ref AnsibleMoleculeInstanceProfile
       Tags:
         - Key: Name
-          Value: AnsiblePackerEC2Instance
+          Value: AnsibleMoleculeEC2Instance
 
-  AnsiblePackerEC2InstanceApi:
+  AnsibleMoleculeEC2InstanceApi:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-07faa35bbd2230d90
       InstanceType: t3.small
-      SubnetId: !Ref AnsiblePackerPrivateSubnet
+      SubnetId: !Ref AnsibleMoleculePrivateSubnet
       SecurityGroupIds:
-        - !Ref AnsiblePackerSecurityGroup
-      IamInstanceProfile: !Ref AnsiblePackerInstanceProfile
+        - !Ref AnsibleMoleculeSecurityGroup
+      IamInstanceProfile: !Ref AnsibleMoleculeInstanceProfile
       Tags:
         - Key: Name
-          Value: AnsiblePackerEC2Instance
+          Value: AnsibleMoleculeEC2Instance
 
-  AnsiblePackerEC2InstanceBatch:
+  AnsibleMoleculeEC2InstanceBatch:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-07faa35bbd2230d90
       InstanceType: t3.small
-      SubnetId: !Ref AnsiblePackerPrivateSubnet
+      SubnetId: !Ref AnsibleMoleculePrivateSubnet
       SecurityGroupIds:
-        - !Ref AnsiblePackerSecurityGroup
-      IamInstanceProfile: !Ref AnsiblePackerInstanceProfile
+        - !Ref AnsibleMoleculeSecurityGroup
+      IamInstanceProfile: !Ref AnsibleMoleculeInstanceProfile
       Tags:
         - Key: Name
-          Value: AnsiblePackerEC2Instance
+          Value: AnsibleMoleculeEC2Instance
 
-  AnsiblePackerEC2InstanceIdParameterWeb:
+  AnsibleMoleculeEC2InstanceIdParameterWeb:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/AnsiblePacker/ec2-instance-web/instance-id"
+      Name: "/AnsibleMolecule/ec2-instance-web/instance-id"
       Type: String
-      Value: !Ref AnsiblePackerEC2InstanceWeb
+      Value: !Ref AnsibleMoleculeEC2InstanceWeb
 
-  AnsiblePackerEC2InstanceIdParameterApi:
+  AnsibleMoleculeEC2InstanceIdParameterApi:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/AnsiblePacker/ec2-instance-api/instance-id"
+      Name: "/AnsibleMolecule/ec2-instance-api/instance-id"
       Type: String
-      Value: !Ref AnsiblePackerEC2InstanceApi
+      Value: !Ref AnsibleMoleculeEC2InstanceApi
 
-  AnsiblePackerEC2InstanceIdParameterBatch:
+  AnsibleMoleculeEC2InstanceIdParameterBatch:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/AnsiblePacker/ec2-instance-batch/instance-id"
+      Name: "/AnsibleMolecule/ec2-instance-batch/instance-id"
       Type: String
-      Value: !Ref AnsiblePackerEC2InstanceBatch
+      Value: !Ref AnsibleMoleculeEC2InstanceBatch
 
 Outputs:
   VPCId:
-    Value: !Ref AnsiblePackerVPC
+    Value: !Ref AnsibleMoleculeVPC
   PublicSubnetId:
-    Value: !Ref AnsiblePackerPublicSubnet
+    Value: !Ref AnsibleMoleculePublicSubnet
   PrivateSubnetId:
-    Value: !Ref AnsiblePackerPrivateSubnet
+    Value: !Ref AnsibleMoleculePrivateSubnet
   SecurityGroupId:
-    Value: !Ref AnsiblePackerSecurityGroup
+    Value: !Ref AnsibleMoleculeSecurityGroup
   NatGatewayId:
-    Value: !Ref AnsiblePackerNATGateway
+    Value: !Ref AnsibleMoleculeNATGateway

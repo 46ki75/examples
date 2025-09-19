@@ -1,2 +1,2 @@
 common_name: api
-ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsiblePacker/ec2-instance-api/instance-id' ) }}"
+ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsibleMolecule/ec2-instance-api/instance-id' ) }}"
