@@ -57,6 +57,6 @@ build {
   sources = ["source.amazon-ebs.example"]
 
   provisioner "ansible" {
-    playbook_file = "./playbooks/site.yaml"
+    playbook_file = "./site.yaml"
   }
 }

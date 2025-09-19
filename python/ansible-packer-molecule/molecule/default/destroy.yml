@@ -7,7 +7,7 @@
     - name: Destroy the stack
       amazon.aws.cloudformation:
         stack_name: "{{ provisioning_info.cloudformation.stack_name }}"
-        template_body: "{{ lookup('ansible.builtin.template', '../../template.yaml') }}"
+        template_body: "{{ lookup('ansible.builtin.template', '../../template-molecule.yml') }}"
         capabilities:
           - CAPABILITY_IAM
           - CAPABILITY_NAMED_IAM
