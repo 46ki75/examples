@@ -141,7 +141,7 @@ Resources:
         - !Ref AnsiblePackerInstanceRole
       InstanceProfileName: AnsiblePackerInstanceProfile
 
-  AnsiblePackerEC2Instance:
+  AnsiblePackerEC2InstanceWeb:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-07faa35bbd2230d90
@@ -154,12 +154,52 @@ Resources:
         - Key: Name
           Value: AnsiblePackerEC2Instance
 
-  AnsiblePackerEC2InstanceIdParameter:
+  AnsiblePackerEC2InstanceApi:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-07faa35bbd2230d90
+      InstanceType: t3.small
+      SubnetId: !Ref AnsiblePackerPrivateSubnet
+      SecurityGroupIds:
+        - !Ref AnsiblePackerSecurityGroup
+      IamInstanceProfile: !Ref AnsiblePackerInstanceProfile
+      Tags:
+        - Key: Name
+          Value: AnsiblePackerEC2Instance
+
+  AnsiblePackerEC2InstanceBatch:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-07faa35bbd2230d90
+      InstanceType: t3.small
+      SubnetId: !Ref AnsiblePackerPrivateSubnet
+      SecurityGroupIds:
+        - !Ref AnsiblePackerSecurityGroup
+      IamInstanceProfile: !Ref AnsiblePackerInstanceProfile
+      Tags:
+        - Key: Name
+          Value: AnsiblePackerEC2Instance
+
+  AnsiblePackerEC2InstanceIdParameterWeb:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/AnsiblePacker/instance-id"
+      Name: "/AnsiblePacker/ec2-instance-web/instance-id"
       Type: String
-      Value: !Ref AnsiblePackerEC2Instance
+      Value: !Ref AnsiblePackerEC2InstanceWeb
+
+  AnsiblePackerEC2InstanceIdParameterApi:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/AnsiblePacker/ec2-instance-api/instance-id"
+      Type: String
+      Value: !Ref AnsiblePackerEC2InstanceApi
+
+  AnsiblePackerEC2InstanceIdParameterBatch:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/AnsiblePacker/ec2-instance-batch/instance-id"
+      Type: String
+      Value: !Ref AnsiblePackerEC2InstanceBatch
 
 Outputs:
   VPCId:
@@ -172,5 +212,3 @@ Outputs:
     Value: !Ref AnsiblePackerSecurityGroup
   NatGatewayId:
     Value: !Ref AnsiblePackerNATGateway
-  EC2InstanceId:
-    Value: !Ref AnsiblePackerEC2Instance

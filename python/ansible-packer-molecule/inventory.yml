@@ -1,0 +1,7 @@
+all:
+  children:
+    example:
+      hosts:
+        ec2-instance-web:
+        ec2-instance-api:
+        ec2-instance-batch:

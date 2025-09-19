@@ -9,9 +9,18 @@ driver:
   name: default
 
 platforms:
-  - name: ec2-instance
+  - name: ec2-instance-web
     groups:
       - example
+      - web
+  - name: ec2-instance-api
+    groups:
+      - example
+      - api
+  - name: ec2-instance-batch
+    groups:
+      - example
+      - batch
 
 provisioner:
   name: ansible
