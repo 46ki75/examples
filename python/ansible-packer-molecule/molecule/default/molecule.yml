@@ -2,7 +2,8 @@
 dependency:
   name: galaxy
   options:
-    requirements-file: ../../requirements.yaml
+    role-file: requirements.yml
+    requirements-file: requirements.yml
 
 driver:
   name: default
@@ -12,7 +13,3 @@ platforms:
 
 provisioner:
   name: ansible
-  # connection_options:
-  #   ansible_connection: ssh
-  #   ansible_host: "{{ lookup('env', 'TARGET_HOST') }}" # Instance ID
-  #   ansible_aws_ssm_region: "{{ lookup('env', 'AWS_REGION') | default('ap-northeast-1') }}"
