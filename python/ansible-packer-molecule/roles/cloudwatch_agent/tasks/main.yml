@@ -5,11 +5,105 @@
     name:
       - amazon-cloudwatch-agent
     state: present
+  notify: Enable and Start CloudWatch Agent
 
-- name: Enable Auto Start
+- name: Create CloudWatch Agent Configuration File
   become: true
-  ansible.builtin.systemd:
-    name: amazon-cloudwatch-agent.service
-    state: reloaded
-    enabled: true
-    masked: false
+  ansible.builtin.copy:
+    content: "{{ cloudwatch_agent_config | to_json(indent=2) }}"
+    dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.d/cloudwatch-agent.json
+    mode: "0644"
+  notify: Restart CloudWatch Agent
+  vars:
+    cloudwatch_agent_config:
+      agent:
+        metrics_collection_interval: 60
+        region: ap-northeast-1
+        logfile: /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
+        run_as_user: root
+      metrics:
+        namespace: CWAgent/AnsiblePackerMolecule
+        metrics_collected:
+          cpu:
+            resources:
+              - "*"
+            measurement:
+              - "usage_active"
+            totalcpu: true
+          mem:
+            measurement:
+              - "used_percent"
+      logs:
+        logs_collected:
+          files:
+            collect_list:
+              - file_path: /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
+                log_group_name: /ansible-packer-molecule/amazon-cloudwatch-agent.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+
+              - file_path: /var/log/amazon/ssm/amazon-ssm-agent.log
+                log_group_name: /ansible-packer-molecule/amazon-ssm-agent.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+
+              - file_path: /var/log/amazon/ssm/errors.log
+                log_group_name: /ansible-packer-molecule/amazon-ssm-agent.errors.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+
+              - file_path: /var/log/amazon/ssm/audits/amazon-ssm-agent-audit-*
+                log_group_name: /ansible-packer-molecule/amazon-ssm-agent-audit
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+
+              - file_path: /var/log/audit/audit.log
+                log_group_name: /ansible-packer-molecule/audit.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+
+              - file_path: /var/log/cloud-init.log
+                log_group_name: /ansible-packer-molecule/cloud-init.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+
+              - file_path: /var/log/cloud-init-output.log
+                log_group_name: /ansible-packer-molecule/cloud-init-output.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+
+              - file_path: /var/log/dnf.log
+                log_group_name: /ansible-packer-molecule/dnf.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+                filters:
+                  - type: "exclude"
+                    expression: "DEBUG"
+
+              - file_path: /var/log/dnf.librepo.log
+                log_group_name: /ansible-packer-molecule/dnf.librepo.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+                filters:
+                  - type: "exclude"
+                    expression: "DEBUG"
+
+              - file_path: /var/log/dnf.rpm.log
+                log_group_name: /ansible-packer-molecule/dnf.rpm.log
+                log_stream_name: "{instance_id}"
+                log_group_class: STANDARD
+                retention_in_days: 1
+                filters:
+                  - type: "exclude"
+                    expression: "DEBUG"
+                  - type: "exclude"
+                    expression: "SUBDEBUG"
