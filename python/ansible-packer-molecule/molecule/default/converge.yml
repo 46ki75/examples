@@ -16,7 +16,7 @@
         msg: "This is the effective test"
 
 - name: Converge - Test Playbook (site.yaml)
-  import_playbook: ../../playbooks/site.yaml
+  import_playbook: ../../site.yaml
   vars:
     ansible_connection: amazon.aws.aws_ssm
     ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsiblePacker/instance-id' ) }}"

@@ -10,3 +10,7 @@
       ansible.builtin.dnf:
         update_cache: true
         update_only: true
+
+    - name: CloudWatch Agent
+      ansible.builtin.import_role:
+        name: cloudwatch_agent
