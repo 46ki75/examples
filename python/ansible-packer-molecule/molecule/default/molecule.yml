@@ -10,6 +10,20 @@ driver:
 
 platforms:
   - name: ec2-instance
+    groups:
+      - example
 
 provisioner:
   name: ansible
+
+scenario:
+  name: default
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy
