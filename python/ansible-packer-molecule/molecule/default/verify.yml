@@ -11,10 +11,6 @@
     - name: Wait for connection
       ansible.builtin.wait_for_connection:
 
-- name: Converge - Test Playbook (site.yaml)
-  import_playbook: ../../site.yaml
-  vars:
-    ansible_connection: amazon.aws.aws_ssm
-    ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsiblePacker/instance-id' ) }}"
-    ansible_aws_ssm_bucket_name: "shared-46ki75-examples-s3-bucket-ansible-molecule"
-    ansible_aws_ssm_region: "ap-northeast-1"
+    - name: Replace this task with one that validates your content
+      ansible.builtin.debug:
+        msg: "This is the effective test"

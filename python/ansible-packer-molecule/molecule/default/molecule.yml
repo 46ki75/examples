@@ -2,17 +2,28 @@
 dependency:
   name: galaxy
   options:
-    requirements-file: ../../requirements.yaml
+    role-file: requirements.yml
+    requirements-file: requirements.yml
 
 driver:
   name: default
 
 platforms:
   - name: ec2-instance
+    groups:
+      - example
 
 provisioner:
   name: ansible
-  # connection_options:
-  #   ansible_connection: ssh
-  #   ansible_host: "{{ lookup('env', 'TARGET_HOST') }}" # Instance ID
-  #   ansible_aws_ssm_region: "{{ lookup('env', 'AWS_REGION') | default('ap-northeast-1') }}"
+
+scenario:
+  name: default
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy

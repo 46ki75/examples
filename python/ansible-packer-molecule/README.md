@@ -23,7 +23,7 @@ uv sync
 ### Install Ansible Collections
 
 ```bash
-uv run ansible-galaxy install -r requirements.yaml
+uv run ansible-galaxy collection install -r requirements.yml
 ```
 
 ## Playbook Testing (Molecule)
