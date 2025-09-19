@@ -1,6 +1,6 @@
 all:
   children:
-    example:
+    example-group:
       hosts:
         ec2-instance-web:
         ec2-instance-api:
