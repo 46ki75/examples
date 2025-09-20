@@ -1,2 +1,1 @@
 common_name: batch
-ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsibleMolecule/ec2-instance-batch/instance-id' ) }}"
