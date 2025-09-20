@@ -11,7 +11,7 @@
       ansible.builtin.assert:
         that:
           - inventory_hostname in valid_hostnames
-        success_msg: "{{ inventory_hostname }}"
+        success_msg: "Hostname (`inventory_hostname`): {{ inventory_hostname }}"
         fail_msg: "The specified hostname {{ inventory_hostname }} is not permitted. Valid hostnames are: {{ valid_hostnames }}"
       vars:
         valid_hostnames:
