@@ -57,6 +57,8 @@ build {
   sources = ["source.amazon-ebs.example"]
 
   provisioner "ansible" {
-    playbook_file = "./site.yaml"
+    command = "./.venv/bin/ansible-playbook"
+    host_alias = "ec2-instance-web"
+    playbook_file = "./site.yml"
   }
 }
