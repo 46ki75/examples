@@ -1,5 +1,3 @@
 ---
 - name: Converge - Test Playbook (site.yaml)
   ansible.builtin.import_playbook: ../../site.yml
-  vars:
-    service: httpd
