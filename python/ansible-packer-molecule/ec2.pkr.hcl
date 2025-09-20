@@ -1,25 +1,25 @@
 variable "ami_id" {
-  type =  string
+  type = string
   default = "ami-07faa35bbd2230d90"
 }
 
 variable "vpc_id" {
-  type =  string
+  type = string
 }
 
 variable "subnet_id" {
-  type =  string
+  type = string
 }
 
 variable "security_group_id" {
-  type =  string
+  type = string
 }
 
 packer {
   required_plugins {
     amazon = {
       version = ">= 1.4.0"
-      source  = "github.com/hashicorp/amazon"
+      source = "github.com/hashicorp/amazon"
     }
     ansible = {
       version = ">= 1.1.4"
@@ -29,21 +29,19 @@ packer {
 }
 
 source "amazon-ebs" "example" {
-  ami_name      = "packer-ansible-example-{{timestamp}}"
   instance_type = "t3.small"
-  region        = "ap-northeast-1"
+  region = "ap-northeast-1"
 
-  vpc_id        = var.vpc_id
-  subnet_id     = var.subnet_id
+  vpc_id = var.vpc_id
+  subnet_id = var.subnet_id
   security_group_id = var.security_group_id
   source_ami = var.ami_id
 
-  ssh_username  = "ec2-user"
+  ssh_username = "ec2-user"
   ssh_interface = "session_manager"
   iam_instance_profile = "AnsiblePackerInstanceProfile"
 
-  
-  launch_block_device_mappings  {
+  launch_block_device_mappings {
     device_name = "/dev/xvda"
     volume_size = 30
     volume_type = "gp3"
@@ -54,11 +52,46 @@ source "amazon-ebs" "example" {
 }
 
 build {
+  name = "ec2-instance-web"
   sources = ["source.amazon-ebs.example"]
+
+  source "amazon-ebs.example" {
+    ami_name = "packer-ansible-web-{{timestamp}}"
+  }
 
   provisioner "ansible" {
     command = "./.venv/bin/ansible-playbook"
     host_alias = "ec2-instance-web"
+    playbook_file = "./site.yml"
+  }
+}
+
+build {
+  name = "ec2-instance-api"
+  sources = ["source.amazon-ebs.example"]
+
+  source "amazon-ebs.example" {
+    ami_name = "packer-ansible-api-{{timestamp}}"
+  }
+
+  provisioner "ansible" {
+    command = "./.venv/bin/ansible-playbook"
+    host_alias = "ec2-instance-api"
+    playbook_file = "./site.yml"
+  }
+}
+
+build {
+  name = "ec2-instance-batch"
+  sources = ["source.amazon-ebs.example"]
+
+  source "amazon-ebs.example" {
+    ami_name = "packer-ansible-batch-{{timestamp}}"
+  }
+
+  provisioner "ansible" {
+    command = "./.venv/bin/ansible-playbook"
+    host_alias = "ec2-instance-batch"
     playbook_file = "./site.yml"
   }
 }
