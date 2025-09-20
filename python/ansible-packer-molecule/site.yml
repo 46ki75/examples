@@ -1,4 +1,24 @@
 ---
+- name: Show inventory name
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Display Hostname
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}"
+
+    - name: Assert Hostname
+      ansible.builtin.assert:
+        that:
+          - inventory_hostname in valid_hostnames
+        success_msg: "{{ inventory_hostname }}"
+        fail_msg: "The specified hostname {{ inventory_hostname }} is not permitted. Valid hostnames are: {{ valid_hostnames }}"
+      vars:
+        valid_hostnames:
+          - ec2-instance-web
+          - ec2-instance-api
+          - ec2-instance-batch
+
 - name: Test
   hosts:
     # - example-group
