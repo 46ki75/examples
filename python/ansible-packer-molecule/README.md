@@ -41,3 +41,9 @@ Summary:
 ```bash
 uv run molecule test
 ```
+
+## Create AMI with Packer
+
+```bash
+./build-ami.sh
+```
