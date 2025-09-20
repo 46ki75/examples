@@ -1,0 +1,215 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: VPC, Public Subnet, Private Subnet, IGW, NAT Gateway, Routes, and SG (all outbound allowed)
+
+Resources:
+  AnsibleMoleculeVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 192.168.200.0/24
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: AnsibleMolecule
+
+  AnsibleMoleculePublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AnsibleMoleculeVPC
+      CidrBlock: 192.168.200.0/26
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: ap-northeast-1a
+      Tags:
+        - Key: Name
+          Value: AnsibleMoleculePublic
+
+  AnsibleMoleculePrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AnsibleMoleculeVPC
+      CidrBlock: 192.168.200.64/26
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: ap-northeast-1a
+      Tags:
+        - Key: Name
+          Value: AnsibleMoleculePrivate
+
+  AnsibleMoleculeInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: MyIGW
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref AnsibleMoleculeVPC
+      InternetGatewayId: !Ref AnsibleMoleculeInternetGateway
+
+  AnsibleMoleculeEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+
+  AnsibleMoleculeNATGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt AnsibleMoleculeEIP.AllocationId
+      SubnetId: !Ref AnsibleMoleculePublicSubnet
+      Tags:
+        - Key: Name
+          Value: AnsibleMoleculeNAT
+
+  AnsibleMoleculePublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AnsibleMoleculeVPC
+      Tags:
+        - Key: Name
+          Value: MyPublicRouteTable
+
+  AnsibleMoleculePrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AnsibleMoleculeVPC
+      Tags:
+        - Key: Name
+          Value: MyPrivateRouteTable
+
+  AnsibleMoleculePublicRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref AnsibleMoleculePublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref AnsibleMoleculeInternetGateway
+
+  AnsibleMoleculePrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref AnsibleMoleculePrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref AnsibleMoleculeNATGateway
+
+  PublicSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AnsibleMoleculePublicSubnet
+      RouteTableId: !Ref AnsibleMoleculePublicRouteTable
+
+  PrivateSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AnsibleMoleculePrivateSubnet
+      RouteTableId: !Ref AnsibleMoleculePrivateRouteTable
+
+  AnsibleMoleculeSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow all outbound traffic
+      VpcId: !Ref AnsibleMoleculeVPC
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: MyAllOutboundSG
+
+  AnsibleMoleculeInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      Tags:
+        - Key: Name
+          Value: AnsibleMoleculeInstanceRole
+
+  AnsibleMoleculeInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles:
+        - !Ref AnsibleMoleculeInstanceRole
+      InstanceProfileName: AnsibleMoleculeInstanceProfile
+
+  AnsibleMoleculeEC2InstanceWeb:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-07faa35bbd2230d90
+      InstanceType: t3.small
+      SubnetId: !Ref AnsibleMoleculePrivateSubnet
+      SecurityGroupIds:
+        - !Ref AnsibleMoleculeSecurityGroup
+      IamInstanceProfile: !Ref AnsibleMoleculeInstanceProfile
+      Tags:
+        - Key: Name
+          Value: AnsibleMoleculeEC2Instance
+
+  AnsibleMoleculeEC2InstanceApi:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-07faa35bbd2230d90
+      InstanceType: t3.small
+      SubnetId: !Ref AnsibleMoleculePrivateSubnet
+      SecurityGroupIds:
+        - !Ref AnsibleMoleculeSecurityGroup
+      IamInstanceProfile: !Ref AnsibleMoleculeInstanceProfile
+      Tags:
+        - Key: Name
+          Value: AnsibleMoleculeEC2Instance
+
+  AnsibleMoleculeEC2InstanceBatch:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-07faa35bbd2230d90
+      InstanceType: t3.small
+      SubnetId: !Ref AnsibleMoleculePrivateSubnet
+      SecurityGroupIds:
+        - !Ref AnsibleMoleculeSecurityGroup
+      IamInstanceProfile: !Ref AnsibleMoleculeInstanceProfile
+      Tags:
+        - Key: Name
+          Value: AnsibleMoleculeEC2Instance
+
+  AnsibleMoleculeEC2InstanceIdParameterWeb:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/AnsibleMolecule/ec2-instance-web/instance-id"
+      Type: String
+      Value: !Ref AnsibleMoleculeEC2InstanceWeb
+
+  AnsibleMoleculeEC2InstanceIdParameterApi:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/AnsibleMolecule/ec2-instance-api/instance-id"
+      Type: String
+      Value: !Ref AnsibleMoleculeEC2InstanceApi
+
+  AnsibleMoleculeEC2InstanceIdParameterBatch:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/AnsibleMolecule/ec2-instance-batch/instance-id"
+      Type: String
+      Value: !Ref AnsibleMoleculeEC2InstanceBatch
+
+Outputs:
+  VPCId:
+    Value: !Ref AnsibleMoleculeVPC
+  PublicSubnetId:
+    Value: !Ref AnsibleMoleculePublicSubnet
+  PrivateSubnetId:
+    Value: !Ref AnsibleMoleculePrivateSubnet
+  SecurityGroupId:
+    Value: !Ref AnsibleMoleculeSecurityGroup
+  NatGatewayId:
+    Value: !Ref AnsibleMoleculeNATGateway

@@ -1,0 +1,35 @@
+---
+- name: Verify Caller Info
+  hosts:
+    - localhost
+  gather_facts: false
+  tasks:
+    - name: Check AWS Session
+      amazon.aws.aws_caller_info:
+      register: caller_info
+
+    - name: Display Caller Info
+      ansible.builtin.debug:
+        msg: "{{ caller_info }}"
+
+- name: Assert Inventory Hostname
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Assert Hostname
+      ansible.builtin.assert:
+        that:
+          - inventory_hostname in valid_hostnames
+        success_msg: "Hostname (`inventory_hostname`): {{ inventory_hostname }}"
+        fail_msg: "The specified hostname {{ inventory_hostname }} is not permitted. Valid hostnames are: {{ valid_hostnames }}"
+      vars:
+        valid_hostnames:
+          - ec2-instance-web
+          - ec2-instance-api
+          - ec2-instance-batch
+
+- name: Test
+  hosts:
+    - all
+  roles:
+    - cloudwatch_agent

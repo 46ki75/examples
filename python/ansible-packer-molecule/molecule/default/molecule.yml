@@ -9,12 +9,31 @@ driver:
   name: default
 
 platforms:
-  - name: ec2-instance
-    groups:
-      - example
+  - name: ec2-instance-web
+  - name: ec2-instance-api
+  - name: ec2-instance-batch
 
 provisioner:
   name: ansible
+  inventory:
+    group_vars:
+      all:
+        ansible_connection: amazon.aws.aws_ssm
+        ansible_aws_ssm_bucket_name: "shared-46ki75-examples-s3-bucket-ansible-molecule"
+        ansible_aws_ssm_region: "ap-northeast-1"
+        provisioning_info:
+          cloudformation:
+            stack_name: AnsibleMolecule
+
+    host_vars:
+      ec2-instance-web:
+        ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsibleMolecule/ec2-instance-web/instance-id' ) }}"
+
+      ec2-instance-api:
+        ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsibleMolecule/ec2-instance-api/instance-id' ) }}"
+
+      ec2-instance-batch:
+        ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsibleMolecule/ec2-instance-batch/instance-id' ) }}"
 
 scenario:
   name: default

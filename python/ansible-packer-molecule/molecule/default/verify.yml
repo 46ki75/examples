@@ -1,16 +1,15 @@
 ---
-- name: Converge - Connection Test
-  hosts: ec2-instance
+- name: Verify
+  hosts:
+    - ec2-instance-web
+    - ec2-instance-api
+    - ec2-instance-batch
   gather_facts: false
-  vars:
-    ansible_connection: amazon.aws.aws_ssm
-    ansible_aws_ssm_instance_id: "{{ lookup('amazon.aws.aws_ssm', '/AnsiblePacker/instance-id' ) }}"
-    ansible_aws_ssm_bucket_name: "shared-46ki75-examples-s3-bucket-ansible-molecule"
-    ansible_aws_ssm_region: "ap-northeast-1"
   tasks:
-    - name: Wait for connection
-      ansible.builtin.wait_for_connection:
-
     - name: Replace this task with one that validates your content
       ansible.builtin.debug:
         msg: "This is the effective test"
+
+    - name: Display Common Host Name
+      ansible.builtin.debug:
+        msg: "{{ common_name }}"

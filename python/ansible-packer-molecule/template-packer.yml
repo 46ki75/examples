@@ -1,3 +1,4 @@
+---
 AWSTemplateFormatVersion: "2010-09-09"
 Description: VPC, Public Subnet, Private Subnet, IGW, NAT Gateway, Routes, and SG (all outbound allowed)
 
@@ -5,7 +6,7 @@ Resources:
   AnsiblePackerVPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: 192.168.0.0/16
+      CidrBlock: 192.168.201.0/24
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
@@ -16,7 +17,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref AnsiblePackerVPC
-      CidrBlock: 192.168.1.0/24
+      CidrBlock: 192.168.201.0/26
       MapPublicIpOnLaunch: true
       AvailabilityZone: ap-northeast-1a
       Tags:
@@ -27,7 +28,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref AnsiblePackerVPC
-      CidrBlock: 192.168.2.0/24
+      CidrBlock: 192.168.201.64/26
       MapPublicIpOnLaunch: false
       AvailabilityZone: ap-northeast-1a
       Tags:
@@ -67,7 +68,7 @@ Resources:
       VpcId: !Ref AnsiblePackerVPC
       Tags:
         - Key: Name
-          Value: MyPublicRouteTable
+          Value: AnsiblePackerPublicRouteTable
 
   AnsiblePackerPrivateRouteTable:
     Type: AWS::EC2::RouteTable
@@ -75,7 +76,7 @@ Resources:
       VpcId: !Ref AnsiblePackerVPC
       Tags:
         - Key: Name
-          Value: MyPrivateRouteTable
+          Value: AnsiblePackerPrivateRouteTable
 
   AnsiblePackerPublicRoute:
     Type: AWS::EC2::Route
@@ -141,25 +142,26 @@ Resources:
         - !Ref AnsiblePackerInstanceRole
       InstanceProfileName: AnsiblePackerInstanceProfile
 
-  AnsiblePackerEC2Instance:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: ami-07faa35bbd2230d90
-      InstanceType: t3.small
-      SubnetId: !Ref AnsiblePackerPrivateSubnet
-      SecurityGroupIds:
-        - !Ref AnsiblePackerSecurityGroup
-      IamInstanceProfile: !Ref AnsiblePackerInstanceProfile
-      Tags:
-        - Key: Name
-          Value: AnsiblePackerEC2Instance
-
-  AnsiblePackerEC2InstanceIdParameter:
+  AnsiblePackerVPCIdParameter:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/AnsiblePacker/instance-id"
+      Name: "/AnsiblePacker/vpc-id"
       Type: String
-      Value: !Ref AnsiblePackerEC2Instance
+      Value: !Ref AnsiblePackerVPC
+
+  AnsiblePackerPrivateSubnetParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/AnsiblePacker/private-subnet-id"
+      Type: String
+      Value: !Ref AnsiblePackerPrivateSubnet
+
+  AnsiblePackerSecurityGroupParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/AnsiblePacker/security-group-id"
+      Type: String
+      Value: !Ref AnsiblePackerSecurityGroup
 
 Outputs:
   VPCId:
@@ -170,7 +172,3 @@ Outputs:
     Value: !Ref AnsiblePackerPrivateSubnet
   SecurityGroupId:
     Value: !Ref AnsiblePackerSecurityGroup
-  NatGatewayId:
-    Value: !Ref AnsiblePackerNATGateway
-  EC2InstanceId:
-    Value: !Ref AnsiblePackerEC2Instance

@@ -3,10 +3,11 @@
 set -u -e -o pipefail
 
 STACK_NAME="AnsiblePacker"
+TEMPLATE_FILE_PATH="template-packer.yml"
 
 aws cloudformation deploy \
     --stack-name "${STACK_NAME}" \
-    --template-file ./template.yaml \
+    --template-file "${TEMPLATE_FILE_PATH}" \
     --capabilities CAPABILITY_NAMED_IAM
 
 outputs=$(aws cloudformation describe-stacks \
@@ -19,12 +20,9 @@ PUBLIC_SUBNET_ID=$(echo "${outputs}" | jq -r '.[] | select(.OutputKey=="PublicSu
 PRIVATE_SUBNET_ID=$(echo "${outputs}" | jq -r '.[] | select(.OutputKey=="PrivateSubnetId") | .OutputValue')
 SECURITY_GROUP_ID=$(echo "${outputs}" | jq -r '.[] | select(.OutputKey=="SecurityGroupId") | .OutputValue')
 
-# @see https://developer.hashicorp.com/packer/guides/hcl/variables#assigning-variables
-packer build \
-  -var "vpc_id=${VPC_ID}" \
-  -var "subnet_id=${PRIVATE_SUBNET_ID}" \
-  -var "security_group_id=${SECURITY_GROUP_ID}" \
-  .
+packer init .
+
+packer build .
 
 aws cloudformation delete-stack \
     --stack-name "${STACK_NAME}"
