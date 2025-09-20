@@ -3,16 +3,19 @@ variable "ami_id" {
   default = "ami-07faa35bbd2230d90"
 }
 
-variable "vpc_id" {
-  type = string
+data "amazon-parameterstore" "vpc_id" {
+  name = "/AnsiblePacker/vpc-id"
+  with_decryption = false
 }
 
-variable "subnet_id" {
-  type = string
+data "amazon-parameterstore" "subnet_id" {
+  name = "/AnsiblePacker/private-subnet-id"
+  with_decryption = false
 }
 
-variable "security_group_id" {
-  type = string
+data "amazon-parameterstore" "security_group_id" {
+  name = "/AnsiblePacker/security-group-id"
+  with_decryption = false
 }
 
 packer {
@@ -32,9 +35,9 @@ source "amazon-ebs" "example" {
   instance_type = "t3.small"
   region = "ap-northeast-1"
 
-  vpc_id = var.vpc_id
-  subnet_id = var.subnet_id
-  security_group_id = var.security_group_id
+  vpc_id = data.amazon-parameterstore.vpc_id.value
+  subnet_id = data.amazon-parameterstore.subnet_id.value
+  security_group_id = data.amazon-parameterstore.security_group_id.value
   source_ami = var.ami_id
 
   ssh_username = "ec2-user"

@@ -1,3 +1,4 @@
+---
 AWSTemplateFormatVersion: "2010-09-09"
 Description: VPC, Public Subnet, Private Subnet, IGW, NAT Gateway, Routes, and SG (all outbound allowed)
 

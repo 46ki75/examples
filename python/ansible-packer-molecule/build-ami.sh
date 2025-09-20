@@ -22,12 +22,7 @@ SECURITY_GROUP_ID=$(echo "${outputs}" | jq -r '.[] | select(.OutputKey=="Securit
 
 packer init .
 
-# @see https://developer.hashicorp.com/packer/guides/hcl/variables#assigning-variables
-packer build \
-  -var "vpc_id=${VPC_ID}" \
-  -var "subnet_id=${PRIVATE_SUBNET_ID}" \
-  -var "security_group_id=${SECURITY_GROUP_ID}" \
-  .
+packer build .
 
 aws cloudformation delete-stack \
     --stack-name "${STACK_NAME}"
