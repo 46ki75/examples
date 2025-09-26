@@ -2583,7 +2583,7 @@ dependencies = [
  "futures",
  "paste",
  "pin-project-lite",
- "rmcp-macros 0.7.0",
+ "rmcp-macros",
  "schemars 1.0.4",
  "serde",
  "serde_json",
@@ -2591,19 +2591,6 @@ dependencies = [
  "tokio",
  "tokio-util",
  "tracing",
-]
-
-[[package]]
-name = "rmcp-macros"
-version = "0.6.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1827cd98dab34cade0513243c6fe0351f0f0b2c9d6825460bcf45b42804bdda0"
-dependencies = [
- "darling 0.21.0",
- "proc-macro2",
- "quote",
- "serde_json",
- "syn",
 ]
 
 [[package]]
@@ -2667,7 +2654,7 @@ name = "rust-mcp"
 version = "0.1.0"
 dependencies = [
  "rmcp",
- "rmcp-macros 0.6.4",
+ "rmcp-macros",
  "schemars 1.0.4",
  "serde",
  "serde_json",
