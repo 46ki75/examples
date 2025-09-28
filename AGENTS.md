@@ -10,5 +10,5 @@ This repository is a collection of project examples that are implemented in vari
 - `java/{project_name}/`: Projects written in JVM family languages (Java, Kotlin, Scala)
 - `others/{project_name}/`: Projects written in other languages or only configuration
 - `packages/{project_name}/`: Projects written in TypeScript
-- `plumi/{project_name}/`: Projects using Pulumi
+- `pulumi/{project_name}/`: Projects using Pulumi
 - `python/{project_name}/`: Projects written in Python
