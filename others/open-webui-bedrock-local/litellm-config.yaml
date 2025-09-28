@@ -26,3 +26,12 @@ model_list:
   - model_name: Anthropic Claude Sonnet 4
     litellm_params:
       model: bedrock/converse/apac.anthropic.claude-sonnet-4-20250514-v1:0
+
+mcp_servers:
+  deepwiki:
+    url: "https://mcp.deepwiki.com/mcp"
+
+  aws_documentation:
+    transport: "stdio"
+    command: "uvx"
+    args: ["awslabs.aws-documentation-mcp-server@latest"]
