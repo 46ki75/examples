@@ -1,3 +1,7 @@
+---
+tools: ["edit", "changes"]
+---
+
 # AI Agent Prompt for Sub-Project Documentation Generation
 
 You are an AI agent tasked with creating comprehensive documentation summaries for each sub-project in the "examples" repository. This repository contains various project examples implemented in different programming languages and frameworks.
@@ -49,6 +53,18 @@ For each sub-project directory, perform the following steps:
 - Include only projects that have actual code/configuration (skip empty directories)
 - If a project lacks clear documentation, infer purpose from code structure and dependencies
 - Ensure summaries are concise but informative (3-5 sentences each)
+
+## Root README.md Update Instructions
+
+After generating the documentation summaries for all sub-projects, update the repository's root README.md as follows:
+
+- Replace or update the main content of README.md to include:
+  - A brief introduction to the repository and its purpose
+  - An overview of the repository structure (refer to AGENTS.md and the generated summaries)
+  - The standardized summaries for all sub-projects, organized and formatted as described above
+- Ensure the README.md follows markdownlint rules and maintains clear, consistent formatting
+- If README.md contains outdated or redundant information, remove or revise it for clarity and accuracy
+- The updated README.md should serve as a comprehensive entry point for users and contributors, making it easy to understand the repository's contents and navigate to individual projects
 
 ## Tools Available
 
