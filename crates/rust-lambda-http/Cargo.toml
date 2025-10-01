@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 async-graphql = "7.0.17"
-axum = "0.8.5"
+axum = "0.8.6"
 lambda_http = "0.17.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.145"
