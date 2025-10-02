@@ -15,6 +15,9 @@ pub struct Counter {
 }
 
 #[derive(Debug, serde::Deserialize, rmcp::schemars::JsonSchema)]
+pub struct NoParams {}
+
+#[derive(Debug, serde::Deserialize, rmcp::schemars::JsonSchema)]
 pub struct AddParams {
     pub value: i32,
 }
@@ -29,7 +32,7 @@ impl Counter {
     }
 
     #[tool(description = "Increment the counter by 1")]
-    async fn increment(&self) -> Result<CallToolResult, rmcp::ErrorData> {
+    async fn increment(&self, _: Parameters<NoParams>) -> Result<CallToolResult, rmcp::ErrorData> {
         let mut counter = self.counter.lock().await;
         *counter += 1;
         Ok(CallToolResult::success(vec![Content::text(
@@ -50,7 +53,7 @@ impl Counter {
     }
 
     #[tool(description = "Get the current counter value")]
-    async fn get(&self) -> Result<CallToolResult, rmcp::ErrorData> {
+    async fn get(&self, _: Parameters<NoParams>) -> Result<CallToolResult, rmcp::ErrorData> {
         let counter = self.counter.lock().await;
         Ok(CallToolResult::success(vec![Content::text(
             counter.to_string(),
