@@ -32,7 +32,7 @@ impl Counter {
     }
 
     #[tool(description = "Increment the counter by 1")]
-    async fn increment(&self, _: Parameters<NoParams>) -> Result<CallToolResult, rmcp::ErrorData> {
+    async fn increment(&self) -> Result<CallToolResult, rmcp::ErrorData> {
         let mut counter = self.counter.lock().await;
         *counter += 1;
         Ok(CallToolResult::success(vec![Content::text(
