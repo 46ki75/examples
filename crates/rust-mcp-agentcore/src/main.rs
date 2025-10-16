@@ -1,9 +1,12 @@
+use axum::{http::StatusCode, routing::get};
 use rmcp::{
-    ServiceExt,
     handler::server::{router::tool::ToolRouter, wrapper::Parameters},
     model::*,
     tool, tool_handler, tool_router,
-    transport::stdio,
+    transport::{
+        StreamableHttpServerConfig,
+        streamable_http_server::{StreamableHttpService, session::local::LocalSessionManager},
+    },
 };
 use std::sync::Arc;
 use tokio::sync::Mutex;
@@ -74,7 +77,21 @@ impl rmcp::ServerHandler for Counter {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let service = Counter::new().serve(stdio()).await?;
-    service.waiting().await?;
+    let service = StreamableHttpService::new(
+        || Ok(Counter::new()),
+        Arc::new(LocalSessionManager::default()),
+        StreamableHttpServerConfig {
+            stateful_mode: true,
+            ..Default::default()
+        },
+    );
+
+    let router = axum::Router::new()
+        .nest_service("/invocations", service)
+        .route("/ping", get(|| async { StatusCode::OK }));
+
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, router).await.unwrap();
+
     Ok(())
 }
