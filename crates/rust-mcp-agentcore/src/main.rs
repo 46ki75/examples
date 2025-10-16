@@ -1,3 +1,4 @@
+use axum::{http::StatusCode, routing::get};
 use rmcp::{
     handler::server::{router::tool::ToolRouter, wrapper::Parameters},
     model::*,
@@ -80,14 +81,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         || Ok(Counter::new()),
         Arc::new(LocalSessionManager::default()),
         StreamableHttpServerConfig {
-            stateful_mode: false,
+            stateful_mode: true,
             ..Default::default()
         },
     );
 
-    let router = axum::Router::new().nest_service("/mcp", service);
+    let router = axum::Router::new()
+        .nest_service("/invocations", service)
+        .route("/ping", get(|| async { StatusCode::OK }));
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
     axum::serve(listener, router).await.unwrap();
 
     Ok(())
