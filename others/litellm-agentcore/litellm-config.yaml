@@ -1,0 +1,27 @@
+mcp_servers:
+  DuckDuckGo:
+    transport: "stdio"
+    command: "uv"
+    args: ["tool", "run", "duckduckgo-mcp-server"]
+
+  deepwiki:
+    url: "https://mcp.deepwiki.com/mcp"
+
+  context7:
+    url: "https://mcp.context7.com/mcp"
+
+  aws_knowledge:
+    url: "https://knowledge-mcp.global.api.aws"
+
+  microsoft_knowledge:
+    url: "https://learn.microsoft.com/api/mcp"
+
+  strands_agents:
+    transport: "stdio"
+    command: "uv"
+    args: ["tool", "run", "strands-agents-mcp-server"]
+
+  repomix:
+    transport: "stdio"
+    command: "repomix"
+    args: ["--mcp"]
