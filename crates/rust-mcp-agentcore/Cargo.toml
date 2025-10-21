@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 axum = "0.8.6"
-rmcp = { version = "0.8.1", features = [
+rmcp = { version = "0.8.2", features = [
     "transport-streamable-http-server",
     "macros",
 ] }
