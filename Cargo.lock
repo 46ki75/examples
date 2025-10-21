@@ -2552,9 +2552,9 @@ dependencies = [
 
 [[package]]
 name = "rmcp-macros"
-version = "0.8.1"
+version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c9f1d5220aaa23b79c3d02e18f7a554403b3ccea544bbb6c69d6bcb3e854a274"
+checksum = "d88518b38110c439a03f0f4eee40e5105d648a530711cb87f98991e3f324a664"
 dependencies = [
  "darling 0.21.0",
  "proc-macro2",
