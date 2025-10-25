@@ -39,8 +39,14 @@ resource "aws_s3_bucket_policy" "web" {
         Principal = {
           Service = "cloudfront.amazonaws.com"
         }
-        Action   = "s3:GetObject"
-        Resource = "${aws_s3_bucket.web.arn}/*"
+        Action = [
+          "s3:ListBucket",
+          "s3:GetObject"
+        ]
+        Resource = [
+          "${aws_s3_bucket.web.arn}",
+          "${aws_s3_bucket.web.arn}/*"
+        ]
         Condition = {
           StringEquals = {
             "AWS:SourceArn" = "${aws_cloudfront_distribution.web.arn}"
@@ -68,7 +74,8 @@ resource "aws_cloudfront_origin_access_control" "web" {
 }
 
 resource "aws_cloudfront_distribution" "web" {
-  enabled = true
+  enabled      = true
+  http_version = "http2and3"
 
   restrictions {
     geo_restriction {
