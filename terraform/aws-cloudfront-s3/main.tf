@@ -34,19 +34,27 @@ resource "aws_s3_bucket_policy" "web" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid    = "AllowCloudFrontServicePrincipal"
+        Sid    = "AllowCloudFrontServicePrincipalGetObject"
         Effect = "Allow"
         Principal = {
           Service = "cloudfront.amazonaws.com"
         }
-        Action = [
-          "s3:ListBucket",
-          "s3:GetObject"
-        ]
-        Resource = [
-          "${aws_s3_bucket.web.arn}",
-          "${aws_s3_bucket.web.arn}/*"
-        ]
+        Action   = ["s3:GetObject"]
+        Resource = ["${aws_s3_bucket.web.arn}/*"]
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = "${aws_cloudfront_distribution.web.arn}"
+          }
+        }
+      },
+      {
+        Sid    = "AllowCloudFrontServicePrincipalListBucket"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        }
+        Action   = ["s3:ListBucket"]
+        Resource = ["${aws_s3_bucket.web.arn}"]
         Condition = {
           StringEquals = {
             "AWS:SourceArn" = "${aws_cloudfront_distribution.web.arn}"
@@ -74,6 +82,10 @@ resource "aws_cloudfront_origin_access_control" "web" {
 }
 
 resource "aws_cloudfront_distribution" "web" {
+  tags = {
+    "name" = "46ki75-${local.stage_name}-aws-cloudfront-distribution-web"
+  }
+
   comment             = "46ki75-${local.stage_name}-aws-cloudfront-distribution-web"
   enabled             = true
   staging             = false
