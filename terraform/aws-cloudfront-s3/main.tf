@@ -74,8 +74,13 @@ resource "aws_cloudfront_origin_access_control" "web" {
 }
 
 resource "aws_cloudfront_distribution" "web" {
-  enabled      = true
-  http_version = "http2and3"
+  comment             = "46ki75-${local.stage_name}-aws-cloudfront-distribution-web"
+  enabled             = true
+  staging             = false
+  is_ipv6_enabled     = true
+  http_version        = "http2and3"
+  default_root_object = "index.html"
+  web_acl_id          = aws_wafv2_web_acl.web.arn
 
   restrictions {
     geo_restriction {
@@ -119,8 +124,6 @@ resource "aws_cloudfront_distribution" "web" {
     origin_id                = "s3-root"
     origin_access_control_id = aws_cloudfront_origin_access_control.web.id
   }
-
-  default_root_object = "index.html"
 
   custom_error_response {
     error_code            = 403
