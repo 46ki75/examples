@@ -8,17 +8,15 @@ pub(crate) struct IncomingMessage {
 
 #[derive(Serialize)]
 pub(crate) struct OutgoingMessage {
-    req_id: String,
-    msg: String,
+    markdown: String,
 }
 
 pub(crate) async fn function_handler(
     event: LambdaEvent<IncomingMessage>,
 ) -> Result<OutgoingMessage, Error> {
-    let resp = OutgoingMessage {
-        req_id: event.context.request_id,
-        msg: format!("URL: {}", event.payload.url),
-    };
+    let markdown = rust_lambda_chrome::fetch(&event.payload.url).await.unwrap();
+
+    let resp = OutgoingMessage { markdown };
 
     Ok(resp)
 }
