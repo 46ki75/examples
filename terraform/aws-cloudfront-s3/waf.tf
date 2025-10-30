@@ -1,7 +1,8 @@
 resource "aws_wafv2_web_acl" "web" {
-  provider = aws.us-east-1
-  name     = "46ki75-${local.stage_name}-aws-waf-wacl-web"
-  scope    = "CLOUDFRONT"
+  provider    = aws.us-east-1
+  name        = "46ki75-${local.stage_name}-aws-waf-wacl-web"
+  description = "Sample Web ACL"
+  scope       = "CLOUDFRONT"
 
   default_action {
     allow {}
