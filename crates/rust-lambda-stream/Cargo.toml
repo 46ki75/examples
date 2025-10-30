@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 aws-config = "1.8.8"
-aws-sdk-bedrockruntime = "1.110.0"
+aws-sdk-bedrockruntime = "1.111.0"
 axum = "0.8.6"
 bytes = "1.10.1"
 futures = "0.3.31"
