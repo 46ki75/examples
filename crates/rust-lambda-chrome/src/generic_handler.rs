@@ -14,7 +14,9 @@ pub(crate) struct OutgoingMessage {
 pub(crate) async fn function_handler(
     event: LambdaEvent<IncomingMessage>,
 ) -> Result<OutgoingMessage, Error> {
-    let markdown = rust_lambda_chrome::fetch(&event.payload.url).await.unwrap();
+    let markdown = rust_lambda_chrome::fetch(&event.payload.url)
+        .await
+        .map_err(|e| Error::from(e.to_string()))?;
 
     let resp = OutgoingMessage { markdown };
 

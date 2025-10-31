@@ -20,7 +20,6 @@ impl<'a> FlexibleWaiter<'a> {
         self
     }
 
-    // 複数の戦略を組み合わせる
     fn wait_smart(&self) -> Result<(), Box<dyn std::error::Error + Send>> {
         let start = std::time::Instant::now();
 
@@ -79,8 +78,15 @@ pub async fn fetch(url: &str) -> Result<String, Box<dyn std::error::Error + Send
         sandbox: false,
         devtools: false,
         enable_gpu: false,
-        enable_logging: true,
+        enable_logging: false,
         path: Some(PathBuf::from("/bin/chrome-headless-shell")),
+        args: vec![
+            &std::ffi::OsString::from("--disable-setuid-sandbox"),
+            &std::ffi::OsString::from("--disable-dev-shm-usage"),
+            &std::ffi::OsString::from("--disable-software-rasterizer"),
+            &std::ffi::OsString::from("--single-process"),
+            &std::ffi::OsString::from("--no-zygote"),
+        ],
         ..Default::default()
     })?;
 
