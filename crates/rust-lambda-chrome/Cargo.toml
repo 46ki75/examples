@@ -1,0 +1,13 @@
+[package]
+name = "rust-lambda-chrome"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+fast_html2md = "0.0.48"
+headless_chrome = "1.0.18"
+
+lambda_runtime = "0.13.0"
+serde = "1"
+tokio = { version = "1", features = ["macros"] }
+tracing = "0.1.41"
