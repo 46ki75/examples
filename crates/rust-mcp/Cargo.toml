@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-rmcp = { version = "0.8.4", features = ["transport-io", "macros"] }
+rmcp = { version = "0.8.5", features = ["transport-io", "macros"] }
 rmcp-macros = "0.8.3"
 schemars = "1.1.0"
 serde = "1.0.228"
