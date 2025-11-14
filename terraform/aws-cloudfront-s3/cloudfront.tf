@@ -142,19 +142,11 @@ resource "aws_cloudfront_distribution" "web" {
     viewer_protocol_policy = "redirect-to-https"
     target_origin_id       = "s3-root"
 
-    default_ttl = 3600 * 24 * 30
-    min_ttl     = 0
-    max_ttl     = 3600 * 24 * 30 * 12
+    cache_policy_id            = aws_cloudfront_cache_policy.s3.id
+    origin_request_policy_id   = aws_cloudfront_origin_request_policy.all_viewer.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.default.id
 
     compress = true
-
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-      headers = ["etag"]
-    }
   }
 
   ordered_cache_behavior {
@@ -171,10 +163,6 @@ resource "aws_cloudfront_distribution" "web" {
     cached_methods         = ["GET", "HEAD"]
     viewer_protocol_policy = "redirect-to-https"
     target_origin_id       = "lambda-api"
-
-    default_ttl = 3600 * 24 * 30
-    min_ttl     = 0
-    max_ttl     = 3600 * 24 * 30 * 12
 
     cache_policy_id            = aws_cloudfront_cache_policy.disabled.id
     origin_request_policy_id   = aws_cloudfront_origin_request_policy.all_viewer.id
