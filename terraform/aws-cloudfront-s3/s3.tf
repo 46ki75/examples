@@ -34,7 +34,7 @@ resource "aws_s3_bucket_policy" "web" {
         Resource = ["${aws_s3_bucket.web.arn}/*"]
         Condition = {
           StringEquals = {
-            "AWS:SourceArn" = "${aws_cloudfront_distribution.web.arn}"
+            "AWS:SourceArn" = aws_cloudfront_distribution.web.arn
           }
         }
       },
@@ -45,10 +45,10 @@ resource "aws_s3_bucket_policy" "web" {
           Service = "cloudfront.amazonaws.com"
         }
         Action   = ["s3:ListBucket"]
-        Resource = ["${aws_s3_bucket.web.arn}"]
+        Resource = [aws_s3_bucket.web.arn]
         Condition = {
           StringEquals = {
-            "AWS:SourceArn" = "${aws_cloudfront_distribution.web.arn}"
+            "AWS:SourceArn" = aws_cloudfront_distribution.web.arn
           }
         }
       }
