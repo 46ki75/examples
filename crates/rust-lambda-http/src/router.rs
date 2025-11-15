@@ -21,9 +21,13 @@ pub fn init_router() -> axum::Router {
     let customized_api = ApiDoc::openapi().merge_from(auto_generated_api);
 
     let router = rest_router
-        .route(
-            "/api/v1/openapi.json",
-            axum::routing::get(|| async move { axum::Json(customized_api) }),
+        // .route(
+        //     "/api/v1/openapi.json",
+        //     axum::routing::get(|| async move { axum::Json(customized_api) }),
+        // )
+        .merge(
+            utoipa_swagger_ui::SwaggerUi::new("/api/v1/swagger-ui")
+                .url("/api/v1/openapi.json", customized_api),
         )
         .route(
             "/graphql",
