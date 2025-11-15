@@ -19,4 +19,4 @@ cargo lambda watch
 
 Then, try to access [http://localhost:9000/lambda-url/rust-lambda-http](http://localhost:9000/lambda-url/rust-lambda-http).
 
-For further infomation, please refer [this documentation (Cargo Lambda)](https://www.cargo-lambda.info/).
+For further information, please refer [this documentation (Cargo Lambda)](https://www.cargo-lambda.info/).
