@@ -5,7 +5,7 @@ use utoipa_axum::{router::OpenApiRouter, routes};
 #[openapi(info(
     title = "web-lambda-http-api",
     version = "1.0.0",
-    description = "API description",
+    description = "Lambda HTTP API providing REST and GraphQL endpoints.",
     contact(name = "Ikuma Yamashita", email = "me@ikuma.cloud"),
     license(name = "GPL-3.0")
 ))]
