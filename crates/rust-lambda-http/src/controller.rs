@@ -12,7 +12,11 @@ struct GreetResponse {
     )
 )]
 pub async fn greet() -> Result<axum::response::Response<axum::body::Body>, axum::http::StatusCode> {
-    let body = axum::body::Body::from("Hello, world!");
+    let body = GreetResponse {
+        message: "Hello, world!".to_owned(),
+    };
+    let body_string = serde_json::to_string(&body).unwrap();
+    let body = axum::body::Body::from(body_string);
 
     let response = axum::response::Response::builder()
         .status(200)
