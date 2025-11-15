@@ -1,3 +1,16 @@
+#[derive(serde::Serialize, utoipa::ToSchema)]
+struct GreetResponse {
+    message: String,
+}
+
+#[utoipa::path(
+    get,
+    path = "/api/v1/greet",
+    responses(
+        (status = 200, description = "Greet", body = GreetResponse),
+        (status = 400, description = "Bad request", body = String)
+    )
+)]
 pub async fn greet() -> Result<axum::response::Response<axum::body::Body>, axum::http::StatusCode> {
     let body = axum::body::Body::from("Hello, world!");
 
