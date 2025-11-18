@@ -1764,7 +1764,7 @@ dependencies = [
  "libc",
  "percent-encoding",
  "pin-project-lite",
- "socket2 0.5.10",
+ "socket2 0.6.0",
  "tokio",
  "tower-service",
  "tracing",
@@ -2893,7 +2893,7 @@ dependencies = [
  "paste",
  "pin-project-lite",
  "rand 0.9.1",
- "rmcp-macros",
+ "rmcp-macros 0.8.5",
  "schemars 1.1.0",
  "serde",
  "serde_json",
@@ -2912,6 +2912,19 @@ name = "rmcp-macros"
 version = "0.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "01263441d3f8635c628e33856c468b96ebbce1af2d3699ea712ca71432d4ee7a"
+dependencies = [
+ "darling 0.21.0",
+ "proc-macro2",
+ "quote",
+ "serde_json",
+ "syn",
+]
+
+[[package]]
+name = "rmcp-macros"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "263caba1c96f2941efca0fdcd97b03f42bcde52d2347d05e5d77c93ab18c5b58"
 dependencies = [
  "darling 0.21.0",
  "proc-macro2",
@@ -3017,7 +3030,7 @@ name = "rust-mcp"
 version = "0.1.0"
 dependencies = [
  "rmcp",
- "rmcp-macros",
+ "rmcp-macros 0.9.0",
  "schemars 1.1.0",
  "serde",
  "serde_json",
@@ -3030,7 +3043,7 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "rmcp",
- "rmcp-macros",
+ "rmcp-macros 0.9.0",
  "schemars 1.1.0",
  "serde",
  "serde_json",
