@@ -60,8 +60,10 @@
     },
     // .NET
     "ghcr.io/devcontainers/features/dotnet": {},
-    // DinD
-    "ghcr.io/devcontainers/features/docker-outside-of-docker": {}
+    // DooD
+    "ghcr.io/devcontainers/features/docker-outside-of-docker": {
+      "moby": false
+    }
   },
   "remoteEnv": {
     "AWS_PROFILE": "examples"
