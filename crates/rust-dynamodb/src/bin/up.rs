@@ -20,18 +20,46 @@ async fn main() {
         .await
         .unwrap();
 
-    let users: Vec<jsonplaceholder::User> = serde_json::from_slice(body.as_ref()).unwrap();
+    let users: Vec<jsonplaceholder::User> = serde_json::from_slice(&body).unwrap();
 
     for user in users {
         let _put = dynamodb_client
             .put_item()
             .table_name(TABLE_NAME)
             .item("PK", AttributeValue::S(user.id.to_string()))
+            .item("SK", AttributeValue::S("PROFILE#".to_string()))
             .item("facet", AttributeValue::S("USER".to_owned()))
             .item("user_id", AttributeValue::S(user.id.to_string()))
             .item("name", AttributeValue::S(user.name.to_string()))
             .item("username", AttributeValue::S(user.username.to_string()))
             .item("email", AttributeValue::S(user.email.to_string()))
+            .send()
+            .await
+            .unwrap();
+    }
+
+    let body = client
+        .get("https://jsonplaceholder.typicode.com/posts")
+        .send()
+        .await
+        .unwrap()
+        .bytes()
+        .await
+        .unwrap();
+
+    let posts: Vec<jsonplaceholder::Post> = serde_json::from_slice(&body).unwrap();
+
+    for post in posts {
+        let _put = dynamodb_client
+            .put_item()
+            .table_name(TABLE_NAME)
+            .item("PK", AttributeValue::S(post.user_id.to_string()))
+            .item("facet", AttributeValue::S("POST".to_owned()))
+            .item(
+                "SK",
+                AttributeValue::S(format!("POST#{}#", post.id.to_string())),
+            )
+            .item("post_id", AttributeValue::S(post.id.to_string()))
             .send()
             .await
             .unwrap();

@@ -25,3 +25,12 @@ pub struct Company {
     pub catch_phrase: String,
     pub bs: String,
 }
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Post {
+    pub user_id: u64,
+    pub id: u64,
+    pub title: String,
+    pub body: String,
+}
