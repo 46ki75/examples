@@ -1,6 +1,8 @@
 Resources:
   JSONPlaceHolder:
     Type: AWS::DynamoDB::Table
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
     Properties:
       TableName: jsonplaceholder
       AttributeDefinitions:
