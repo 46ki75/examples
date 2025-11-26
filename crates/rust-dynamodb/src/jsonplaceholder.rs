@@ -34,3 +34,13 @@ pub struct Post {
     pub title: String,
     pub body: String,
 }
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Comment {
+    pub post_id: u64,
+    pub id: u64,
+    pub name: String,
+    pub email: String,
+    pub body: String,
+}

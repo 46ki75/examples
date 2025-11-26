@@ -30,9 +30,12 @@ async fn main() {
             .item("SK", AttributeValue::S("PROFILE#".to_string()))
             .item("facet", AttributeValue::S("USER".to_owned()))
             .item("user_id", AttributeValue::S(user.id.to_string()))
-            .item("name", AttributeValue::S(user.name.to_string()))
-            .item("username", AttributeValue::S(user.username.to_string()))
-            .item("email", AttributeValue::S(user.email.to_string()))
+            .item("user_name", AttributeValue::S(user.name.to_string()))
+            .item(
+                "user_username",
+                AttributeValue::S(user.username.to_string()),
+            )
+            .item("user_email", AttributeValue::S(user.email.to_string()))
             .send()
             .await
             .unwrap();
@@ -54,12 +57,14 @@ async fn main() {
             .put_item()
             .table_name(TABLE_NAME)
             .item("PK", AttributeValue::S(post.user_id.to_string()))
-            .item("facet", AttributeValue::S("POST".to_owned()))
             .item(
                 "SK",
                 AttributeValue::S(format!("POST#{}#", post.id.to_string())),
             )
+            .item("facet", AttributeValue::S("POST".to_owned()))
             .item("post_id", AttributeValue::S(post.id.to_string()))
+            .item("post_title", AttributeValue::S(post.title.to_string()))
+            .item("post_body", AttributeValue::S(post.body.to_string()))
             .send()
             .await
             .unwrap();

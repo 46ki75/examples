@@ -15,5 +15,8 @@ Resources:
           KeyType: HASH
         - AttributeName: SK
           KeyType: RANGE
-      BillingMode: PAY_PER_REQUEST
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        WriteCapacityUnits: 5
+        ReadCapacityUnits: 5
       DeletionProtectionEnabled: false
