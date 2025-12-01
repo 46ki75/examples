@@ -7,7 +7,7 @@ interface IAMStackProps extends cdk.NestedStackProps {
 }
 
 export class IAMStack extends cdk.NestedStack {
-  public readonly ec2Role: iam.Role;
+  public readonly ec2InstaceProfile: iam.CfnInstanceProfile;
 
   constructor(scope: Construct, id: string, props: IAMStackProps) {
     super(scope, id, props);
@@ -15,7 +15,7 @@ export class IAMStack extends cdk.NestedStack {
     const { DEPLOY_ENV } = props;
 
     const ec2RoleName = `${DEPLOY_ENV}-IAM-Role-EC2InstanceProfileRoleMain`;
-    this.ec2Role = new iam.Role(this, ec2RoleName, {
+    const ec2Role = new iam.Role(this, ec2RoleName, {
       roleName: ec2RoleName,
       description: "IAM Role for EC2 Instance Profile",
       maxSessionDuration: cdk.Duration.hours(1),
@@ -27,5 +27,15 @@ export class IAMStack extends cdk.NestedStack {
         ),
       ],
     });
+
+    const ec2InstanceProfileName = `${DEPLOY_ENV}-IAM-InstanceProfile-EC2InstanceProfileMain`;
+    this.ec2InstaceProfile = new iam.CfnInstanceProfile(
+      this,
+      ec2InstanceProfileName,
+      {
+        instanceProfileName: ec2InstanceProfileName,
+        roles: [ec2Role.roleName],
+      }
+    );
   }
 }

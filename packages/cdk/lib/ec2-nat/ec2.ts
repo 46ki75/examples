@@ -10,6 +10,7 @@ interface EC2StackProps extends cdk.NestedStackProps {
   DEPLOY_ENV: string;
   vpcId: string;
   subnetId: string;
+  ec2InstanceProfileArn: string;
 }
 
 export class EC2Stack extends cdk.NestedStack {
@@ -30,6 +31,7 @@ export class EC2Stack extends cdk.NestedStack {
       instanceType: "t3.nano",
       subnetId: subnetId,
       userData: base64UserData,
+      iamInstanceProfile: props.ec2InstanceProfileArn,
       tags: [{ key: "Name", value: ec2InstanceName }],
     });
   }

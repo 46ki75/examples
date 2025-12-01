@@ -16,15 +16,16 @@ export class EC2NATStack extends cdk.Stack {
 
     const DEPLOY_ENV = "shared";
 
+    Aspects.of(this).add(new AutoTagAspect("DeployEnv", DEPLOY_ENV));
+    Aspects.of(this).add(new AutoTagAspect("ProvisionedBy", "aws-cdk"));
+
     const iamStack = new IAMStack(this, "IAMStack", { DEPLOY_ENV });
     const vpcStack = new VpcStack(this, "VpcStack", { DEPLOY_ENV });
     const ec2Stack = new EC2Stack(this, "EC2Stack", {
       DEPLOY_ENV,
       vpcId: vpcStack.vpc.attrVpcId,
       subnetId: vpcStack.ec2Subnet.attrSubnetId,
+      ec2InstanceProfileArn: iamStack.ec2InstaceProfile.attrArn,
     });
-
-    Aspects.of(this).add(new AutoTagAspect("DeployEnv", DEPLOY_ENV));
-    Aspects.of(this).add(new AutoTagAspect("ProvisionedBy", "aws-cdk"));
   }
 }
