@@ -25,7 +25,7 @@ export class EC2NATStack extends cdk.Stack {
       DEPLOY_ENV,
       vpcId: vpcStack.vpc.attrVpcId,
       subnetId: vpcStack.ec2Subnet.attrSubnetId,
-      ec2InstanceProfileArn: iamStack.ec2InstaceProfile.attrArn,
+      ec2InstanceProfileName: iamStack.ec2InstaceProfile.instanceProfileName,
     });
   }
 }
