@@ -38,7 +38,22 @@ export class VpcStack extends cdk.NestedStack {
       availabilityZone: "ap-northeast-1a",
       cidrBlock: "172.16.10.16/28",
       mapPublicIpOnLaunch: true,
-      tags: [{ key: "Name", value: ec2SubnetName }],
+      tags: [{ key: "Name", value: natGatewaySubnetName }],
+    });
+
+    // Elastic IP for NAT Gateway
+    const natEipName = `${DEPLOY_ENV}-EC2-EIP-NATGateway`;
+    const natEip = new ec2.CfnEIP(this, natEipName, {
+      domain: "vpc",
+      tags: [{ key: "Name", value: natEipName }],
+    });
+
+    // NAT Gateway in the NAT subnet
+    const natGatewayName = `${DEPLOY_ENV}-EC2-NATGateway`;
+    const natGateway = new ec2.CfnNatGateway(this, natGatewayName, {
+      allocationId: natEip.attrAllocationId,
+      subnetId: natGatewaySubnet.attrSubnetId,
+      tags: [{ key: "Name", value: natGatewayName }],
     });
 
     const internetGatewayName = `${DEPLOY_ENV}-vpc-InternetGateway-Main`;
@@ -111,7 +126,7 @@ export class VpcStack extends cdk.NestedStack {
       ec2ToNATGatewayRouteName,
       {
         routeTableId: ec2SubnetRouteTable.attrRouteTableId,
-        natGatewayId: natGatewaySubnet.attrSubnetId,
+        natGatewayId: natGateway.attrNatGatewayId,
         destinationCidrBlock: "0.0.0.0/0",
       }
     );
