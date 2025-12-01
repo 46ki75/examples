@@ -1,8 +1,13 @@
 import * as cdk from "aws-cdk-lib";
-import { Construct } from "constructs";
-import { VpcStack } from "./vpc";
 import { Aspects } from "aws-cdk-lib";
+import { Construct } from "constructs";
+
+// Aspects
 import { AutoTagAspect } from "../aspect";
+
+// Stacks
+import { IAMStack } from "./iam";
+import { VpcStack } from "./vpc";
 import { EC2Stack } from "./ec2";
 
 export class EC2NATStack extends cdk.Stack {
@@ -11,6 +16,7 @@ export class EC2NATStack extends cdk.Stack {
 
     const DEPLOY_ENV = "shared";
 
+    const iamStack = new IAMStack(this, "IAMStack", { DEPLOY_ENV });
     const vpcStack = new VpcStack(this, "VpcStack", { DEPLOY_ENV });
     const ec2Stack = new EC2Stack(this, "EC2Stack", {
       DEPLOY_ENV,
