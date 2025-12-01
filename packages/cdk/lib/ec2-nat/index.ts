@@ -28,6 +28,7 @@ export class EC2NATStack extends cdk.Stack {
       vpcId: vpcStack.vpc.attrVpcId,
       subnetId: vpcStack.ec2Subnet.attrSubnetId,
       ec2InstanceProfileName: iamStack.ec2InstaceProfile.instanceProfileName,
+      securityGroupId: securityGroupStack.ec2SecurityGroup.attrGroupId,
     });
   }
 }

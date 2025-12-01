@@ -28,6 +28,16 @@ export class VpcStack extends cdk.NestedStack {
       vpcId: this.vpc.attrVpcId,
       availabilityZone: "ap-northeast-1a",
       cidrBlock: "172.16.10.0/28",
+      mapPublicIpOnLaunch: false,
+      tags: [{ key: "Name", value: ec2SubnetName }],
+    });
+
+    const natGatewaySubnetName = `${DEPLOY_ENV}-EC2-Subnet-NATGateway`;
+    const natGatewaySubnet = new ec2.CfnSubnet(this, natGatewaySubnetName, {
+      vpcId: this.vpc.attrVpcId,
+      availabilityZone: "ap-northeast-1a",
+      cidrBlock: "172.16.10.16/28",
+      mapPublicIpOnLaunch: true,
       tags: [{ key: "Name", value: ec2SubnetName }],
     });
 
@@ -50,30 +60,68 @@ export class VpcStack extends cdk.NestedStack {
       }
     );
 
-    const routeTableName = `${DEPLOY_ENV}-EC2-RouteTable-EC2`;
-    const routeTable = new ec2.CfnRouteTable(this, routeTableName, {
-      vpcId: this.vpc.attrVpcId,
-      tags: [{ key: "Name", value: routeTableName }],
-    });
+    // NAT Gateway Subnet Route Table and Routes
 
-    const ec2ToInternetGatewayRouteName = `${DEPLOY_ENV}-EC2-Route-EC2ToInternetGateway`;
-    const ec2ToInternetGatewayRoute = new ec2.CfnRoute(
+    const natGatewaySubnetRouteTableName = `${DEPLOY_ENV}-EC2-RouteTable-NATGatewaySubnet`;
+    const natGatewaySubnetRouteTable = new ec2.CfnRouteTable(
       this,
-      ec2ToInternetGatewayRouteName,
+      natGatewaySubnetRouteTableName,
       {
-        routeTableId: routeTable.attrRouteTableId,
+        vpcId: this.vpc.attrVpcId,
+        tags: [{ key: "Name", value: natGatewaySubnetRouteTableName }],
+      }
+    );
+
+    const natGatewayToInternetGatewayRouteName = `${DEPLOY_ENV}-EC2-Route-NAT2IGW`;
+    const natGatewayToInternetGatewayRoute = new ec2.CfnRoute(
+      this,
+      natGatewayToInternetGatewayRouteName,
+      {
+        routeTableId: natGatewaySubnetRouteTable.attrRouteTableId,
         gatewayId: internetGateway.attrInternetGatewayId,
         destinationCidrBlock: "0.0.0.0/0",
       }
     );
-    ec2ToInternetGatewayRoute.addDependency(internetGatewayAttachment);
 
-    const ec2SubnetRouteTableAssociationName = `${DEPLOY_ENV}-EC2-SubnetRouteTableAssociation-EC2ToInternetGateway`;
+    const natGatewaySubnetRouteTableAssociationName = `${DEPLOY_ENV}-EC2-SubnetRouteTableAssociation-NAT2IGW`;
+    new ec2.CfnSubnetRouteTableAssociation(
+      this,
+      natGatewaySubnetRouteTableAssociationName,
+      {
+        routeTableId: natGatewaySubnetRouteTable.attrRouteTableId,
+        subnetId: natGatewaySubnet.attrSubnetId,
+      }
+    );
+
+    // EC2 Subnet Route Table and Routes
+
+    const ec2SubnetRouteTableName = `${DEPLOY_ENV}-EC2-RouteTable-EC2`;
+    const ec2SubnetRouteTable = new ec2.CfnRouteTable(
+      this,
+      ec2SubnetRouteTableName,
+      {
+        vpcId: this.vpc.attrVpcId,
+        tags: [{ key: "Name", value: ec2SubnetRouteTableName }],
+      }
+    );
+
+    const ec2ToNATGatewayRouteName = `${DEPLOY_ENV}-EC2-Route-EC22NAT`;
+    const ec2ToNATGatewayRoute = new ec2.CfnRoute(
+      this,
+      ec2ToNATGatewayRouteName,
+      {
+        routeTableId: ec2SubnetRouteTable.attrRouteTableId,
+        natGatewayId: natGatewaySubnet.attrSubnetId,
+        destinationCidrBlock: "0.0.0.0/0",
+      }
+    );
+
+    const ec2SubnetRouteTableAssociationName = `${DEPLOY_ENV}-EC2-SubnetRouteTableAssociation-EC22NAT`;
     new ec2.CfnSubnetRouteTableAssociation(
       this,
       ec2SubnetRouteTableAssociationName,
       {
-        routeTableId: routeTable.attrRouteTableId,
+        routeTableId: ec2SubnetRouteTable.attrRouteTableId,
         subnetId: this.ec2Subnet.attrSubnetId,
       }
     );

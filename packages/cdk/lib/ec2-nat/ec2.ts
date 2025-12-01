@@ -11,13 +11,14 @@ interface EC2StackProps extends cdk.NestedStackProps {
   vpcId: string;
   subnetId: string;
   ec2InstanceProfileName?: string;
+  securityGroupId?: string;
 }
 
 export class EC2Stack extends cdk.NestedStack {
   constructor(scope: Construct, id: string, props: EC2StackProps) {
     super(scope, id, props);
 
-    const { DEPLOY_ENV, subnetId } = props;
+    const { DEPLOY_ENV, subnetId, securityGroupId } = props;
 
     const userData = readFileSync(
       resolve(__dirname, "cloud-init.yaml"),
@@ -30,6 +31,7 @@ export class EC2Stack extends cdk.NestedStack {
       imageId: AMI,
       instanceType: "t3.nano",
       subnetId: subnetId,
+      securityGroupIds: securityGroupId ? [securityGroupId] : undefined,
       userData: base64UserData,
       iamInstanceProfile: props.ec2InstanceProfileName,
       tags: [{ key: "Name", value: ec2InstanceName }],
