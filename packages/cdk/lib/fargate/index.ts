@@ -5,7 +5,7 @@ import { Aspects } from "aws-cdk-lib";
 import { AutoTagAspect } from "../aspect";
 import { FargateStack } from "./fargate";
 
-export class PublicFargateStack extends cdk.Stack {
+export class FargatePublicStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
