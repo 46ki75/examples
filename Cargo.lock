@@ -3208,9 +3208,9 @@ dependencies = [
 
 [[package]]
 name = "rmcp-macros"
-version = "0.9.1"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f6fa09933cac0d0204c8a5d647f558425538ed6a0134b1ebb1ae4dc00c96db3"
+checksum = "c75d0a62676bf8c8003c4e3c348e2ceb6a7b3e48323681aaf177fdccdac2ce50"
 dependencies = [
  "darling 0.21.0",
  "proc-macro2",
@@ -3330,7 +3330,7 @@ name = "rust-mcp"
 version = "0.1.0"
 dependencies = [
  "rmcp",
- "rmcp-macros 0.9.1",
+ "rmcp-macros 0.10.0",
  "schemars 1.1.0",
  "serde",
  "serde_json",
@@ -3343,7 +3343,7 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "rmcp",
- "rmcp-macros 0.9.1",
+ "rmcp-macros 0.10.0",
  "schemars 1.1.0",
  "serde",
  "serde_json",
