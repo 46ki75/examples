@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-fast_html2md = "0.0.50"
+fast_html2md = "0.0.51"
 headless_chrome = "1.0.18"
 
 lambda_runtime = "1.0.1"
