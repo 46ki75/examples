@@ -1428,9 +1428,9 @@ dependencies = [
 
 [[package]]
 name = "fast_html2md"
-version = "0.0.50"
+version = "0.0.51"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b76cab678adb7268b49671a685d02aebc76dd4a77f37655f56de370970ae2bba"
+checksum = "119ae5cbce673db80a0592dfa809fee7b94b0712cd3ba5e7ce21826e842a3875"
 dependencies = [
  "auto_encoder",
  "futures-util",
