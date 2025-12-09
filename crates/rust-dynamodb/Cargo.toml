@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 aws-config = { version = "1.8.11", features = ["rustls"] }
 aws-sdk-dynamodb = "1.100.0"
-reqwest = { version = "0.12.24", default-features = false, features = [
+reqwest = { version = "0.12.25", default-features = false, features = [
   "gzip",
   "http2",
   "rustls-tls",
