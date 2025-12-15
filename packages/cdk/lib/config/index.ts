@@ -29,26 +29,5 @@ export class ConfigStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
-
-    const configRole = new aws_iam.Role(this, "ConfigRole", {
-      roleName: "AWSConfigRole",
-      assumedBy: new aws_iam.ServicePrincipal("config.amazonaws.com"),
-      managedPolicies: [
-        aws_iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "service-role/ConfigRole"
-        ),
-      ],
-    });
-
-    configBucket.grantWrite(configRole);
-    configBucket.addToResourcePolicy(
-      new aws_iam.PolicyStatement({
-        sid: "AWSConfigBucketPermissionsCheck",
-        effect: aws_iam.Effect.ALLOW,
-        principals: [new aws_iam.ServicePrincipal("config.amazonaws.com")],
-        actions: ["s3:GetBucketAcl"],
-        resources: [configBucket.bucketArn],
-      })
-    );
   }
 }
