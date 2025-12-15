@@ -42,9 +42,7 @@
     "ghcr.io/devcontainers/features/github-cli": {},
     "ghcr.io/devcontainers/features/aws-cli": {},
     // Python
-    "ghcr.io/devcontainers/features/python": {
-      "version": "3.12"
-    },
+    "ghcr.io/devcontainers/features/python": {},
     // Terraform
     "ghcr.io/devcontainers/features/terraform": {},
     // Node.js
