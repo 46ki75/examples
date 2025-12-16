@@ -147,6 +147,7 @@ export class ConfigStack extends Stack {
       {
         name: primaryDeliveryChannelName,
         s3BucketName: configBucket.bucketName,
+        s3KeyPrefix: "AWSLogs",
         snsTopicArn: primaryTopic.attrTopicArn,
         configSnapshotDeliveryProperties: {
           deliveryFrequency: "TwentyFour_Hours",
