@@ -36,10 +36,24 @@ export class ConfigStack extends Stack {
       autoDeleteObjects: true,
     });
 
-    const primaryTopicName = `${prefix}-primary`;
+    const primaryTopicName = `${prefix}-SNS-Topic-primary`;
     const primaryTopic = new aws_sns.Topic(this, "PrimaryTopic", {
       topicName: primaryTopicName,
     });
+
+    const primaryDeliveryChannelName = `${prefix}-Config-DeliveryChannel-primary`;
+    const primaryDeliveryChannel = new aws_config.CfnDeliveryChannel(
+      this,
+      primaryDeliveryChannelName,
+      {
+        name: primaryDeliveryChannelName,
+        s3BucketName: configBucket.bucketName,
+        snsTopicArn: primaryTopic.topicArn,
+        configSnapshotDeliveryProperties: {
+          deliveryFrequency: "DAILY",
+        },
+      }
+    );
 
     const awsConfigServiceLinkedRole = new aws_iam.CfnServiceLinkedRole(
       this,
@@ -49,7 +63,7 @@ export class ConfigStack extends Stack {
       }
     );
 
-    const primaryConfigRecorderName = `${prefix}-primary`;
+    const primaryConfigRecorderName = `${prefix}-Config-ConfigurationRecorder-primary`;
     const primaryConfigRecorder = new aws_config.CfnConfigurationRecorder(
       this,
       primaryConfigRecorderName,
