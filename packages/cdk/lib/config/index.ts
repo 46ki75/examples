@@ -6,6 +6,7 @@ import {
   StackProps,
   aws_s3,
   aws_iam,
+  aws_sns,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
@@ -14,9 +15,13 @@ export class ConfigStack extends Stack {
     super(scope, id, props);
 
     const DEPLOY_ENV = "shared";
+    const ORG_NAME = "46ki75";
+    const PROJECT_NAME = "examples";
+
+    const prefix = `${DEPLOY_ENV}-${ORG_NAME}-${PROJECT_NAME}`;
 
     const configBucket = new aws_s3.Bucket(this, "ConfigBucket", {
-      bucketName: `${DEPLOY_ENV}-46ki75-examples-${Aws.ACCOUNT_ID}-${Aws.REGION}`,
+      bucketName: `${prefix}-config`,
       encryption: aws_s3.BucketEncryption.S3_MANAGED,
       blockPublicAccess: aws_s3.BlockPublicAccess.BLOCK_ALL,
       lifecycleRules: [
@@ -28,6 +33,11 @@ export class ConfigStack extends Stack {
       ],
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+    });
+
+    const primaryTopicName = `${prefix}-primary`;
+    const primaryTopic = new aws_sns.Topic(this, "PrimaryTopic", {
+      topicName: primaryTopicName,
     });
   }
 }
