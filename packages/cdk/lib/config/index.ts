@@ -155,6 +155,8 @@ export class ConfigStack extends Stack {
       }
     );
 
+    primaryDeliveryChannel.addDependency(configBucketPolicy);
+
     // Configuration Recorder
     const primaryConfigRecorderName = `${prefix}-Config-ConfigurationRecorder-primary`;
     const primaryConfigRecorder = new aws_config.CfnConfigurationRecorder(
