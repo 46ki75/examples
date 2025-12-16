@@ -50,7 +50,7 @@ export class ConfigStack extends Stack {
         s3BucketName: configBucket.bucketName,
         snsTopicArn: primaryTopic.topicArn,
         configSnapshotDeliveryProperties: {
-          deliveryFrequency: "DAILY",
+          deliveryFrequency: "TwentyFour_Hours",
         },
       }
     );
