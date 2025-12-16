@@ -7,6 +7,7 @@ import {
   aws_s3,
   aws_iam,
   aws_sns,
+  aws_config,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
@@ -39,5 +40,30 @@ export class ConfigStack extends Stack {
     const primaryTopic = new aws_sns.Topic(this, "PrimaryTopic", {
       topicName: primaryTopicName,
     });
+
+    const awsConfigServiceLinkedRole = new aws_iam.CfnServiceLinkedRole(
+      this,
+      "AWSServiceRoleForConfig",
+      {
+        awsServiceName: "config.amazonaws.com",
+      }
+    );
+
+    const primaryConfigRecorderName = `${prefix}-primary`;
+    const primaryConfigRecorder = new aws_config.CfnConfigurationRecorder(
+      this,
+      primaryConfigRecorderName,
+      {
+        name: primaryConfigRecorderName,
+        roleArn: `arn:${Aws.PARTITION}:iam::${Aws.ACCOUNT_ID}:role/aws-service-role/config.amazonaws.com/${awsConfigServiceLinkedRole.attrRoleName}`,
+        recordingGroup: {
+          allSupported: true,
+          includeGlobalResourceTypes: true,
+        },
+        recordingMode: {
+          recordingFrequency: "DAILY",
+        },
+      }
+    );
   }
 }
