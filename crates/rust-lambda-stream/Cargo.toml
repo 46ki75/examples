@@ -9,7 +9,7 @@ aws-sdk-bedrockruntime = "1.120.0"
 axum = "0.8.7"
 bytes = "1.11.0"
 futures = "0.3.31"
-lambda_http = "1.0.1"
+lambda_http = "1.0.2"
 reqwest = { version = "0.12.26", features = [
     "http2",
     "rustls-tls",
