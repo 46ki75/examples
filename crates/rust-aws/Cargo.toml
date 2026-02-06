@@ -7,8 +7,18 @@ edition = "2024"
 aws-config = "1.8.13"
 aws-sdk-s3 = "1.122.0"
 aws-sdk-sts = "1.96.0"
+clap = { version = "4.5.57", features = ["derive"] }
 infer = "0.19.0"
-reqwest = { version = "0.12.28", default-features = false, features = ["gzip", "http2", "rustls-tls"] }
+lettre = { version = "0.11.19", features = [
+    "aws-lc-rs",
+    "rustls",
+    "rustls-platform-verifier",
+] }
+reqwest = { version = "0.12.28", default-features = false, features = [
+    "gzip",
+    "http2",
+    "rustls-tls",
+] }
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 tokio = { version = "1.49.0", features = ["macros", "rt-multi-thread"] }
