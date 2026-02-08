@@ -3701,6 +3701,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust-misc"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "tokio",
+]
+
+[[package]]
 name = "rust_dynamodb"
 version = "0.1.0"
 dependencies = [
