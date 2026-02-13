@@ -11,6 +11,9 @@ updates:
       aws-sdk:
         patterns:
           - "@aws-sdk/*"
+      eslint:
+        patterns:
+          - "*eslint*"
 
   - package-ecosystem: "cargo"
     directory: "/"
