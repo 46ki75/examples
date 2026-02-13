@@ -16,13 +16,13 @@
     "@types/archiver": "^6.0.3",
     "@types/aws-lambda": "^8.10.150",
     "@types/node": "^24.0.14",
-    "eslint": "^9.29.0",
+    "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "jiti": "^2.6.1",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.35.0"
+    "typescript-eslint": "^8.55.0"
   },
   "dependencies": {
     "chrome-aws-lambda": "^10.1.0",
