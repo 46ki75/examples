@@ -24,8 +24,8 @@ importers:
         version: 0.5.21
     devDependencies:
       '@types/aws-lambda':
-        specifier: ^8.10.150
-        version: 8.10.150
+        specifier: ^8.10.160
+        version: 8.10.160
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -82,8 +82,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       '@types/aws-lambda':
-        specifier: ^8.10.150
-        version: 8.10.150
+        specifier: ^8.10.160
+        version: 8.10.160
       '@types/node':
         specifier: ^24.0.14
         version: 24.0.14
@@ -126,8 +126,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       '@types/aws-lambda':
-        specifier: ^8.10.150
-        version: 8.10.150
+        specifier: ^8.10.160
+        version: 8.10.160
       '@types/node':
         specifier: ^24.0.14
         version: 24.0.14
@@ -159,8 +159,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       '@types/aws-lambda':
-        specifier: ^8.10.150
-        version: 8.10.150
+        specifier: ^8.10.160
+        version: 8.10.160
       '@types/node':
         specifier: ^24.0.14
         version: 24.0.14
@@ -2349,8 +2349,8 @@ packages:
   '@types/archiver@6.0.3':
     resolution: {integrity: sha512-a6wUll6k3zX6qs5KlxIggs1P1JcYJaTCx2gnlr+f0S1yd2DoaEwoIK10HmBaLnZwWneBz+JBm0dwcZu0zECBcQ==}
 
-  '@types/aws-lambda@8.10.150':
-    resolution: {integrity: sha512-AX+AbjH/rH5ezX1fbK8onC/a+HyQHo7QGmvoxAE42n22OsciAxvZoZNEr22tbXs8WfP1nIsBjKDpgPm3HjOZbA==}
+  '@types/aws-lambda@8.10.160':
+    resolution: {integrity: sha512-uoO4QVQNWFPJMh26pXtmtrRfGshPUSpMZGUyUQY20FhfHEElEBOPKgVmFs1z+kbpyBsRs2JnoOPT7++Z4GA9pA==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -7652,7 +7652,7 @@ snapshots:
     dependencies:
       '@types/readdir-glob': 1.1.5
 
-  '@types/aws-lambda@8.10.150': {}
+  '@types/aws-lambda@8.10.160': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
