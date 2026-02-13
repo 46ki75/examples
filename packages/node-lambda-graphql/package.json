@@ -23,6 +23,6 @@
     "@graphql-tools/stitch": "^9.4.25",
     "@graphql-tools/utils": "^10.9.0",
     "@graphql-tools/wrap": "^10.1.1",
-    "graphql": "^16.11.0"
+    "graphql": "^16.12.0"
   }
 }
