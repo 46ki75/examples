@@ -7,6 +7,10 @@ updates:
     target-branch: "main"
     labels:
       - "nodejs"
+    groups:
+      aws-sdk:
+        patterns:
+          - "@aws-sdk/*"
 
   - package-ecosystem: "cargo"
     directory: "/"
@@ -15,6 +19,11 @@ updates:
     target-branch: "main"
     labels:
       - "rust"
+    groups:
+      aws-sdk:
+        patterns:
+          - "aws-config"
+          - "aws-sdk*"
 
   - package-ecosystem: "gradle"
     directory: "/java"
