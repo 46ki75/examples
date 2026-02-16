@@ -56,4 +56,4 @@ updates:
     groups:
       aws:
         patterns:
-          - "hashicorp/aws"
+          - "*aws*"
