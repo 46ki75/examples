@@ -53,3 +53,7 @@ updates:
     target-branch: "main"
     labels:
       - "terraform"
+    group:
+      aws:
+        patterns:
+          - "hashicorp/aws"
