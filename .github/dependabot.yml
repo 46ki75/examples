@@ -11,6 +11,7 @@ updates:
       aws-sdk:
         patterns:
           - "@aws-sdk/*"
+          - "@smithy/*"
       eslint:
         patterns:
           - "*eslint*"
