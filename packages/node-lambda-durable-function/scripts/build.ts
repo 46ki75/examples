@@ -10,7 +10,7 @@ await build({
   bundle: true,
   minify: true,
   keepNames: true,
-  external: ["@aws/durable-execution-sdk-js"],
+  external: ["@aws/durable-execution-sdk-js", "@aws-sdk/client-ssm"],
   plugins: [
     zipPlugin({
       outputPath: "./dist/lambda.zip",

@@ -1,4 +1,7 @@
 import { withDurableExecution } from "@aws/durable-execution-sdk-js";
+import { PutParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
+
+const ssmClient = new SSMClient({});
 
 export const handler = withDurableExecution(async (event, context) => {
   // TODO implement
@@ -16,6 +19,24 @@ export const handler = withDurableExecution(async (event, context) => {
   const message = await context.step("Step #2", async () => {
     return "Hello from Durable Lambda!";
   });
+
+  await context.waitForCallback(
+    "wait-approval",
+    async (callbackId, ctx) => {
+      ctx.logger.info(`Received callback with id: ${callbackId}`);
+      await ssmClient.send(
+        new PutParameterCommand({
+          Name: `/lambda-durable-function/callback-id`,
+          Value: callbackId,
+          Type: "String",
+          Overwrite: true,
+        }),
+      );
+    },
+    {
+      timeout: { minutes: 5 },
+    },
+  );
 
   const response = {
     statusCode: 200,
