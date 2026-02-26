@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  MyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      ImageUri: node-lambda-template
+      MemorySize: 128
+      Timeout: 3
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: .
+      DockerTag: node-lambda-template

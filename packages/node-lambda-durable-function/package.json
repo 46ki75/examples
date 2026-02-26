@@ -1,0 +1,30 @@
+{
+  "name": "node-lambda-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "tsx --test tests/ut/**/*.test.ts tests/ut/**/*.spec.ts",
+    "test:integration": "tsx --test tests/it/**/*.test.ts tests/it/**/*.spec.ts",
+    "build": "tsx ./scripts/build.ts",
+    "lint": "eslint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/archiver": "^7.0.0",
+    "@types/aws-lambda": "^8.10.160",
+    "@types/node": "^25.3.1",
+    "archiver": "^7.0.1",
+    "esbuild": "^0.27.3",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "jiti": "^2.6.1",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  }
+}
