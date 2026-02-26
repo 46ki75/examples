@@ -15,7 +15,7 @@
   "devDependencies": {
     "@types/archiver": "^7.0.0",
     "@types/aws-lambda": "^8.10.160",
-    "@types/node": "^25.3.0",
+    "@types/node": "^25.3.1",
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "jiti": "^2.6.1",
