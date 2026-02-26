@@ -10,6 +10,7 @@ await build({
   bundle: true,
   minify: true,
   keepNames: true,
+  external: ["@aws/durable-execution-sdk-js"],
   plugins: [
     zipPlugin({
       outputPath: "./dist/lambda.zip",
