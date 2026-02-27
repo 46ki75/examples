@@ -7,7 +7,7 @@
     "cdk": "cdk"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.998.0",
+    "@aws-sdk/client-dynamodb": "^3.999.0",
     "aws-cdk-lib": "2.240.0",
     "constructs": "^10.5.1",
     "source-map-support": "^0.5.21"
