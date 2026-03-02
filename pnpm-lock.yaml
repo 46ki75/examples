@@ -11,8 +11,8 @@ importers:
   packages/cdk:
     dependencies:
       '@aws-sdk/client-dynamodb':
-        specifier: ^3.999.0
-        version: 3.999.0
+        specifier: ^3.1000.0
+        version: 3.1000.0
       aws-cdk-lib:
         specifier: 2.240.0
         version: 2.240.0(constructs@10.5.1)
@@ -101,7 +101,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^1.1.19
-        version: 1.1.19(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.999.0)(@aws-sdk/credential-provider-node@3.972.14)(@browserbasehq/sdk@2.7.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(zod@4.3.6))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.1.29(openai@6.25.0(ws@8.19.0)(zod@4.3.6)))(@smithy/eventstream-codec@4.2.10)(@smithy/protocol-http@5.3.10)(@smithy/signature-v4@5.3.10)(@smithy/util-utf8@4.2.1)(fast-xml-parser@5.3.6)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.9.2)(jsonwebtoken@9.0.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(ws@8.19.0)
+        version: 1.1.19(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1000.0)(@aws-sdk/credential-provider-node@3.972.14)(@browserbasehq/sdk@2.7.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(zod@4.3.6))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.1.29(openai@6.25.0(ws@8.19.0)(zod@4.3.6)))(@smithy/eventstream-codec@4.2.10)(@smithy/protocol-http@5.3.10)(@smithy/signature-v4@5.3.10)(@smithy/util-utf8@4.2.1)(fast-xml-parser@5.3.6)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.9.2)(jsonwebtoken@9.0.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(ws@8.19.0)
       '@langchain/core':
         specifier: ^1.1.29
         version: 1.1.29(openai@6.25.0(ws@8.19.0)(zod@4.3.6))
@@ -196,7 +196,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^1.1.19
-        version: 1.1.19(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.999.0)(@aws-sdk/credential-provider-node@3.972.14)(@browserbasehq/sdk@2.7.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(zod@4.3.6))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.1.29(openai@6.25.0(ws@8.19.0)(zod@4.3.6)))(@smithy/eventstream-codec@4.2.10)(@smithy/protocol-http@5.3.10)(@smithy/signature-v4@5.3.10)(@smithy/util-utf8@4.2.1)(fast-xml-parser@5.3.6)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.9.2)(jsonwebtoken@9.0.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(ws@8.19.0)
+        version: 1.1.19(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1000.0)(@aws-sdk/credential-provider-node@3.972.14)(@browserbasehq/sdk@2.7.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(zod@4.3.6))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.1.29(openai@6.25.0(ws@8.19.0)(zod@4.3.6)))(@smithy/eventstream-codec@4.2.10)(@smithy/protocol-http@5.3.10)(@smithy/signature-v4@5.3.10)(@smithy/util-utf8@4.2.1)(fast-xml-parser@5.3.6)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.9.2)(jsonwebtoken@9.0.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(ws@8.19.0)
       '@langchain/core':
         specifier: ^1.1.29
         version: 1.1.29(openai@6.25.0(ws@8.19.0)(zod@4.3.6))
@@ -249,8 +249,8 @@ packages:
   '@aws-crypto/util@5.2.0':
     resolution: {integrity: sha512-4RkU9EsI6ZpBve5fseQlGNUWKMa1RLPQ1dnjnQoe07ldfIzcsGb5hC5W0Dm7u423KWzawlrpbjXBrXCEv9zazQ==}
 
-  '@aws-sdk/client-dynamodb@3.999.0':
-    resolution: {integrity: sha512-DbFR7Y4KQ6HUgt9QcKyx1XvBgz2JJP5JWApL4o1oxyYJaHwAazqKq+QtidOhGNVkaCMoQv70NrrUFwZXf3ArNQ==}
+  '@aws-sdk/client-dynamodb@3.1000.0':
+    resolution: {integrity: sha512-S0M9ndVgGiupQEX9M6yLIKx2Iw1Z/lnZR1j5guuR76sqteQM6jsQseTJepq0hJ9SGGpzSwMucYJxETQDHsgFhQ==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.973.15':
@@ -2359,8 +2359,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     deprecated: The AWS SDK for JavaScript (v2) has reached end-of-support, and no longer receives updates. Please migrate your code to use AWS SDK for JavaScript (v3). More info https://a.co/cUPnyil
 
-  axios@1.13.5:
-    resolution: {integrity: sha512-cz4ur7Vb0xS4/KUN0tPWe44eqxrIu31me+fbang3ijiNscE129POzipJJA6zniq2C/Z6sJCjMimjS8Lc/GAs8Q==}
+  axios@1.13.6:
+    resolution: {integrity: sha512-ChTCHMouEe2kn713WHbQGcuYrr6fXTBiu460OTwWrWob16g1bXn4vtz07Ope7ewMozJAnEquLk5lWQWtBig9DQ==}
 
   b4a@1.6.7:
     resolution: {integrity: sha512-OnAYlL5b7LEkALw87fUVafQw5rVR9RjwGd4KUwNQ6DrrNmaVaUCgLipfVlzrPQ4tWOR9P0IXGNOx50jYCCdSJg==}
@@ -4227,8 +4227,8 @@ packages:
   psl@1.15.0:
     resolution: {integrity: sha512-JZd3gMVBAVQkSs6HdNZo9Sdo0LNcQeMNP3CozBJb3JYC/QUYZTnKxP+f8oWRX4rHP5EurWxqAHTSwUCjlNKa1w==}
 
-  pump@3.0.3:
-    resolution: {integrity: sha512-todwxLMY7/heScKmntwQG8CXVkWUOdYxIvY2s0VWAAMh/nd8SoYiRaKjlr7+iCs984f2P8zvrfWcDDYVb73NfA==}
+  pump@3.0.4:
+    resolution: {integrity: sha512-VS7sjc6KR7e1ukRFhQSY5LM2uBWAUPiOPa/A3mkKmiMwSmRFUITt0xuj+/lesgnCv+dPIEYlkzrcyXgquIHMcA==}
 
   punycode@1.3.2:
     resolution: {integrity: sha512-RofWgt/7fL5wP1Y7fxE7/EmTLzQVnB0ycyibJ0OOHIlJqTNzglYFxVwETOcIoJqJmpDXJ9xImDv+Fq34F/d4Dw==}
@@ -4550,8 +4550,8 @@ packages:
   strip-literal@3.1.0:
     resolution: {integrity: sha512-8r3mkIM/2+PpjHoOtiAW8Rg3jJLHaV7xPwG+YRGrv6FP0wwk/toTpATxWYOW0BKdWwl82VT2tFYi5DlROa0Mxg==}
 
-  strnum@2.1.2:
-    resolution: {integrity: sha512-l63NF9y/cLROq/yqKXSLtcMeeyOfnSQlfMSlzFt/K73oIaD8DGaQWd7Z34X9GPiKqP5rbSh84Hl4bOlLcjiSrQ==}
+  strnum@2.2.0:
+    resolution: {integrity: sha512-Y7Bj8XyJxnPAORMZj/xltsfo55uOiyHcU2tnAVzHUnSJR/KsEX+9RoDeXEnsXtl/CX4fAcrt64gZ13aGaWPeBg==}
 
   strtok3@6.3.0:
     resolution: {integrity: sha512-fZtbhtvI9I48xDSywd/somNqgUHl2L2cstmXCCif0itOf96jeW18MBSyrLuNicYQVkvpOxkZtkzujiTJ9LW5Jw==}
@@ -5107,7 +5107,7 @@ snapshots:
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-dynamodb@3.999.0':
+  '@aws-sdk/client-dynamodb@3.1000.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
@@ -6186,7 +6186,7 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/community@1.1.19(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.999.0)(@aws-sdk/credential-provider-node@3.972.14)(@browserbasehq/sdk@2.7.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(zod@4.3.6))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.1.29(openai@6.25.0(ws@8.19.0)(zod@4.3.6)))(@smithy/eventstream-codec@4.2.10)(@smithy/protocol-http@5.3.10)(@smithy/signature-v4@5.3.10)(@smithy/util-utf8@4.2.1)(fast-xml-parser@5.3.6)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.9.2)(jsonwebtoken@9.0.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(ws@8.19.0)':
+  '@langchain/community@1.1.19(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1000.0)(@aws-sdk/credential-provider-node@3.972.14)(@browserbasehq/sdk@2.7.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(zod@4.3.6))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.1.29(openai@6.25.0(ws@8.19.0)(zod@4.3.6)))(@smithy/eventstream-codec@4.2.10)(@smithy/protocol-http@5.3.10)(@smithy/signature-v4@5.3.10)(@smithy/util-utf8@4.2.1)(fast-xml-parser@5.3.6)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.9.2)(jsonwebtoken@9.0.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(ws@8.19.0)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.25.0(ws@8.19.0)(zod@4.3.6))(zod@4.3.6)
       '@ibm-cloud/watsonx-ai': 1.6.8
@@ -6203,7 +6203,7 @@ snapshots:
       zod: 4.3.6
     optionalDependencies:
       '@aws-crypto/sha256-js': 5.2.0
-      '@aws-sdk/client-dynamodb': 3.999.0
+      '@aws-sdk/client-dynamodb': 3.1000.0
       '@aws-sdk/credential-provider-node': 3.972.14
       '@browserbasehq/sdk': 2.7.0
       '@smithy/eventstream-codec': 4.2.10
@@ -7287,7 +7287,7 @@ snapshots:
       uuid: 8.0.0
       xml2js: 0.6.2
 
-  axios@1.13.5(debug@4.4.3):
+  axios@1.13.6(debug@4.4.3):
     dependencies:
       follow-redirects: 1.15.11(debug@4.4.3)
       form-data: 4.0.5
@@ -7930,7 +7930,7 @@ snapshots:
 
   fast-xml-parser@5.3.6:
     dependencies:
-      strnum: 2.1.2
+      strnum: 2.2.0
 
   fastq@1.19.1:
     dependencies:
@@ -8077,7 +8077,7 @@ snapshots:
 
   get-stream@5.2.0:
     dependencies:
-      pump: 3.0.3
+      pump: 3.0.4
 
   get-stream@6.0.1: {}
 
@@ -8238,7 +8238,7 @@ snapshots:
       '@types/debug': 4.1.12
       '@types/node': 18.19.130
       '@types/tough-cookie': 4.0.5
-      axios: 1.13.5(debug@4.4.3)
+      axios: 1.13.6(debug@4.4.3)
       camelcase: 6.3.0
       debug: 4.4.3
       dotenv: 16.6.1
@@ -8248,7 +8248,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.13.5(debug@4.4.3))
+      retry-axios: 2.6.0(axios@1.13.6(debug@4.4.3))
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -9419,7 +9419,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  pump@3.0.3:
+  pump@3.0.4:
     dependencies:
       end-of-stream: 1.4.5
       once: 1.4.0
@@ -9538,9 +9538,9 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.13.5(debug@4.4.3)):
+  retry-axios@2.6.0(axios@1.13.6(debug@4.4.3)):
     dependencies:
-      axios: 1.13.5(debug@4.4.3)
+      axios: 1.13.6(debug@4.4.3)
 
   reusify@1.1.0: {}
 
@@ -9786,7 +9786,7 @@ snapshots:
     dependencies:
       js-tokens: 9.0.1
 
-  strnum@2.1.2: {}
+  strnum@2.2.0: {}
 
   strtok3@6.3.0:
     dependencies:
@@ -9817,7 +9817,7 @@ snapshots:
     dependencies:
       chownr: 1.1.4
       mkdirp: 0.5.6
-      pump: 3.0.3
+      pump: 3.0.4
       tar-stream: 2.2.0
 
   tar-stream@2.2.0:
