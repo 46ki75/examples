@@ -66,8 +66,8 @@ importers:
         specifier: ^10.0.31
         version: 10.0.31(graphql@16.13.1)
       '@graphql-tools/stitch':
-        specifier: ^10.1.14
-        version: 10.1.14(graphql@16.13.1)
+        specifier: ^10.1.15
+        version: 10.1.15(graphql@16.13.1)
       '@graphql-tools/utils':
         specifier: ^11.0.0
         version: 11.0.0(graphql@16.13.1)
@@ -764,8 +764,8 @@ packages:
   '@fastify/busboy@3.2.0':
     resolution: {integrity: sha512-m9FVDXU3GT2ITSe0UaMA5rU3QkfC/UXtCU8y0gSN/GugTqtVldOBWIB5V6V3sbmenVZUIpU6f+mPEO2+m5iTaA==}
 
-  '@graphql-tools/batch-delegate@10.0.16':
-    resolution: {integrity: sha512-f4T1Slv56GaSzCNPHqWxcsMixWA99LukmD3PCj57uheqYUlWZ6FMIpgo6TKsMad8FEWRWN93DdRL1mYE//a+zA==}
+  '@graphql-tools/batch-delegate@10.0.17':
+    resolution: {integrity: sha512-h2ukws6+ZnNOj+PEFUEbcY/mKAwLwosbudLVPCL1quOCJIOuHgQAF9rUFFbBDvqqbCBwTAyr3ysDwClTOGq/6A==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -812,8 +812,8 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/stitch@10.1.14':
-    resolution: {integrity: sha512-hTIosUQV1qtWAZIqZj9Jp3rHM1mHQb1bSzthGlBZFMVXLOgWJNxVDL3qnEzOzhYdmHET7MxFcvQERWbq8mettw==}
+  '@graphql-tools/stitch@10.1.15':
+    resolution: {integrity: sha512-GtQYmEb3jJsKWrxh8q81hAHXlZiE4VHffragb0QaXN08jW+fGPZcdHtgOzJTCgi+noCJvu2GquL3RYNKEGWaDA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -821,6 +821,12 @@ packages:
   '@graphql-tools/utils@11.0.0':
     resolution: {integrity: sha512-bM1HeZdXA2C3LSIeLOnH/bcqSgbQgKEDrjxODjqi3y58xai2TkNrtYcQSoWzGbt9VMN1dORGjR7Vem8SPnUFQA==}
     engines: {node: '>=16.0.0'}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+
+  '@graphql-tools/wrap@11.1.11':
+    resolution: {integrity: sha512-6LvimwWPRwRWe+Ls5Qj0gG+kpAsu+cMKugc+kLEl8C7z7Va3IM6BNxrTc8PPky7A4eiDumS5FLPWNuIZjg5IFg==}
+    engines: {node: '>=20.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
@@ -5850,7 +5856,7 @@ snapshots:
   '@fastify/busboy@3.2.0':
     optional: true
 
-  '@graphql-tools/batch-delegate@10.0.16(graphql@16.13.1)':
+  '@graphql-tools/batch-delegate@10.0.17(graphql@16.13.1)':
     dependencies:
       '@graphql-tools/delegate': 12.0.11(graphql@16.13.1)
       '@graphql-tools/utils': 11.0.0(graphql@16.13.1)
@@ -5922,10 +5928,10 @@ snapshots:
       graphql: 16.13.1
       tslib: 2.8.1
 
-  '@graphql-tools/stitch@10.1.14(graphql@16.13.1)':
+  '@graphql-tools/stitch@10.1.15(graphql@16.13.1)':
     dependencies:
-      '@graphql-tools/batch-delegate': 10.0.16(graphql@16.13.1)
-      '@graphql-tools/delegate': 12.0.10(graphql@16.13.1)
+      '@graphql-tools/batch-delegate': 10.0.17(graphql@16.13.1)
+      '@graphql-tools/delegate': 12.0.11(graphql@16.13.1)
       '@graphql-tools/executor': 1.5.1(graphql@16.13.1)
       '@graphql-tools/merge': 9.1.7(graphql@16.13.1)
       '@graphql-tools/schema': 10.0.31(graphql@16.13.1)
@@ -5940,6 +5946,15 @@ snapshots:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.13.1)
       '@whatwg-node/promise-helpers': 1.3.2
       cross-inspect: 1.0.1
+      graphql: 16.13.1
+      tslib: 2.8.1
+
+  '@graphql-tools/wrap@11.1.11(graphql@16.13.1)':
+    dependencies:
+      '@graphql-tools/delegate': 12.0.11(graphql@16.13.1)
+      '@graphql-tools/schema': 10.0.31(graphql@16.13.1)
+      '@graphql-tools/utils': 11.0.0(graphql@16.13.1)
+      '@whatwg-node/promise-helpers': 1.3.2
       graphql: 16.13.1
       tslib: 2.8.1
 
@@ -8328,7 +8343,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.13.6)
+      retry-axios: 2.6.0(axios@1.13.6(debug@4.4.3))
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -9632,7 +9647,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.13.6):
+  retry-axios@2.6.0(axios@1.13.6(debug@4.4.3)):
     dependencies:
       axios: 1.13.6(debug@4.4.3)
 
