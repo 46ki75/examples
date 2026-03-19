@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "tsx ./scripts/build.ts"
+    "build": "tsx ./scripts/build.ts",
+    "predeploy": "pnpm run build",
+    "deploy": "aws lambda update-function-code --function-name \"${FUNCTION_NAME:-node-lambda-durable-function}\" --zip-file fileb://./dist/lambda.zip"
   },
   "keywords": [],
   "author": "",
