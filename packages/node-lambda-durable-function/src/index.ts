@@ -40,7 +40,7 @@ export const handler = withDurableExecution(
 
     await context.wait("wait-1", { seconds: 3 });
 
-    const users = await context.step("fetch-html", async () => {
+    const users = await context.step("fetch-users", async () => {
       try {
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/users",
@@ -54,17 +54,24 @@ export const handler = withDurableExecution(
     });
 
     const userDetails = await context.parallel(
-      users.map(
-        ({ id }) =>
-          async (context) =>
-            context.step(`fetch-user-${id}`, async () => {
+      "parallel-fetch-user-details",
+      users.map(({ id }) => ({
+        name: `branch-fetch-user-${id}`,
+        func: async (context) => {
+          const userDetail = await context.step(
+            `fetch-user-${id}`,
+            async () => {
               const response = await fetch(
                 `https://jsonplaceholder.typicode.com/users/${id}`,
               );
               const user = await response.json();
               return user as User;
-            }),
-      ),
+            },
+          );
+
+          return userDetail;
+        },
+      })),
     );
 
     const [promise, callbackId] = await context.createCallback(
