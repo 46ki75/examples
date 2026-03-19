@@ -16,5 +16,5 @@ await build({
       sourceDir: "./dist/lambda",
     }),
   ],
-  external: ["@aws/durable-execution-sdk-js"],
+  external: ["@aws/durable-execution-sdk-js", "@aws-sdk/client-ssm"],
 });

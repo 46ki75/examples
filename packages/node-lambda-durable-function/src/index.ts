@@ -2,6 +2,9 @@ import {
   withDurableExecution,
   DurableContext,
 } from "@aws/durable-execution-sdk-js";
+import { PutParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
+
+const ssmClient = new SSMClient({});
 
 export const handler = withDurableExecution(
   async (event: any, context: DurableContext) => {
@@ -25,9 +28,25 @@ export const handler = withDurableExecution(
       seconds: 3,
     });
 
+    const [promise, callbackId] = await context.createCallback("approval", {
+      timeout: { hours: 1 },
+    });
+
+    await ssmClient.send(
+      new PutParameterCommand({
+        Name: `/node-lambda-durable-function/callback-id`,
+        Value: callbackId,
+        Type: "String",
+        Overwrite: true,
+      }),
+    );
+
+    const approvalResult = await promise;
+
     return {
       message: "Hello, Durable Function!",
       user,
+      approvalResult,
     };
   },
 );

@@ -6,13 +6,15 @@
   "scripts": {
     "build": "tsx ./scripts/build.ts",
     "predeploy": "pnpm run build",
-    "deploy": "aws lambda update-function-code --function-name \"${FUNCTION_NAME:-node-lambda-durable-function}\" --zip-file fileb://./dist/lambda.zip --publish"
+    "deploy": "aws lambda update-function-code --function-name \"${FUNCTION_NAME:-node-lambda-durable-function}\" --zip-file fileb://./dist/lambda.zip --publish",
+    "approve": "tsx ./scripts/approve.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.30.1",
   "devDependencies": {
+    "@aws-sdk/client-lambda": "^3.1012.0",
     "@types/archiver": "^7.0.0",
     "@types/node": "^25.5.0",
     "archiver": "^7.0.1",
@@ -21,6 +23,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@aws-sdk/client-ssm": "^3.1012.0",
     "@aws/durable-execution-sdk-js": "^1.1.0"
   }
 }
