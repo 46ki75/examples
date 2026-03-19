@@ -1,14 +1,11 @@
-import {
-  withDurableExecution,
-  DurableContext,
-} from "@aws/durable-execution-sdk-js";
+import { DurableContext } from "@aws/durable-execution-sdk-js";
 import { PutParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
 import type { User } from "../user.js";
 
 const ssmClient = new SSMClient({});
 
 export const defaultHandler = async (
-  event: unknown,
+  _event: unknown,
   context: DurableContext,
 ) => {
   const startTime = await context.step("start-time", async () => {

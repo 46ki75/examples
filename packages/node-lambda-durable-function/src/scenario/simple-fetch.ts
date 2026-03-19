@@ -1,11 +1,8 @@
-import {
-  withDurableExecution,
-  DurableContext,
-} from "@aws/durable-execution-sdk-js";
+import { DurableContext } from "@aws/durable-execution-sdk-js";
 import type { User } from "../user.js";
 
 export const simpleFetchHandler = async (
-  event: unknown,
+  _event: unknown,
   context: DurableContext,
 ) => {
   const user1 = await context.step("fetch-user-1", async () => {

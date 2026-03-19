@@ -1,11 +1,8 @@
-import {
-  withDurableExecution,
-  DurableContext,
-} from "@aws/durable-execution-sdk-js";
+import { DurableContext } from "@aws/durable-execution-sdk-js";
 import type { User } from "../user.js";
 
 export const parallelFetchHandler = async (
-  event: unknown,
+  _event: unknown,
   context: DurableContext,
 ) => {
   const users = await context.step("fetch-users", async () => {
