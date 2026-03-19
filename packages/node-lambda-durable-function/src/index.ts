@@ -109,16 +109,6 @@ export const handler = withDurableExecution(
       },
     );
 
-    const cleanup = await context.step("cleanup", async () => {
-      const result = await ssmClient.send(
-        new DeleteParameterCommand({
-          Name: `/node-lambda-durable-function/callback-id`,
-        }),
-      );
-
-      return result;
-    });
-
     return {
       message: "Hello, Durable Function!",
       users,

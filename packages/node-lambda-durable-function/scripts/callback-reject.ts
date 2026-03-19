@@ -1,4 +1,8 @@
-import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
+import {
+  SSMClient,
+  GetParameterCommand,
+  DeleteParameterCommand,
+} from "@aws-sdk/client-ssm";
 import {
   LambdaClient,
   SendDurableExecutionCallbackFailureCommand,
@@ -20,5 +24,11 @@ await lambdaClient.send(
   new SendDurableExecutionCallbackFailureCommand({
     CallbackId: callbackId,
     Error: { ErrorData: JSON.stringify({ approved: false }) },
+  }),
+);
+
+await ssmClient.send(
+  new DeleteParameterCommand({
+    Name: `/node-lambda-durable-function/callback-id`,
   }),
 );
