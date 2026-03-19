@@ -53,7 +53,7 @@ export const handler = withDurableExecution(
       }
     });
 
-    await context.parallel(
+    const userDetails = await context.parallel(
       users.map(
         ({ id }) =>
           async (context) =>
@@ -115,6 +115,7 @@ export const handler = withDurableExecution(
     return {
       message: "Hello, Durable Function!",
       users,
+      userDetails,
       createCallbackResult,
       waitForCallbackResult,
     };
