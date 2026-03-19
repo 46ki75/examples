@@ -31,9 +31,12 @@ export const handler = withDurableExecution(
 
     await Promise.all(waitPromises);
 
-    const [promise, callbackId] = await context.createCallback("approval", {
-      timeout: { hours: 1 },
-    });
+    const [promise, callbackId] = await context.createCallback(
+      "approval-create-callback",
+      {
+        timeout: { hours: 1 },
+      },
+    );
 
     await ssmClient.send(
       new PutParameterCommand({
@@ -44,12 +47,30 @@ export const handler = withDurableExecution(
       }),
     );
 
-    const approvalResult = await promise;
+    const createCallbackResult = await promise;
+
+    const waitForCallbackResult = await context.waitForCallback(
+      "approval-wait-for-callback",
+      async (callbackId) => {
+        await ssmClient.send(
+          new PutParameterCommand({
+            Name: `/node-lambda-durable-function/callback-id`,
+            Value: callbackId,
+            Type: "String",
+            Overwrite: true,
+          }),
+        );
+      },
+      {
+        timeout: { hours: 1 },
+      },
+    );
 
     return {
       message: "Hello, Durable Function!",
       user,
-      approvalResult,
+      createCallbackResult,
+      waitForCallbackResult,
     };
   },
 );
