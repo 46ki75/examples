@@ -7,6 +7,7 @@ import {
   PutParameterCommand,
   SSMClient,
 } from "@aws-sdk/client-ssm";
+import type { User } from "./user.js";
 
 const ssmClient = new SSMClient({});
 
@@ -37,26 +38,34 @@ export const handler = withDurableExecution(
       },
     );
 
-    const user = await context.step("fetch-html", async () => {
+    await context.wait("wait-1", { seconds: 3 });
+
+    const users = await context.step("fetch-html", async () => {
       try {
         const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users/1",
+          "https://jsonplaceholder.typicode.com/users",
         );
-        const user = await response.json();
-        return user;
+        const users = await response.json();
+        return users as User[];
       } catch (error) {
         console.error("Error fetching user:", error);
         throw error;
       }
     });
 
-    await context.wait("wait-1", { seconds: 3 });
-
-    await context.parallel([
-      async (context) => context.wait("wait-2-1", { seconds: 1 }),
-      async (context) => context.wait("wait-2-2", { seconds: 2 }),
-      async (context) => context.wait("wait-2-3", { seconds: 3 }),
-    ]);
+    await context.parallel(
+      users.map(
+        ({ id }) =>
+          async (context) =>
+            context.step(`fetch-user-${id}`, async () => {
+              const response = await fetch(
+                `https://jsonplaceholder.typicode.com/users/${id}`,
+              );
+              const user = await response.json();
+              return user as User;
+            }),
+      ),
+    );
 
     const [promise, callbackId] = await context.createCallback(
       "approval-create-callback",
@@ -105,7 +114,7 @@ export const handler = withDurableExecution(
 
     return {
       message: "Hello, Durable Function!",
-      user,
+      users,
       createCallbackResult,
       waitForCallbackResult,
     };
