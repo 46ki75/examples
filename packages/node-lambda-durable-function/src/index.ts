@@ -21,12 +21,15 @@ export const handler = withDurableExecution(
       }
     });
 
-    await context.wait("wait-1", {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 3,
-    });
+    await context.wait("wait-1", { seconds: 3 });
+
+    const waitPromises = [
+      context.wait("wait-2-1", { seconds: 1 }),
+      context.wait("wait-2-2", { seconds: 2 }),
+      context.wait("wait-2-3", { seconds: 3 }),
+    ];
+
+    await Promise.all(waitPromises);
 
     const [promise, callbackId] = await context.createCallback("approval", {
       timeout: { hours: 1 },
