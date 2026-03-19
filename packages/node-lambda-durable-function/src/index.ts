@@ -2,12 +2,41 @@ import {
   withDurableExecution,
   DurableContext,
 } from "@aws/durable-execution-sdk-js";
-import { PutParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
+import {
+  DeleteParameterCommand,
+  PutParameterCommand,
+  SSMClient,
+} from "@aws-sdk/client-ssm";
 
 const ssmClient = new SSMClient({});
 
 export const handler = withDurableExecution(
   async (event: any, context: DurableContext) => {
+    const startTime = await context.step("start-time", async () => {
+      return new Date().toISOString();
+    });
+
+    const _ = await context.waitForCondition(
+      "wait-for-condition",
+      async (state, ctx) => {
+        return { ...state, time: new Date().toISOString() };
+      },
+      {
+        initialState: { time: new Date().toISOString() },
+        waitStrategy: (state) => {
+          const shouldContinue =
+            new Date(state.time).getTime() - new Date(startTime).getTime() <
+            10000;
+
+          if (shouldContinue) {
+            return { shouldContinue: true, delay: { seconds: 3 } };
+          } else {
+            return { shouldContinue: false };
+          }
+        },
+      },
+    );
+
     const user = await context.step("fetch-html", async () => {
       try {
         const response = await fetch(
@@ -63,6 +92,16 @@ export const handler = withDurableExecution(
         timeout: { hours: 1 },
       },
     );
+
+    const cleanup = await context.step("cleanup", async () => {
+      const result = await ssmClient.send(
+        new DeleteParameterCommand({
+          Name: `/node-lambda-durable-function/callback-id`,
+        }),
+      );
+
+      return result;
+    });
 
     return {
       message: "Hello, Durable Function!",
