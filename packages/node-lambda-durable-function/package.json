@@ -7,7 +7,8 @@
     "build": "tsx ./scripts/build.ts",
     "predeploy": "pnpm run build",
     "deploy": "aws lambda update-function-code --function-name \"${FUNCTION_NAME:-node-lambda-durable-function}\" --zip-file fileb://./dist/lambda.zip --publish",
-    "approve": "tsx ./scripts/approve.ts"
+    "approve": "tsx ./scripts/callback-approve.ts",
+    "reject": "tsx ./scripts/callback-reject.ts"
   },
   "keywords": [],
   "author": "",
