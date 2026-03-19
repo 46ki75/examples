@@ -13,6 +13,8 @@ export const simpleFetchHandler = async (
     return user as User;
   });
 
+  await context.wait("wait", { seconds: 1 });
+
   const user2 = await context.step("fetch-user-2", async () => {
     const response = await fetch(
       "https://jsonplaceholder.typicode.com/users/2",
