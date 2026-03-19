@@ -23,13 +23,11 @@ export const handler = withDurableExecution(
 
     await context.wait("wait-1", { seconds: 3 });
 
-    const waitPromises = [
-      context.wait("wait-2-1", { seconds: 1 }),
-      context.wait("wait-2-2", { seconds: 2 }),
-      context.wait("wait-2-3", { seconds: 3 }),
-    ];
-
-    await Promise.all(waitPromises);
+    await context.parallel([
+      async (context) => context.wait("wait-2-1", { seconds: 1 }),
+      async (context) => context.wait("wait-2-2", { seconds: 2 }),
+      async (context) => context.wait("wait-2-3", { seconds: 3 }),
+    ]);
 
     const [promise, callbackId] = await context.createCallback(
       "approval-create-callback",
