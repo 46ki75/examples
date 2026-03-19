@@ -26,10 +26,10 @@ export const handler = withDurableExecution(
         waitStrategy: (state) => {
           const shouldContinue =
             new Date(state.time).getTime() - new Date(startTime).getTime() <
-            10000;
+            3000;
 
           if (shouldContinue) {
-            return { shouldContinue: true, delay: { seconds: 3 } };
+            return { shouldContinue: true, delay: { seconds: 1 } };
           } else {
             return { shouldContinue: false };
           }
