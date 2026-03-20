@@ -8,30 +8,6 @@ export const defaultHandler = async (
   _event: unknown,
   context: DurableContext,
 ) => {
-  const startTime = await context.step("start-time", async () => {
-    return new Date().toISOString();
-  });
-
-  const _ = await context.waitForCondition(
-    "wait-for-condition",
-    async (state, ctx) => {
-      return { ...state, time: new Date().toISOString() };
-    },
-    {
-      initialState: { time: new Date().toISOString() },
-      waitStrategy: (state) => {
-        const shouldContinue =
-          new Date(state.time).getTime() - new Date(startTime).getTime() < 3000;
-
-        if (shouldContinue) {
-          return { shouldContinue: true, delay: { seconds: 1 } };
-        } else {
-          return { shouldContinue: false };
-        }
-      },
-    },
-  );
-
   await context.wait("wait-1", { seconds: 3 });
 
   const users = await context.step("fetch-users", async () => {

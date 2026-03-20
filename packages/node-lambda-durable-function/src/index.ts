@@ -6,8 +6,14 @@ import {
 import { defaultHandler } from "./scenario/default.js";
 import { simpleFetchHandler } from "./scenario/simple-fetch.js";
 import { parallelFetchHandler } from "./scenario/parallel-fetch.js";
+import { waitForConditionHandler } from "./scenario/wait-for-condition.js";
 
-const EVENTS = ["default", "simple-fetch", "parallel-fetch"] as const;
+const EVENTS = [
+  "default",
+  "simple-fetch",
+  "parallel-fetch",
+  "wait-for-condition",
+] as const;
 
 export interface EventPayload {
   scenario?: (typeof EVENTS)[number];
@@ -21,6 +27,9 @@ export const handler = withDurableExecution(
 
       case "parallel-fetch":
         return parallelFetchHandler(event, context);
+
+      case "wait-for-condition":
+        return waitForConditionHandler(event, context);
 
       case "default":
       case undefined:
