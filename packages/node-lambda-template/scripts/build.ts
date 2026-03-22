@@ -1,6 +1,8 @@
 import { build } from "esbuild";
 import { zipPlugin } from "./plugin.js";
 
+import { devDependencies } from "../package.json";
+
 await build({
   entryPoints: ["./src/index.ts"],
   outfile: "./dist/lambda/index.mjs",
@@ -16,4 +18,5 @@ await build({
       sourceDir: "./dist/lambda",
     }),
   ],
+  external: Object.keys(devDependencies),
 });
