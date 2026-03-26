@@ -1,10 +1,10 @@
 module aws-cloudfront-s3
 
-go 1.25.6
+go 1.25.8
 
 require (
 	github.com/pulumi/pulumi-aws/sdk/v6 v6.83.2
-	github.com/pulumi/pulumi/sdk/v3 v3.227.0
+	github.com/pulumi/pulumi/sdk/v3 v3.228.0
 )
 
 require (
