@@ -14,8 +14,8 @@ importers:
         specifier: ^3.1021.0
         version: 3.1021.0
       aws-cdk-lib:
-        specifier: 2.245.0
-        version: 2.245.0(constructs@10.6.0)
+        specifier: 2.246.0
+        version: 2.246.0(constructs@10.6.0)
       constructs:
         specifier: ^10.6.0
         version: 10.6.0
@@ -256,8 +256,8 @@ packages:
   '@aws-cdk/asset-node-proxy-agent-v6@2.1.1':
     resolution: {integrity: sha512-We4bmHaowOPHr+IQR4/FyTGjRfjgBj4ICMjtqmJeBDWad3Q/6St12NT07leNtyuukv2qMhtSZJQorD8KpKTwRA==}
 
-  '@aws-cdk/cloud-assembly-schema@53.10.0':
-    resolution: {integrity: sha512-/gJgJQh9SHIIN82GZ4BB0WS3z3HcKFF734yNOkX0stBeyIfaBl2x476dihVCCM1GpVqnueC9DUA3CyZJOOPitg==}
+  '@aws-cdk/cloud-assembly-schema@53.12.0':
+    resolution: {integrity: sha512-xXB5Cu6uHQl8C0uYvS0gQjMwYGWQ/UcifssdzNOgTNxPky2r68mPXEJ1snvsoLhy44X9r2px0riRglIswKX4ug==}
     engines: {node: '>= 18.0.0'}
     bundledDependencies:
       - jsonschema
@@ -2367,8 +2367,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  aws-cdk-lib@2.245.0:
-    resolution: {integrity: sha512-Yfeb+wKC6s+Ttm/N93C6vY6ksyCh68WaG/j3N6dalJWTW/V4o6hUolHm+v2c2IofJEUS45c5AF/EEj24e9hfMA==}
+  aws-cdk-lib@2.246.0:
+    resolution: {integrity: sha512-7OtF95mss9dWohopCNQKAlNFrMJwgOIvNTNgoOWWcKhULBf6UxKCaf6ATlnuysIWRGf2DHgcval/4+yySOKRBw==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
       constructs: ^10.5.0
@@ -3799,8 +3799,8 @@ packages:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  lodash-es@4.17.23:
-    resolution: {integrity: sha512-kVI48u3PZr38HdYz98UmfPnXl2DXrpdctLrFLCd3kOx1xUkOmpFPx7gCWWM5MPkL/fD8zb+Ph0QzjGFs4+hHWg==}
+  lodash-es@4.18.1:
+    resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -5197,7 +5197,7 @@ snapshots:
 
   '@aws-cdk/asset-node-proxy-agent-v6@2.1.1': {}
 
-  '@aws-cdk/cloud-assembly-schema@53.10.0': {}
+  '@aws-cdk/cloud-assembly-schema@53.12.0': {}
 
   '@aws-crypto/crc32@5.2.0':
     dependencies:
@@ -7485,11 +7485,11 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  aws-cdk-lib@2.245.0(constructs@10.6.0):
+  aws-cdk-lib@2.246.0(constructs@10.6.0):
     dependencies:
       '@aws-cdk/asset-awscli-v1': 2.2.263
       '@aws-cdk/asset-node-proxy-agent-v6': 2.1.1
-      '@aws-cdk/cloud-assembly-schema': 53.10.0
+      '@aws-cdk/cloud-assembly-schema': 53.12.0
       constructs: 10.6.0
 
   aws-cdk@2.1115.0: {}
@@ -8519,7 +8519,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.14.0)
+      retry-axios: 2.6.0(axios@1.14.0(debug@4.4.3))
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -9169,7 +9169,7 @@ snapshots:
       p-locate: 6.0.0
     optional: true
 
-  lodash-es@4.17.23:
+  lodash-es@4.18.1:
     optional: true
 
   lodash.debounce@4.0.8:
@@ -9319,7 +9319,7 @@ snapshots:
   netlify@13.3.5:
     dependencies:
       '@netlify/open-api': 2.52.0
-      lodash-es: 4.17.23
+      lodash-es: 4.18.1
       micro-api-client: 3.3.0
       node-fetch: 3.3.2
       p-wait-for: 5.0.2
@@ -9816,7 +9816,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.14.0):
+  retry-axios@2.6.0(axios@1.14.0(debug@4.4.3)):
     dependencies:
       axios: 1.14.0(debug@4.4.3)
 
