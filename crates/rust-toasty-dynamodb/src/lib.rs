@@ -10,6 +10,9 @@ pub struct User {
 
     #[unique]
     pub email: String,
+
+    #[index]
+    age: Option<i64>,
 }
 
 pub async fn connect_db() -> toasty::Result<toasty::Db> {
