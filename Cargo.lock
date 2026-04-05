@@ -3996,6 +3996,7 @@ dependencies = [
 name = "rust-toasty-dynamodb"
 version = "0.1.0"
 dependencies = [
+ "clap",
  "toasty",
  "tokio",
  "uuid",
