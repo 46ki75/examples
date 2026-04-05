@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 toasty = { version = "0.3.0", features = ["dynamodb"] }
 tokio = { version = "1.51.0", features = ["macros", "rt-multi-thread"] }
+uuid = { version = "1.23.0", features = ["v4"] }

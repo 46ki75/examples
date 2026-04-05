@@ -3,13 +3,7 @@ use rust_toasty_dynamodb::User;
 #[tokio::main]
 async fn main() -> toasty::Result<()> {
     // Build a Db handle, registering all models in this crate
-    let mut db = toasty::Db::builder()
-        .models(toasty::models!(crate::*))
-        .connect("dynamodb://dynamodb.ap-northeast-1.amazonaws.com")
-        .await?;
-
-    // Create tables based on registered models
-    db.push_schema().await?;
+    let mut db = rust_toasty_dynamodb::connect_db().await?;
 
     // Create a user
     let user = toasty::create!(User {
