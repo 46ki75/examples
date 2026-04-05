@@ -3687,6 +3687,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust-toasty-dynamodb"
+version = "0.1.0"
+
+[[package]]
 name = "rust_dynamodb"
 version = "0.1.0"
 dependencies = [
