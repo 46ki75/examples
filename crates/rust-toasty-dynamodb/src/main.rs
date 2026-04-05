@@ -5,7 +5,7 @@ async fn main() -> toasty::Result<()> {
     // Build a Db handle, registering all models in this crate
     let mut db = toasty::Db::builder()
         .models(toasty::models!(crate::*))
-        .connect("sqlite::memory:")
+        .connect("dynamodb://dynamodb.ap-northeast-1.amazonaws.com")
         .await?;
 
     // Create tables based on registered models
