@@ -11,5 +11,7 @@
       "mode": "auto"
     }
   ],
-  "ansible.python.interpreterPath": "/workspaces/examples/python/ansible-packer-molecule/.venv/bin/python"
+  "terminal.integrated.env.linux": {
+    "AWS_PROFILE": "46ki75-examples"
+  }
 }
