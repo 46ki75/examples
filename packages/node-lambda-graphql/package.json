@@ -22,7 +22,7 @@
     "@graphql-tools/schema": "^10.0.32",
     "@graphql-tools/stitch": "^10.1.17",
     "@graphql-tools/utils": "^11.0.1",
-    "@graphql-tools/wrap": "^11.1.13",
+    "@graphql-tools/wrap": "^11.1.14",
     "graphql": "^16.13.2"
   }
 }
