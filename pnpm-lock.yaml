@@ -33,8 +33,8 @@ importers:
         specifier: 25.6.0
         version: 25.6.0
       aws-cdk:
-        specifier: 2.1118.0
-        version: 2.1118.0
+        specifier: 2.1118.2
+        version: 2.1118.2
       aws-lambda:
         specifier: ^1.0.7
         version: 1.0.7
@@ -2542,8 +2542,8 @@ packages:
       - yaml
       - mime-types
 
-  aws-cdk@2.1118.0:
-    resolution: {integrity: sha512-Tfd865GRewDTXIbTVtix/l+v8t3rZENvdHcQQZS2wXYVXfHzljULFXe9JKkgZUNDPB1zo9tSBUu8jjiHRm7nWg==}
+  aws-cdk@2.1118.2:
+    resolution: {integrity: sha512-jHuShSx0JI14enDz2Hk2Qe0LYTDPzLyF2nBhWCvoXyRCpz31sI3XsCh4KO5ZXKfw9ET0bHvDTVnMZQPBpswg8A==}
     engines: {node: '>= 18.0.0'}
     hasBin: true
 
@@ -7700,7 +7700,7 @@ snapshots:
       '@aws-cdk/cloud-assembly-schema': 53.14.0
       constructs: 10.6.0
 
-  aws-cdk@2.1118.0: {}
+  aws-cdk@2.1118.2: {}
 
   aws-lambda@1.0.7:
     dependencies:
@@ -8732,7 +8732,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.15.0)
+      retry-axios: 2.6.0(axios@1.15.0(debug@4.4.3))
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -10011,7 +10011,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.15.0):
+  retry-axios@2.6.0(axios@1.15.0(debug@4.4.3)):
     dependencies:
       axios: 1.15.0(debug@4.4.3)
 
