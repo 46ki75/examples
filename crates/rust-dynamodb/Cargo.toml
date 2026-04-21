@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-aws-config = { version = "1.8.15", features = ["rustls"] }
-aws-sdk-dynamodb = "1.110.0"
+aws-config = { version = "1.8.16", features = ["rustls"] }
+aws-sdk-dynamodb = "1.111.0"
 reqwest = { version = "0.12.28", default-features = false, features = [
   "gzip",
   "http2",
