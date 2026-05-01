@@ -5,7 +5,7 @@ go 1.25.8
 require (
 	github.com/matoous/go-nanoid/v2 v2.1.0
 	github.com/pulumi/pulumi-aws/sdk/v6 v6.83.3
-	github.com/pulumi/pulumi/sdk/v3 v3.232.0
+	github.com/pulumi/pulumi/sdk/v3 v3.233.0
 	github.com/stretchr/testify v1.11.1
 )
 
