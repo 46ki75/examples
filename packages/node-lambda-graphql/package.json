@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.33",
-    "@graphql-tools/stitch": "^10.1.18",
+    "@graphql-tools/stitch": "^10.1.19",
     "@graphql-tools/utils": "^11.1.0",
     "@graphql-tools/wrap": "^11.1.15",
     "graphql": "^16.14.0"
