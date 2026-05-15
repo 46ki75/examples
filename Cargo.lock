@@ -2145,6 +2145,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "hashbrown"
+version = "0.17.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a"
+dependencies = [
+ "allocator-api2",
+ "equivalent",
+ "foldhash 0.2.0",
+]
+
+[[package]]
 name = "headless_chrome"
 version = "1.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4817,15 +4828,15 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "toasty"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "947a127ecec8aa98e54c36f0378f58eace374dceae9473a3fc275ef497fae0e1"
+checksum = "a0ed62755bb4e337abca0137a3fbd76352990d0fd8c4ea223438182e2ec60d82"
 dependencies = [
  "async-trait",
  "bit-set",
  "by_address",
  "deadpool",
- "hashbrown 0.16.1",
+ "hashbrown 0.17.1",
  "index_vec",
  "indexmap 2.13.1",
  "inventory",
@@ -4841,13 +4852,13 @@ dependencies = [
 
 [[package]]
 name = "toasty-core"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "38cbee90e64df9b1835aa8cc7ad983f77531c50e7fcf900ba6947191d2889d20"
+checksum = "45a02040c53eafad87b5d9dbc120cd24fcdfef65307f06a0463483fb91ac540f"
 dependencies = [
  "async-trait",
  "bit-set",
- "hashbrown 0.16.1",
+ "hashbrown 0.17.1",
  "heck",
  "indexmap 2.13.1",
  "pluralizer",
@@ -4857,14 +4868,14 @@ dependencies = [
 
 [[package]]
 name = "toasty-driver-dynamodb"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "890a62b2114ea33e7a5c0ddff043d8d7ac3a48010d93799eb0b3835398e2798b"
+checksum = "1a2303fac824a2f7a781e42b38987252ffbdd9dec6751e7ab7c5835b5d83dbb3"
 dependencies = [
  "async-trait",
  "aws-config",
  "aws-sdk-dynamodb",
- "hashbrown 0.16.1",
+ "hashbrown 0.17.1",
  "serde",
  "serde_json",
  "toasty-core",
@@ -4875,11 +4886,11 @@ dependencies = [
 
 [[package]]
 name = "toasty-macros"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0ef466f0799ad9684a9813ba5f08f820db554cba06b8d6bdefb745383a5f7b3e"
+checksum = "8d39763b2d56eadab5a3fea3e8138e350e03e0e56ec768ce8289bd9ce88c9140"
 dependencies = [
- "hashbrown 0.16.1",
+ "hashbrown 0.17.1",
  "heck",
  "pluralizer",
  "proc-macro2",
