@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "rust-toasty": {
+      "source": "46ki75/skills",
+      "sourceType": "github",
+      "skillPath": "skills/rust-toasty/SKILL.md",
+      "computedHash": "c4b5e271a95b25742588615aeaf4ca886406526b6596722951e021ac4a0d68f1"
+    }
+  }
+}
