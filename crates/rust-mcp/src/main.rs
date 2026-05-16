@@ -11,6 +11,7 @@ use tokio::sync::Mutex;
 #[derive(Clone)]
 pub struct Counter {
     counter: Arc<Mutex<i32>>,
+    #[allow(dead_code)]
     tool_router: ToolRouter<Self>,
 }
 
@@ -64,11 +65,10 @@ impl Counter {
 #[tool_handler]
 impl rmcp::ServerHandler for Counter {
     fn get_info(&self) -> ServerInfo {
-        ServerInfo {
-            instructions: Some("A simple calculator".into()),
-            capabilities: ServerCapabilities::builder().enable_tools().build(),
-            ..Default::default()
-        }
+        let mut info = ServerInfo::default();
+        info.instructions = Some("A simple calculator".into());
+        info.capabilities = ServerCapabilities::builder().enable_tools().build();
+        info
     }
 }
 

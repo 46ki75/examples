@@ -1,24 +1,28 @@
 [package]
 name = "rust-aws"
 version = "0.1.0"
-edition = "2024"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
 
 [dependencies]
-aws-config = "1.8.16"
+aws-config = { workspace = true }
+clap = { workspace = true }
+reqwest = { workspace = true, features = ["gzip"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true, features = ["rt-multi-thread"] }
+
 aws-sdk-s3 = "1.132.0"
 aws-sdk-sts = "1.101.0"
-clap = { version = "4.6.1", features = ["derive"] }
 infer = "0.19.0"
 lettre = { version = "0.11.22", features = [
     "aws-lc-rs",
     "rustls",
     "rustls-platform-verifier",
 ] }
-reqwest = { version = "0.12.28", default-features = false, features = [
-    "gzip",
-    "http2",
-    "rustls-tls",
-] }
-serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.149"
-tokio = { version = "1.52.3", features = ["macros", "rt-multi-thread"] }

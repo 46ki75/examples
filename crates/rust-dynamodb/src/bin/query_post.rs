@@ -2,7 +2,7 @@ use aws_config::BehaviorVersion;
 use aws_sdk_dynamodb::types::AttributeValue;
 use serde::{Deserialize, Serialize};
 
-const TABLE_NAME: &'static str = "jsonplaceholder";
+const TABLE_NAME: &str = "jsonplaceholder";
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct Post {

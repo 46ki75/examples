@@ -20,7 +20,7 @@ pub fn init_router() -> axum::Router {
 
     let customized_api = ApiDoc::openapi().merge_from(auto_generated_api);
 
-    let router = rest_router
+    rest_router
         // .route(
         //     "/api/v1/openapi.json",
         //     axum::routing::get(|| async move { axum::Json(customized_api) }),
@@ -43,6 +43,5 @@ pub fn init_router() -> axum::Router {
             "/graphql",
             axum::routing::post(crate::graphql::execute_graphql),
         )
-        .layer(tower_http::compression::CompressionLayer::new());
-    router
+        .layer(tower_http::compression::CompressionLayer::new())
 }

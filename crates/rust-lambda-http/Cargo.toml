@@ -1,16 +1,24 @@
 [package]
 name = "rust-lambda-http"
-edition = "2021"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
 
+[lints]
+workspace = true
 
 [dependencies]
+axum = { workspace = true }
+lambda_http = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tower-http = { workspace = true }
+
 async-graphql = "7.0.17"
-axum = "0.8.9"
-lambda_http = "1.2.0"
-serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.149"
-tokio = { version = "1", features = ["macros"] }
-tower-http = { version = "0.6.10", features = ["compression-full"] }
 utoipa = "5.5.0"
 utoipa-axum = "0.2.0"
 utoipa-swagger-ui = { version = "9.0.2", features = ["axum"] }

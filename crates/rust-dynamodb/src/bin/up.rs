@@ -2,7 +2,7 @@ use aws_config::BehaviorVersion;
 use aws_sdk_dynamodb::types::AttributeValue;
 use rust_dynamodb::jsonplaceholder;
 
-const TABLE_NAME: &'static str = "jsonplaceholder";
+const TABLE_NAME: &str = "jsonplaceholder";
 
 #[tokio::main]
 async fn main() {
@@ -57,10 +57,7 @@ async fn main() {
             .put_item()
             .table_name(TABLE_NAME)
             .item("PK", AttributeValue::S(post.user_id.to_string()))
-            .item(
-                "SK",
-                AttributeValue::S(format!("POST#{}#", post.id.to_string())),
-            )
+            .item("SK", AttributeValue::S(format!("POST#{}#", post.id)))
             .item("facet", AttributeValue::S("POST".to_owned()))
             .item("post_id", AttributeValue::S(post.id.to_string()))
             .item("post_title", AttributeValue::S(post.title.to_string()))
