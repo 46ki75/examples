@@ -1,7 +1,7 @@
 use aws_sdk_bedrockruntime::primitives::Blob;
 
-pub async fn greet_stream(
-) -> Result<axum::response::Response<axum::body::Body>, axum::http::StatusCode> {
+pub async fn greet_stream()
+-> Result<axum::response::Response<axum::body::Body>, axum::http::StatusCode> {
     use futures::stream::StreamExt;
 
     let chars: Vec<char> = "Hello, stream!".chars().collect();

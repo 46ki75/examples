@@ -1,3 +1,38 @@
 [workspace]
+resolver = "3"
 members = ["crates/*"]
-resolver = "2"
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.85"
+license = "GPL-3.0-only"
+authors = ["Ikuma Yamashita <46ki75@gmail.com>"]
+repository = "https://github.com/46ki75/examples"
+
+[workspace.dependencies]
+tokio = { version = "1.52.3", features = ["macros"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+
+aws-config = "1.8.16"
+
+reqwest = { version = "0.12.28", default-features = false, features = [
+    "http2",
+    "rustls-tls",
+] }
+
+axum = "0.8.9"
+tower-http = { version = "0.6.10", features = ["compression-full"] }
+lambda_http = "1.2.0"
+
+clap = { version = "4.6.1", features = ["derive"] }
+
+rmcp = { version = "1.7.0", features = ["macros"] }
+rmcp-macros = "1.6.0"
+schemars = "1.2.1"
+
+[workspace.lints.clippy]
+# Example repo: `unwrap()` is allowed for brevity. Add stricter lints only if
+# they make sense given the example-code nature of this workspace.
+
+
