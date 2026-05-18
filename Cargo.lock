@@ -4895,9 +4895,9 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "toasty"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a0ed62755bb4e337abca0137a3fbd76352990d0fd8c4ea223438182e2ec60d82"
+checksum = "45ceadb6b554b29f2a29d23026d98c267b7e5635203a54be69b0d62a0bff33b2"
 dependencies = [
  "async-trait",
  "bit-set",
@@ -4919,9 +4919,9 @@ dependencies = [
 
 [[package]]
 name = "toasty-core"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "45a02040c53eafad87b5d9dbc120cd24fcdfef65307f06a0463483fb91ac540f"
+checksum = "9582e63e379b54cf2e4940cedb3adfe1642c1ea4d7a71ca7cae7daa222852c0d"
 dependencies = [
  "async-trait",
  "bit-set",
@@ -4935,9 +4935,9 @@ dependencies = [
 
 [[package]]
 name = "toasty-driver-dynamodb"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a2303fac824a2f7a781e42b38987252ffbdd9dec6751e7ab7c5835b5d83dbb3"
+checksum = "bc8c00ba138c1f2cde2ebb625322326c76a3c2a750ee58c5af9de51a5733634e"
 dependencies = [
  "async-trait",
  "aws-config",
@@ -4953,9 +4953,9 @@ dependencies = [
 
 [[package]]
 name = "toasty-macros"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d39763b2d56eadab5a3fea3e8138e350e03e0e56ec768ce8289bd9ce88c9140"
+checksum = "b2e5ba9925ad344bf1f679cac1fb01db46929ac9c10c5a9b42623255d65603c1"
 dependencies = [
  "hashbrown 0.17.1",
  "heck",
