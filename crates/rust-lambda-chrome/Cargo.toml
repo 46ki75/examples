@@ -16,5 +16,5 @@ tokio = { workspace = true }
 
 fast_html2md = "0.0.62"
 headless_chrome = "1.0.21"
-lambda_runtime = "1.2.0"
+lambda_runtime = "1.2.1"
 tracing = "0.1.44"
