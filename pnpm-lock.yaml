@@ -66,8 +66,8 @@ importers:
         specifier: ^3.1051.0
         version: 3.1053.0
       '@aws/durable-execution-sdk-js':
-        specifier: ^1.1.5
-        version: 1.1.5
+        specifier: ^1.1.6
+        version: 1.1.6
     devDependencies:
       '@aws-sdk/client-lambda':
         specifier: ^3.1051.0
@@ -364,8 +364,8 @@ packages:
     resolution: {integrity: sha512-GH+Kjz4nPKWKHnsiQpnhP1MJdTGIcK4rAka6tzakgjjUkVgNsmPeEbbRAf09SzS1hjGu6duGHCBsxYke0BhHjQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws/durable-execution-sdk-js@1.1.5':
-    resolution: {integrity: sha512-Fko9Jn9ubvUCqwNJSagIZkElePGW5aznHTRsVAHrqrK7Ac7CcRHpO08ahs1gVsN9Nftk9AS5CpTkKcC1gzvPtw==}
+  '@aws/durable-execution-sdk-js@1.1.6':
+    resolution: {integrity: sha512-BinSNwKg9TJVa7VWIVBKzoTZi/2/qKjyPrn6B6ytQvEWxSiKGzbMAe1KIPJaee0Fyp7h+xsi6Qe/KHkzOC9Dfg==}
     engines: {node: '>=22'}
 
   '@aws/lambda-invoke-store@0.2.4':
@@ -5320,7 +5320,7 @@ snapshots:
       fast-xml-parser: 5.7.3
       tslib: 2.8.1
 
-  '@aws/durable-execution-sdk-js@1.1.5':
+  '@aws/durable-execution-sdk-js@1.1.6':
     dependencies:
       '@aws-sdk/client-lambda': 3.1053.0
 
