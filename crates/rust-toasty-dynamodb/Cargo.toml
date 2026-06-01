@@ -14,5 +14,5 @@ workspace = true
 clap = { workspace = true }
 tokio = { workspace = true, features = ["rt-multi-thread"] }
 
-toasty = { version = "0.6.1", features = ["dynamodb"] }
+toasty = { version = "0.7.0", features = ["dynamodb"] }
 uuid = { version = "1.23.1", features = ["v4"] }
