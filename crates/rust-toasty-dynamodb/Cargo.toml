@@ -15,4 +15,4 @@ clap = { workspace = true }
 tokio = { workspace = true, features = ["rt-multi-thread"] }
 
 toasty = { version = "0.6.1", features = ["dynamodb"] }
-uuid = { version = "1.23.1", features = ["v4"] }
+uuid = { version = "1.23.2", features = ["v4"] }
