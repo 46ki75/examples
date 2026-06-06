@@ -1,4 +1,4 @@
-"""Step 3: a full-featured RAG pipeline, stage by stage.
+"""A full-featured RAG pipeline, stage by stage.
 
 Production RAG is rarely just "embed and retrieve". This example wires the
 classic pipeline explicitly so every stage is visible and logged:
@@ -12,6 +12,11 @@ classic pipeline explicitly so every stage is visible and logged:
     5.  Expand               - neighbouring chunks are pulled in for context
     6.  Synthesize           - the LLM answers from the final chunk set
 
+Ingestion is delegated to `manage_documents`: this module loads the
+persisted index from storage/ and runs an idempotent sync, so unchanged
+files are never re-embedded. Chunking config lives there too — chunks are
+made at ingestion time, not query time.
+
 Run:
     uv run --env-file .env python -m python_llama_index.advanced_rag
 """
@@ -19,21 +24,17 @@ Run:
 import logging
 import os
 from collections import defaultdict
-from pathlib import Path
 from typing import Any
 
 import httpx
 from llama_index.core import (
     Settings,
     SimpleDirectoryReader,
-    VectorStoreIndex,
     get_response_synthesizer,  # pyright: ignore[reportUnknownVariableType]
 )
-from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.postprocessor import PrevNextNodePostprocessor
 from llama_index.core.postprocessor.types import BaseNodePostprocessor
 from llama_index.core.schema import NodeWithScore, QueryBundle
-from llama_index.core.storage.docstore import SimpleDocumentStore
 from llama_index.embeddings.openai_like import (  # pyright: ignore[reportMissingTypeStubs]
     OpenAILikeEmbedding,
 )
@@ -42,9 +43,14 @@ from llama_index.retrievers.bm25 import (  # pyright: ignore[reportMissingTypeSt
     BM25Retriever,
 )
 
-logger = logging.getLogger(__name__)
+from python_llama_index.manage_documents import (
+    DATA_DIR,
+    PERSIST_DIR,
+    load_or_create_index,
+    sync_index,
+)
 
-DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+logger = logging.getLogger(__name__)
 
 QUERY = "How does the station stay powered through the polar night?"
 
@@ -158,12 +164,13 @@ def log_stage(stage: str, nodes: list[NodeWithScore]) -> None:
 def main() -> None:
     logging.basicConfig(level=logging.INFO)
 
-    # NOTE: MiniMax M2.x are reasoning models — thinking tokens count
-    # against max_tokens, so give them room or .text may come back empty.
-    # context_window must be set too: the wrapper defaults to ~3.9k and
-    # the synthesizer's prompt budget (window - max_tokens) goes negative.
+    # NOTE: reasoning models spend "thinking" tokens out of max_tokens, so
+    # give them room or .text may come back empty. context_window must
+    # match the model too (gpt-5.4-nano: 400k): the wrapper defaults to
+    # ~3.9k and the synthesizer's prompt budget (window - max_tokens)
+    # goes negative.
     Settings.llm = OpenRouter(
-        model="minimax/minimax-m2.7", max_tokens=8192, context_window=204_800
+        model="openai/gpt-5.4-nano", max_tokens=8192, context_window=400_000
     )
     Settings.embed_model = OpenAILikeEmbedding(
         model_name="openai/text-embedding-3-small",
@@ -171,18 +178,24 @@ def main() -> None:
         api_key=os.environ["OPENROUTER_API_KEY"],
     )
 
-    # Ingest: split documents into deliberately small chunks. The docstore
-    # records prev/next relationships between chunks of the same document,
-    # which stage 5 uses to re-attach surrounding context.
-    documents = SimpleDirectoryReader(str(DATA_DIR)).load_data()
-    nodes = SentenceSplitter(chunk_size=128, chunk_overlap=16).get_nodes_from_documents(
-        documents
-    )
-    docstore = SimpleDocumentStore()
-    docstore.add_documents(nodes)
-    logger.info("split %d document(s) into %d chunks", len(documents), len(nodes))
-
-    index = VectorStoreIndex(nodes, show_progress=True)
+    # Ingest: reuse the persisted index managed by manage_documents. The
+    # sync is idempotent, so on most runs nothing is embedded at all —
+    # only new or edited files in data/ cost API calls. The store's
+    # docstore keeps the chunk nodes and their prev/next relationships,
+    # which stage 5 and BM25 both need.
+    documents = SimpleDirectoryReader(str(DATA_DIR), filename_as_id=True).load_data()
+    index = load_or_create_index()
+    stats = sync_index(index, documents)
+    if stats.inserted or stats.refreshed or stats.deleted:
+        index.storage_context.persist(persist_dir=str(PERSIST_DIR))  # pyright: ignore[reportUnknownMemberType]
+        logger.info(
+            "synced store: +%d inserted, ~%d refreshed, -%d deleted",
+            len(stats.inserted),
+            len(stats.refreshed),
+            len(stats.deleted),
+        )
+    docstore = index.docstore
+    logger.info("store has %d chunk(s)", len(docstore.docs))
     vector_retriever = index.as_retriever(similarity_top_k=5)  # pyright: ignore[reportUnknownMemberType]
     bm25_retriever = BM25Retriever.from_defaults(  # pyright: ignore[reportUnknownMemberType]
         docstore=docstore, similarity_top_k=5

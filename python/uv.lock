@@ -2086,7 +2086,6 @@ dependencies = [
     { name = "llama-index-embeddings-openai-like" },
     { name = "llama-index-llms-openrouter" },
     { name = "llama-index-retrievers-bm25" },
-    { name = "python-dotenv" },
 ]
 
 [package.metadata]
@@ -2096,7 +2095,6 @@ requires-dist = [
     { name = "llama-index-embeddings-openai-like", specifier = ">=0.3.1" },
     { name = "llama-index-llms-openrouter", specifier = ">=0.5.0" },
     { name = "llama-index-retrievers-bm25", specifier = ">=0.7.1" },
-    { name = "python-dotenv", specifier = ">=1.2.2" },
 ]
 
 [[package]]
