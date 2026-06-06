@@ -1,4 +1,4 @@
-"""Step 3: a full-featured RAG pipeline, stage by stage.
+"""A full-featured RAG pipeline, stage by stage.
 
 Production RAG is rarely just "embed and retrieve". This example wires the
 classic pipeline explicitly so every stage is visible and logged:

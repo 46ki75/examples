@@ -1,7 +1,7 @@
-"""Step 4: document store management — sync data/ into a persisted index, idempotently.
+"""Document store management — sync data/ into a persisted index, idempotently.
 
-The earlier examples rebuild (and re-embed) the whole index on every run.
-Real systems treat the index as a long-lived store and *sync* it against the
+Naive RAG rebuilds (and re-embeds) the whole index on every run. Real
+systems treat the index as a long-lived store and *sync* it against the
 source of truth instead:
 
     new file       -> embedded and inserted
