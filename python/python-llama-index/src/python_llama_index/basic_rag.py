@@ -39,7 +39,7 @@ def main() -> None:
     # context_window matters: the wrapper defaults to ~3.9k tokens, and the
     # query engine budgets its prompt as (context_window - max_tokens).
     Settings.llm = OpenRouter(
-        model="minimax/minimax-m2.7", max_tokens=8192, context_window=204_800
+        model="openai/gpt-5.4-nano", max_tokens=8192, context_window=204_800
     )
     Settings.embed_model = OpenAILikeEmbedding(
         model_name="openai/text-embedding-3-small",

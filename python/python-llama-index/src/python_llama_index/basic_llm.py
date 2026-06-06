@@ -15,7 +15,7 @@ from llama_index.llms.openrouter import OpenRouter
 
 logger = logging.getLogger(__name__)
 
-MODEL = "minimax/minimax-m2.7"
+MODEL = "openai/gpt-5.4-nano"
 
 
 def main() -> None:
