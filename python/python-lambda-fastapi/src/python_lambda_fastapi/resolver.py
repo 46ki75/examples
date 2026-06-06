@@ -1,5 +1,4 @@
 import strawberry
-from strawberry.fastapi import GraphQLRouter
 
 
 @strawberry.federation.type

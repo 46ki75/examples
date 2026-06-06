@@ -16,6 +16,19 @@ updates:
         patterns:
           - "*eslint*"
 
+  - package-ecosystem: "uv"
+    directory: "/python"
+    schedule:
+      interval: "daily"
+    target-branch: "main"
+    labels:
+      - "python"
+    groups:
+      aws-sdk:
+        patterns:
+          - "boto3"
+          - "botocore"
+
   - package-ecosystem: "cargo"
     directory: "/"
     schedule:

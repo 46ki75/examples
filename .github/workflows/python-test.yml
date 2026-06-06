@@ -1,39 +1,52 @@
-name: Unit Test (Python)
+name: CI (Python)
 
 on:
   push:
+    branches: [main]
   pull_request:
-    branches:
-      - main
-      - develop
-      - 'release/**'
   workflow_dispatch:
 
 jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: python
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+
+      - uses: extractions/setup-just@v3
+
+      - run: uv sync --frozen
+
+      - run: just fmt-check
+
+      - run: just lint
+
+      - run: just typecheck
+
   test:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: python/python_module
+        working-directory: python
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v8.1.0
         with:
-          fetch-depth: 0
+          enable-cache: true
 
-      - name: Set up python
-        id: setup-python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - uses: extractions/setup-just@v3
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+      - run: uv sync --frozen
 
-      - name: Install project
-        run: poetry install --no-interaction
-
-      - name: Run unit tests
-        run: poetry run python -m unittest tests/test_lib.py
+      - run: just test

@@ -2,13 +2,10 @@
 
 set -o pipefail -ue
 
-if [ -d "./dist" ];
-    rm -rf ./dist
-then
-    mkdir -p ./dist
-fi
+rm -rf ./dist
+mkdir -p ./dist
 
-uv export --frozen --no-dev --no-editable -o ./dist/requirements.txt
+uv export --frozen --no-dev --no-emit-project -o ./dist/requirements.txt
 
 uv pip install \
    --no-installer-metadata \
@@ -18,10 +15,12 @@ uv pip install \
    --prefix ./dist/packages \
    -r ./dist/requirements.txt
 
-cp -r src ./dist/lambda
+mkdir -p ./dist/lambda
+
+cp -r src/python_lambda_fastapi ./dist/lambda/
 
 cp -r ./dist/packages/lib/python3.13/site-packages/* ./dist/lambda/
 
 cd ./dist/lambda
 
-zip -r ../lambda.zip . 
+zip -r ../lambda.zip .

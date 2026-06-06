@@ -3,12 +3,11 @@ from strands import Agent
 from strands.tools.mcp import MCPClient
 from strands.models import BedrockModel
 
-stdio_mcp_client = MCPClient(lambda: stdio_client(
-    StdioServerParameters(
-        command="uvx",
-        args=["strands-agents-mcp-server"]
+stdio_mcp_client = MCPClient(
+    lambda: stdio_client(
+        StdioServerParameters(command="uvx", args=["strands-agents-mcp-server"])
     )
-))
+)
 
 bedrock_model = BedrockModel(model_id="apac.amazon.nova-pro-v1:0")
 
@@ -19,4 +18,6 @@ with stdio_mcp_client:
 
     # Create an agent with these tools
     agent = Agent(tools=tools, model=bedrock_model)
-    agent("What is Strands Agents? Can you show me how to create an AI agent using MCP servers with it?")
+    agent(
+        "What is Strands Agents? Can you show me how to create an AI agent using MCP servers with it?"
+    )
