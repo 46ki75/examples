@@ -164,12 +164,13 @@ def log_stage(stage: str, nodes: list[NodeWithScore]) -> None:
 def main() -> None:
     logging.basicConfig(level=logging.INFO)
 
-    # NOTE: MiniMax M2.x are reasoning models — thinking tokens count
-    # against max_tokens, so give them room or .text may come back empty.
-    # context_window must be set too: the wrapper defaults to ~3.9k and
-    # the synthesizer's prompt budget (window - max_tokens) goes negative.
+    # NOTE: reasoning models spend "thinking" tokens out of max_tokens, so
+    # give them room or .text may come back empty. context_window must
+    # match the model too (gpt-5.4-nano: 400k): the wrapper defaults to
+    # ~3.9k and the synthesizer's prompt budget (window - max_tokens)
+    # goes negative.
     Settings.llm = OpenRouter(
-        model="openai/gpt-5.4-nano", max_tokens=8192, context_window=204_800
+        model="openai/gpt-5.4-nano", max_tokens=8192, context_window=400_000
     )
     Settings.embed_model = OpenAILikeEmbedding(
         model_name="openai/text-embedding-3-small",
