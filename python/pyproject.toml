@@ -5,6 +5,7 @@ members = [
     "python-lambda-fastapi",
     "python-module",
     "python-strands-agents",
+    "python-llama-index",
 ]
 
 [dependency-groups]
@@ -23,6 +24,7 @@ testpaths = [
     "python-lambda-fastapi",
     "python-module",
     "python-strands-agents",
+    "python-llama-index",
 ]
 markers = [
     "live: hits real services, costs money, requires secrets",
