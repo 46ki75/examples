@@ -30,6 +30,7 @@ terraform.tfstate.backup
 build
 
 # Python
+.venv/
 __pycache__/
 
 # Ansible

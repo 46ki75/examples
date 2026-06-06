@@ -1,15 +1,17 @@
+# bedrock-agentcore and strands-agents ship without complete type information,
+# so strict mode reports the entrypoint decorator and payload as unknown.
+# pyright: basic
 from mcp import stdio_client, StdioServerParameters
 from strands import Agent
 from strands.tools.mcp import MCPClient
 from strands.models import BedrockModel
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 
-stdio_mcp_client = MCPClient(lambda: stdio_client(
-    StdioServerParameters(
-        command="uvx",
-        args=["strands-agents-mcp-server"]
+stdio_mcp_client = MCPClient(
+    lambda: stdio_client(
+        StdioServerParameters(command="uvx", args=["strands-agents-mcp-server"])
     )
-))
+)
 
 bedrock_model = BedrockModel(model_id="apac.amazon.nova-pro-v1:0")
 
@@ -21,7 +23,8 @@ app = BedrockAgentCoreApp()
 async def agent_invocation(payload):
     """Handler for agent invocation"""
     user_message = payload.get(
-        "prompt", "No prompt found in input, please guide customer to create a json payload with prompt key"
+        "prompt",
+        "No prompt found in input, please guide customer to create a json payload with prompt key",
     )
     # Create an agent with MCP tools
     with stdio_mcp_client:
@@ -45,6 +48,6 @@ if __name__ == "__main__":
 
 # uv tool install bedrock-agentcore-starter-toolkit
 # uv export --format requirements-txt > requirements.txt
-# agentcore configure --entrypoint src/deploy_to_agentcore.py --region us-east-1
+# agentcore configure --entrypoint src/python_strands_agents/deploy_to_agentcore.py --region us-east-1
 # agentcore launch --local # OPTIONAL
 # agentcore launch

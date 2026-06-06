@@ -1,0 +1,30 @@
+[tool.uv.workspace]
+members = [
+    "ansible-packer-molecule",
+    "python-lambda-adapter",
+    "python-lambda-fastapi",
+    "python-module",
+    "python-strands-agents",
+]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.409",
+    "pytest>=8.3.0",
+    "ruff>=0.14.0",
+]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "python-lambda-adapter",
+    "python-lambda-fastapi",
+    "python-module",
+    "python-strands-agents",
+]
+markers = [
+    "live: hits real services, costs money, requires secrets",
+]
+addopts = '-m "not live"'

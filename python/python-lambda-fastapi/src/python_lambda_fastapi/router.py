@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.gzip import GZipMiddleware
-from resolver import schema
 from strawberry.fastapi import GraphQLRouter
-from controller import my_router
+
+from python_lambda_fastapi.controller import my_router
+from python_lambda_fastapi.resolver import schema
 
 app = FastAPI()
 

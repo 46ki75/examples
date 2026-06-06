@@ -4,14 +4,16 @@
 
 ```sh
 # Using a custom script
-uv run src/local.py
+uv run python -m python_lambda_fastapi.local
 
 # Using a direct command
-PYTHONPATH=./src uv run uvicorn router:app
+uv run uvicorn python_lambda_fastapi.router:app
 ```
 
 ## Bundle for AWS Lambda Function
 
 ```sh
-uv run scripts/build.py
+bash scripts/build.sh
 ```
+
+The Lambda handler is `python_lambda_fastapi.lambda.handler`.
