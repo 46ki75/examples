@@ -5,9 +5,12 @@ description = "LlamaIndex examples (OpenRouter LLM + embeddings, RAG)"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "httpx>=0.28.1",
     "llama-index-core>=0.14.22",
     "llama-index-embeddings-openai-like>=0.3.1",
     "llama-index-llms-openrouter>=0.5.0",
+    "llama-index-retrievers-bm25>=0.7.1",
+    "python-dotenv>=1.2.2",
 ]
 
 [build-system]

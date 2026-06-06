@@ -15,13 +15,15 @@ from llama_index.llms.openrouter import OpenRouter
 
 logger = logging.getLogger(__name__)
 
-MODEL = "anthropic/claude-opus-4.8"
+MODEL = "minimax/minimax-m2.7"
 
 
 def main() -> None:
     logging.basicConfig(level=logging.INFO)
 
-    llm = OpenRouter(model=MODEL, max_tokens=1024)
+    # Reasoning models spend "thinking" tokens out of max_tokens too —
+    # keep the budget generous or .text may come back empty.
+    llm = OpenRouter(model=MODEL, max_tokens=8192, context_window=204_800)
 
     # One-shot completion
     completion = llm.complete("In one sentence, what is LlamaIndex?")
