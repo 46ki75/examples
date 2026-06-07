@@ -40,6 +40,24 @@ def test_reciprocal_rank_fusion_prefers_nodes_found_by_both_retrievers() -> None
     assert {item.node.node_id for item in fused} == {"a", "b", "c"}
 
 
+def test_parse_generated_queries_strips_decoration_and_duplicates() -> None:
+    from python_llama_index.rag_fusion import parse_generated_queries
+
+    raw = (
+        "1. What power sources does the outpost use?\n"
+        "2) How is the station kept running in winter?\n"
+        "- What power sources does the outpost use?\n"
+        "\n"
+        "* Renewable energy share of the research station\n"
+    )
+
+    assert parse_generated_queries(raw) == [
+        "What power sources does the outpost use?",
+        "How is the station kept running in winter?",
+        "Renewable energy share of the research station",
+    ]
+
+
 def test_openrouter_rerank_maps_response_back_to_nodes(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
