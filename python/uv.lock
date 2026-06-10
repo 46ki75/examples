@@ -2070,7 +2070,7 @@ dev = [
 requires-dist = [
     { name = "fastapi", specifier = ">=0.116.0" },
     { name = "mangum", specifier = ">=0.19.0" },
-    { name = "strawberry-graphql", extras = ["fastapi", "federation"], specifier = ">=0.275.5" },
+    { name = "strawberry-graphql", extras = ["fastapi", "federation"], specifier = ">=0.316.0" },
 ]
 
 [package.metadata.requires-dev]
