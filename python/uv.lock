@@ -2093,7 +2093,7 @@ requires-dist = [
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "llama-index-core", specifier = ">=0.14.22" },
     { name = "llama-index-embeddings-openai-like", specifier = ">=0.3.1" },
-    { name = "llama-index-llms-openrouter", specifier = ">=0.5.1" },
+    { name = "llama-index-llms-openrouter", specifier = ">=0.5.0" },
     { name = "llama-index-retrievers-bm25", specifier = ">=0.7.1" },
 ]
 
