@@ -11,17 +11,15 @@
     "start": "pnpm build && pnpm serve"
   },
   "dependencies": {
+    "@hono/node-server": "^1.13.7",
     "@modelcontextprotocol/ext-apps": "^1.7.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
+    "hono": "^4.6.14",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.0",
     "@types/node": "^22.10.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

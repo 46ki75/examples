@@ -16,8 +16,10 @@ import {
   registerAppResource,
   registerAppTool,
 } from "@modelcontextprotocol/ext-apps/server";
-import cors from "cors";
-import express from "express";
+import { type HttpBindings, serve } from "@hono/node-server";
+import { RESPONSE_ALREADY_SENT } from "@hono/node-server/utils/response";
+import { Hono } from "hono";
+import { cors } from "hono/cors";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
@@ -119,7 +121,9 @@ registerAppResource(
       "utf-8",
     );
     return {
-      contents: [{ uri: resourceUri, mimeType: RESOURCE_MIME_TYPE, text: html }],
+      contents: [
+        { uri: resourceUri, mimeType: RESOURCE_MIME_TYPE, text: html },
+      ],
     };
   },
 );
@@ -134,21 +138,28 @@ if (process.argv.includes("--stdio")) {
   await server.connect(transport);
   console.error("MCP Apps To-Do server running on stdio");
 } else {
-  const app = express();
-  app.use(cors());
-  app.use(express.json());
+  // `HttpBindings` exposes the raw Node req/res as `c.env.incoming`/`outgoing`,
+  // which is what the MCP transport writes to directly.
+  const app = new Hono<{ Bindings: HttpBindings }>();
+  app.use("/mcp", cors());
 
-  app.post("/mcp", async (req, res) => {
+  app.post("/mcp", async (c) => {
     const transport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
     });
-    res.on("close", () => transport.close());
+    const { incoming, outgoing } = c.env;
+    outgoing.on("close", () => transport.close());
     await server.connect(transport);
-    await transport.handleRequest(req, res, req.body);
+    // Pass the parsed body since Hono has already consumed the request stream.
+    await transport.handleRequest(incoming, outgoing, await c.req.json());
+    // The transport owns the response; tell Hono not to send its own.
+    return RESPONSE_ALREADY_SENT;
   });
 
-  app.listen(3001, () => {
-    console.log("MCP Apps To-Do server listening on http://localhost:3001/mcp");
+  serve({ fetch: app.fetch, port: 3001 }, (info) => {
+    console.log(
+      `MCP Apps To-Do server listening on http://localhost:${info.port}/mcp`,
+    );
   });
 }
