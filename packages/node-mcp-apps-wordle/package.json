@@ -1,0 +1,32 @@
+{
+  "name": "node-mcp-apps-wordle",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP Apps Wordle: a shared game playable by both humans (UI) and agents (tools)",
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "serve": "tsx server.ts",
+    "serve:stdio": "tsx server.ts --stdio",
+    "start": "pnpm build && pnpm serve"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@modelcontextprotocol/ext-apps": "^1.7.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "hono": "^4.6.14",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
+    "vite": "^6.0.0",
+    "vite-plugin-singlefile": "^2.3.0"
+  }
+}
