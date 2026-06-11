@@ -45,6 +45,19 @@ For Claude Desktop (stdio), build first, then point a config entry at
 `tsx server.ts --stdio`. See `../node-mcp-apps/README.md` for the connector and
 tunnel details — the only difference here is the port (3002) and command path.
 
+## Logging
+
+The server logs with [consola](https://github.com/unjs/consola), tagged
+`[wordle]`. All output is routed to **stderr** — never stdout — because in
+`--stdio` mode stdout is the JSON-RPC channel and any stray write there corrupts
+the protocol. Tool calls, guesses (with 🟩🟨⬜ feedback), and game outcomes are
+logged at `info`/`success`/`warn`; the UI's 2s polling and the chosen answer are
+at `debug`. Set `CONSOLA_LEVEL=4` to see debug lines:
+
+```bash
+CONSOLA_LEVEL=4 pnpm serve
+```
+
 ## Play
 
 Ask the host to **"play wordle"** to render the board, then either type guesses

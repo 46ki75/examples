@@ -24,20 +24,77 @@ import { type HttpBindings, serve } from "@hono/node-server";
 import { RESPONSE_ALREADY_SENT } from "@hono/node-server/utils/response";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { createConsola } from "consola";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
 
+// Route ALL log output to stderr. In `--stdio` mode stdout is the JSON-RPC
+// channel, so any stray stdout write corrupts the protocol; stderr is always
+// safe (Claude Desktop captures it into its MCP logs). Set CONSOLA_LEVEL=4 to
+// see debug lines (e.g. the UI's 2s polling of play-wordle).
+const logger = createConsola({
+  stdout: process.stderr,
+  stderr: process.stderr,
+}).withTag("wordle");
+
 // A small word list, used both as the pool of answers and the set of accepted
 // guesses. Kept short on purpose — swap for a full dictionary in a real app.
 const WORD_LIST = [
-  "apple", "beach", "brain", "bread", "brick", "chair", "chess", "cloud",
-  "crane", "dance", "eagle", "earth", "flame", "ghost", "grape", "green",
-  "heart", "house", "juice", "knife", "lemon", "light", "money", "mouse",
-  "music", "night", "ocean", "paint", "piano", "plant", "pride", "quiet",
-  "river", "robot", "shine", "smile", "snake", "spice", "stone", "storm",
-  "sugar", "table", "tiger", "toast", "torch", "train", "truck", "vivid",
-  "water", "whale", "wheat", "world", "yacht", "zebra",
+  "apple",
+  "beach",
+  "brain",
+  "bread",
+  "brick",
+  "chair",
+  "chess",
+  "cloud",
+  "crane",
+  "dance",
+  "eagle",
+  "earth",
+  "flame",
+  "ghost",
+  "grape",
+  "green",
+  "heart",
+  "house",
+  "juice",
+  "knife",
+  "lemon",
+  "light",
+  "money",
+  "mouse",
+  "music",
+  "night",
+  "ocean",
+  "paint",
+  "piano",
+  "plant",
+  "pride",
+  "quiet",
+  "river",
+  "robot",
+  "shine",
+  "smile",
+  "snake",
+  "spice",
+  "stone",
+  "storm",
+  "sugar",
+  "table",
+  "tiger",
+  "toast",
+  "torch",
+  "train",
+  "truck",
+  "vivid",
+  "water",
+  "whale",
+  "wheat",
+  "world",
+  "yacht",
+  "zebra",
 ];
 const WORDS = new Set(WORD_LIST);
 
@@ -59,7 +116,12 @@ function randomWord(): string {
 
 let game: Game = newGame();
 function newGame(): Game {
-  return { answer: randomWord(), guesses: [], status: "playing", maxGuesses: 6 };
+  return {
+    answer: randomWord(),
+    guesses: [],
+    status: "playing",
+    maxGuesses: 6,
+  };
 }
 
 /** Standard Wordle scoring, including correct handling of duplicate letters:
@@ -97,12 +159,14 @@ const EMOJI: Record<LetterState, string> = {
  *  game is over. */
 function result(message?: string): CallToolResult {
   const lines = game.guesses.map(
-    (g, i) => `${i + 1}. ${g.word.toUpperCase()} ${g.states.map((s) => EMOJI[s]).join("")}`,
+    (g, i) =>
+      `${i + 1}. ${g.word.toUpperCase()} ${g.states.map((s) => EMOJI[s]).join("")}`,
   );
   let text = lines.join("\n") || "(no guesses yet)";
   text += `\nStatus: ${game.status} — ${game.guesses.length}/${game.maxGuesses} guesses used.`;
   if (game.status === "won") text += "\nSolved! 🎉";
-  if (game.status === "lost") text += `\nOut of guesses. The word was ${game.answer.toUpperCase()}.`;
+  if (game.status === "lost")
+    text += `\nOut of guesses. The word was ${game.answer.toUpperCase()}.`;
   if (message) text = `${message}\n${text}`;
 
   return {
@@ -135,7 +199,13 @@ registerAppTool(
     inputSchema: {},
     _meta: { ui: { resourceUri } },
   },
-  async () => result(),
+  async () => {
+    // The UI polls this every 2s, so keep it at debug to avoid log spam.
+    logger.debug(
+      `play-wordle: state read (${game.guesses.length}/${game.maxGuesses}, ${game.status})`,
+    );
+    return result();
+  },
 );
 
 server.registerTool(
@@ -152,17 +222,30 @@ server.registerTool(
   async ({ word }) => {
     const w = word.toLowerCase().trim();
     if (game.status !== "playing") {
+      logger.warn(`guess "${word}" rejected: game already ${game.status}`);
       return result("The game is over. Call new-game to play again.");
     }
     if (!/^[a-z]{5}$/.test(w)) {
+      logger.warn(`guess "${word}" rejected: not 5 letters`);
       return result(`"${word}" must be exactly 5 letters (a–z).`);
     }
     if (!WORDS.has(w)) {
+      logger.warn(`guess "${word}" rejected: not in word list`);
       return result(`"${word}" is not in the word list.`);
     }
-    game.guesses.push({ word: w, states: score(game.answer, w) });
-    if (w === game.answer) game.status = "won";
-    else if (game.guesses.length >= game.maxGuesses) game.status = "lost";
+    const states = score(game.answer, w);
+    game.guesses.push({ word: w, states });
+    const feedback = states.map((s) => EMOJI[s]).join("");
+    logger.info(
+      `guess ${game.guesses.length}/${game.maxGuesses}: ${w.toUpperCase()} ${feedback}`,
+    );
+    if (w === game.answer) {
+      game.status = "won";
+      logger.success(`solved in ${game.guesses.length} guess(es)!`);
+    } else if (game.guesses.length >= game.maxGuesses) {
+      game.status = "lost";
+      logger.warn(`out of guesses — the word was ${game.answer.toUpperCase()}`);
+    }
     return result();
   },
 );
@@ -176,6 +259,8 @@ server.registerTool(
   },
   async () => {
     game = newGame();
+    logger.info("new game started");
+    logger.debug(`answer = ${game.answer}`); // visible only at debug level
     return result("New game started — 6 guesses, 5 letters.");
   },
 );
@@ -192,7 +277,9 @@ registerAppResource(
       "utf-8",
     );
     return {
-      contents: [{ uri: resourceUri, mimeType: RESOURCE_MIME_TYPE, text: html }],
+      contents: [
+        { uri: resourceUri, mimeType: RESOURCE_MIME_TYPE, text: html },
+      ],
     };
   },
 );
@@ -203,12 +290,13 @@ registerAppResource(
 if (process.argv.includes("--stdio")) {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("MCP Apps Wordle server running on stdio");
+  logger.ready("MCP Apps Wordle server running on stdio");
 } else {
   const app = new Hono<{ Bindings: HttpBindings }>();
   app.use("/mcp", cors());
 
   app.post("/mcp", async (c) => {
+    logger.debug("POST /mcp");
     const transport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
@@ -220,7 +308,9 @@ if (process.argv.includes("--stdio")) {
     return RESPONSE_ALREADY_SENT;
   });
 
-  serve({ fetch: app.fetch, port: 3002 }, (info) => {
-    console.log(`MCP Apps Wordle server listening on http://localhost:${info.port}/mcp`);
+  serve({ fetch: app.fetch, port: 3002, hostname: "127.0.0.1" }, (info) => {
+    logger.ready(
+      `MCP Apps Wordle server listening on http://127.0.0.1:${info.port}/mcp`,
+    );
   });
 }
