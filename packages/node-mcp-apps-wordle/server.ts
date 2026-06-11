@@ -272,6 +272,7 @@ registerAppResource(
   resourceUri,
   { mimeType: RESOURCE_MIME_TYPE },
   async () => {
+    logger.info(`serving UI resource ${resourceUri}`);
     const html = await fs.readFile(
       path.join(import.meta.dirname, "dist", "mcp-app.html"),
       "utf-8",
