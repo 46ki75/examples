@@ -1,0 +1,15 @@
+{
+    "mcpServers": {
+        "node-mcp-apps": {
+            "command": "wsl",
+            "args": [
+                "--cd",
+                "/home/ikuma/org/46ki75/examples/packages/node-mcp-apps",
+                "--",
+                "bash",
+                "-lic",
+                "exec pnpm -s run serve:stdio"
+            ]
+        }
+    }
+}
