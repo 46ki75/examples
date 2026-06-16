@@ -22,7 +22,7 @@ reqwest = { version = "0.12.28", default-features = false, features = [
 ] }
 
 axum = "0.8.9"
-tower-http = { version = "0.6.11", features = ["compression-full"] }
+tower-http = { version = "0.7.0", features = ["compression-full"] }
 lambda_http = "1.2.1"
 
 clap = { version = "4.6.1", features = ["derive"] }
