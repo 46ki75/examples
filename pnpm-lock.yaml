@@ -150,8 +150,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0(puppeteer-core@10.4.0)
       playwright-core:
-        specifier: ^1.60.0
-        version: 1.60.0
+        specifier: ^1.61.0
+        version: 1.61.0
     devDependencies:
       '@types/archiver':
         specifier: ^7.0.0
@@ -2016,6 +2016,10 @@ packages:
     resolution: {integrity: sha512-KoUi4M1f3BG6kzN1FnCwL7oyFptTbyBJKjR6yhSib+JHRdUmM1o+VwsFtJ66NZCkCzVfJMWRHJNo0R0jznp0Pg==}
     engines: {node: '>=18.0.0'}
 
+  '@smithy/core@3.25.0':
+    resolution: {integrity: sha512-TTD6el7tvKyafkXBf7XO3jLOE+qVxOTrLjp/fEGiV3BMfUHK/LfdYlQO9YgZvzxC7kqA3H/IhJXNqQgnbgjb7A==}
+    engines: {node: '>=18.0.0'}
+
   '@smithy/credential-provider-imds@4.3.9':
     resolution: {integrity: sha512-ZlfJ/4Fa3jYb+3eaohPfG9utX9HmdhFNcFtpoGAhUhdynAOmGXtmigbi7eEiONKM+ykHw8RwKuDEb85Lx7t7fA==}
     engines: {node: '>=18.0.0'}
@@ -2048,12 +2052,16 @@ packages:
     resolution: {integrity: sha512-B2S9+UGm1+/pHkcx3ZoLVX1a+pmSk8rqxRR+ZsNqZaJ5q9FWX9AFGQVM4qG5+OBeQUZVy99HY8HqW8gK/wgXzQ==}
     engines: {node: '>=18.0.0'}
 
+  '@smithy/types@4.15.0':
+    resolution: {integrity: sha512-Z5TAOxygoFvybJV3igo5SloFflSokHx2hu1eFA+DxDTcn+FtKxUSui+rbTRG1pAafMA888Z3MVvCWUuvCrTXjg==}
+    engines: {node: '>=18.0.0'}
+
   '@smithy/util-buffer-from@2.2.0':
     resolution: {integrity: sha512-IJdWBbTcMQ6DA0gdNhh/BwrLkDR+ADW5Kr1aZmd4k3DIF6ezMV4R2NIAmT08wQJ3yUK82thHWmC/TnK/wpMMIA==}
     engines: {node: '>=14.0.0'}
 
-  '@smithy/util-buffer-from@4.3.7':
-    resolution: {integrity: sha512-Ur4edaceoTQZSCi7cLcJfRpw1Kh28pcSVFuOLSrrjppbO3xIMo9Zi0Q0ZfQ0qflMZzB0f5NIBHswBLiFSwzVVg==}
+  '@smithy/util-buffer-from@4.4.0':
+    resolution: {integrity: sha512-C8u31V1di8HIs8azooCJ4XfG/RwmMZ5rJRfwYd0z/B3Yu1985KWouo9m2WuHNXXXh+5fLi+15Ut8jYlgBWETbA==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/util-utf8@2.3.0':
@@ -4608,8 +4616,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright-core@1.60.0:
-    resolution: {integrity: sha512-9bW6zvX/m0lEbgTKJ6YppOKx8H3VOPBMOCFh2irXFOT4BbHgrx5hPjwJYLT40Lu+4qtD36qKc/Hn56StUW57IA==}
+  playwright-core@1.61.0:
+    resolution: {integrity: sha512-caX7TrY3Ml6egyDX0WUcTHDxodl/b51y5wJOdCEA36QviK/s2g081hvmGs8eaE3DWb6NYZQ6BjO/QkNRPenoPA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -7152,6 +7160,13 @@ snapshots:
       '@smithy/types': 4.14.4
       tslib: 2.8.1
 
+  '@smithy/core@3.25.0':
+    dependencies:
+      '@aws-crypto/crc32': 5.2.0
+      '@smithy/types': 4.15.0
+      tslib: 2.8.1
+    optional: true
+
   '@smithy/credential-provider-imds@4.3.9':
     dependencies:
       '@smithy/core': 3.24.7
@@ -7181,7 +7196,7 @@ snapshots:
 
   '@smithy/protocol-http@5.3.14':
     dependencies:
-      '@smithy/types': 4.14.4
+      '@smithy/types': 4.15.0
       tslib: 2.8.1
     optional: true
 
@@ -7195,14 +7210,19 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  '@smithy/types@4.15.0':
+    dependencies:
+      tslib: 2.8.1
+    optional: true
+
   '@smithy/util-buffer-from@2.2.0':
     dependencies:
       '@smithy/is-array-buffer': 2.2.0
       tslib: 2.8.1
 
-  '@smithy/util-buffer-from@4.3.7':
+  '@smithy/util-buffer-from@4.4.0':
     dependencies:
-      '@smithy/core': 3.24.7
+      '@smithy/core': 3.25.0
       tslib: 2.8.1
     optional: true
 
@@ -7213,7 +7233,7 @@ snapshots:
 
   '@smithy/util-utf8@4.2.2':
     dependencies:
-      '@smithy/util-buffer-from': 4.3.7
+      '@smithy/util-buffer-from': 4.4.0
       tslib: 2.8.1
     optional: true
 
@@ -8822,7 +8842,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.18.0)
+      retry-axios: 2.6.0(axios@1.18.0(debug@4.4.3))
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -10017,7 +10037,7 @@ snapshots:
 
   playwright-core@1.54.1: {}
 
-  playwright-core@1.60.0: {}
+  playwright-core@1.61.0: {}
 
   playwright@1.54.1:
     dependencies:
@@ -10207,7 +10227,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.18.0):
+  retry-axios@2.6.0(axios@1.18.0(debug@4.4.3)):
     dependencies:
       axios: 1.18.0(debug@4.4.3)
 
