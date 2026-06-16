@@ -11,7 +11,7 @@
     "start": "pnpm build && pnpm serve"
   },
   "dependencies": {
-    "@hono/node-server": "^1.13.7",
+    "@hono/node-server": "^2.0.5",
     "@modelcontextprotocol/ext-apps": "^1.7.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "hono": "^4.6.14",
