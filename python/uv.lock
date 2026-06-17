@@ -228,7 +228,7 @@ dependencies = [
 requires-dist = [
     { name = "ansible-core", specifier = ">=2.19.2" },
     { name = "ansible-lint", specifier = ">=25.9.0" },
-    { name = "boto3", specifier = ">=1.43.30" },
+    { name = "boto3", specifier = ">=1.40.33" },
     { name = "botocore", specifier = ">=1.40.33" },
     { name = "molecule", specifier = ">=25.9.0" },
 ]
