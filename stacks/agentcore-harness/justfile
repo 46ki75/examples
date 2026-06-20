@@ -1,0 +1,27 @@
+# Orchestration for the agentcore-harness stack.
+# Requires: terraform, the aws CLI, uv, and just.
+
+tf := "terraform -chdir=terraform"
+region := "us-east-1"
+
+default:
+    @just --list
+
+init:
+    {{tf}} init
+
+# Provision the execution role + harness (managed memory auto-provisions).
+deploy: init
+    {{tf}} apply
+
+# Stream two turns through the deployed harness, reusing one session id to show
+# managed short-term memory carrying the conversation.
+invoke:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    ARN=$({{tf}} output -raw harness_arn)
+    uv run --script invoke.py "$ARN" {{region}}
+
+# Tear down. The managed memory cascade-deletes with the harness by default.
+destroy:
+    {{tf}} destroy
