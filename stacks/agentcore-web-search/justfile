@@ -1,0 +1,56 @@
+# Orchestration for the agentcore-web-search stack.
+# Requires: terraform, docker (with buildx), the aws CLI, and just.
+
+tf := "terraform -chdir=terraform"
+region := "us-east-1"
+
+default:
+    @just --list
+
+init:
+    {{tf}} init
+
+# Step 1: create just the ECR repository (the runtime needs the image to exist).
+bootstrap-ecr:
+    {{tf}} apply -target=aws_ecr_repository.agent
+
+# Step 2: build the linux/arm64 image and push it to ECR.
+push tag="latest":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    ROOT="$(git rev-parse --show-toplevel)"
+    # Pin the agent's third-party deps from the workspace lock into the build context.
+    uv export --directory "$ROOT" --package agentcore-web-search \
+      --no-dev --no-emit-workspace --frozen --no-hashes \
+      -o "$ROOT/stacks/agentcore-web-search/agent/requirements.txt"
+    REPO=$({{tf}} output -raw ecr_repository_url)
+    REGISTRY=${REPO%%/*}
+    aws ecr get-login-password --region {{region}} \
+      | docker login --username AWS --password-stdin "$REGISTRY"
+    docker buildx build --platform linux/arm64 -t "$REPO:{{tag}}" --push agent
+
+# Step 3: apply everything else (Cognito, gateway, web-search target, runtime).
+apply:
+    {{tf}} apply
+
+# Full deploy from scratch.
+deploy: init bootstrap-ecr push apply
+
+# Invoke the deployed agent, e.g. `just invoke prompt="..."`.
+invoke prompt="What did AWS recently announce about AgentCore web search?":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    ARN=$({{tf}} output -raw agent_runtime_arn)
+    SID="$(uuidgen | tr -d '-')$(uuidgen | tr -d '-')"
+    aws bedrock-agentcore invoke-agent-runtime \
+      --region {{region}} \
+      --agent-runtime-arn "$ARN" \
+      --qualifier live \
+      --runtime-session-id "$SID" \
+      --payload '{"prompt":"{{prompt}}"}' \
+      --content-type application/json \
+      --accept application/json \
+      /dev/stdout
+
+destroy:
+    {{tf}} destroy

@@ -12,3 +12,4 @@ This repository is a collection of project examples that are implemented in vari
 - `packages/{project_name}/`: Projects written in TypeScript
 - `pulumi/{project_name}/`: Projects using Pulumi
 - `python/{project_name}/`: Projects written in Python
+- `stacks/{deployable_unit}/`: Polyglot projects grouped by deployable unit (e.g. `terraform/` + `agent/`), rather than by language
