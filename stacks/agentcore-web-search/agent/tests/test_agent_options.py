@@ -11,9 +11,7 @@ from agentcore_web_search.config import Config
 def _config() -> Config:
     return Config(
         gateway_url="https://gw.example/mcp",
-        cognito_token_url="https://auth.example/oauth2/token",
-        cognito_client_id="client",
-        cognito_client_secret="secret",
+        gateway_oauth_provider_name="gateway-oauth-provider",
         cognito_scope="agentcore-gateway/invoke",
         worker_model_id="vendor/worker",
         synthesize_model_id="vendor/synth",

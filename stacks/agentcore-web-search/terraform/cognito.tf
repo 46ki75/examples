@@ -1,6 +1,8 @@
 # Cognito provides the CUSTOM_JWT authorizer for the Gateway. A machine-to-machine
-# (client_credentials) app client lets the agent mint a bearer token with no user
+# (client_credentials) app client lets a bearer token be minted with no user
 # interaction; the Gateway validates that token against this pool's OIDC metadata.
+# The client_id/secret are handed to an AgentCore Identity OAuth2 credential
+# provider (see identity.tf), which runs the grant on the runtime's behalf.
 
 resource "aws_cognito_user_pool" "gateway" {
   name = "${var.name_prefix}-pool"

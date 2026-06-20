@@ -32,7 +32,7 @@ async def invoke(payload):
     config = Config.from_env()
     api_key = fetch_openrouter_api_key(config)
     configure_sdk_env(config, api_key)
-    token = fetch_gateway_token(config)
+    token = await fetch_gateway_token(config)
     options = build_agent_options(config, token)
 
     # The orchestrator's own text (its preamble and final synthesis) arrives as

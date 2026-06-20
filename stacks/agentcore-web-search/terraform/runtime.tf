@@ -95,6 +95,26 @@ data "aws_iam_policy_document" "runtime" {
       values   = ["ssm.${var.openrouter_api_key_region}.amazonaws.com"]
     }
   }
+
+  # AgentCore Identity vends the Gateway bearer token from its token vault. The
+  # runtime needs to read the OAuth2 credential provider (scoped by its workload
+  # identity) and the Secrets Manager secret AgentCore created for the client
+  # secret. Mirrors the policy in the AgentCore Identity getting-started guide.
+  statement {
+    sid    = "AccessTokenVault"
+    effect = "Allow"
+    actions = [
+      "bedrock-agentcore:GetResourceOauth2Token",
+      "secretsmanager:GetSecretValue",
+    ]
+    resources = [
+      "arn:aws:bedrock-agentcore:${local.region}:${local.account_id}:workload-identity-directory/default",
+      "arn:aws:bedrock-agentcore:${local.region}:${local.account_id}:workload-identity-directory/default/workload-identity/*",
+      "arn:aws:bedrock-agentcore:${local.region}:${local.account_id}:token-vault/default",
+      "arn:aws:bedrock-agentcore:${local.region}:${local.account_id}:token-vault/default/oauth2credentialprovider/${local.oauth_provider_name}",
+      "arn:aws:secretsmanager:${local.region}:${local.account_id}:secret:bedrock-agentcore-identity!default/oauth2/${local.oauth_provider_name}*",
+    ]
+  }
 }
 
 resource "aws_iam_role_policy" "runtime" {
@@ -126,14 +146,13 @@ resource "aws_bedrockagentcore_agent_runtime" "this" {
   }
 
   environment_variables = {
-    GATEWAY_URL       = aws_bedrockagentcore_gateway.this.gateway_url
-    COGNITO_TOKEN_URL = local.cognito_token_url
-    COGNITO_CLIENT_ID = aws_cognito_user_pool_client.gateway.id
-    # For example simplicity the M2M secret rides in plain env vars. In
-    # production, store it in Secrets Manager and grant the runtime role read
-    # access instead.
-    COGNITO_CLIENT_SECRET = aws_cognito_user_pool_client.gateway.client_secret
-    COGNITO_SCOPE         = local.cognito_scope
+    GATEWAY_URL = aws_bedrockagentcore_gateway.this.gateway_url
+    # The Cognito client_id/secret are no longer passed to the runtime; the agent
+    # obtains the Gateway token from this AgentCore Identity credential provider,
+    # which holds them in its token vault. Only the provider name and the scope
+    # to request are needed here.
+    GATEWAY_OAUTH_PROVIDER_NAME = aws_bedrockagentcore_oauth2_credential_provider.gateway.name
+    COGNITO_SCOPE               = local.cognito_scope
     # The OpenRouter API key itself is not passed here; the runtime reads it from
     # SSM Parameter Store (SecureString) at startup using the name below.
     OPENROUTER_API_KEY_PARAM  = var.openrouter_api_key_param

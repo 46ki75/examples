@@ -4,9 +4,7 @@ from agentcore_web_search.config import Config
 
 _REQUIRED = {
     "GATEWAY_URL": "https://gw.example/mcp",
-    "COGNITO_TOKEN_URL": "https://auth.example/oauth2/token",
-    "COGNITO_CLIENT_ID": "client",
-    "COGNITO_CLIENT_SECRET": "secret",
+    "GATEWAY_OAUTH_PROVIDER_NAME": "gateway-oauth-provider",
     "COGNITO_SCOPE": "agentcore-gateway/invoke",
 }
 
@@ -21,6 +19,7 @@ def test_from_env_reads_all_fields(monkeypatch: pytest.MonkeyPatch) -> None:
     config = Config.from_env()
 
     assert config.gateway_url == "https://gw.example/mcp"
+    assert config.gateway_oauth_provider_name == "gateway-oauth-provider"
     assert config.cognito_scope == "agentcore-gateway/invoke"
     assert config.worker_model_id == "vendor/worker-model"
     assert config.synthesize_model_id == "vendor/synth-model"

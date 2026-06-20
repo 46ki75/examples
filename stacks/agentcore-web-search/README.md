@@ -16,7 +16,7 @@ inside an AgentCore **Runtime**:
                                    └─ Synthesize Agent (orchestrator · OpenRouter)
                                         └─ Agent tool ▶ Web Search subagent (OpenRouter)
                                              └─ MCP WebSearch tool
-                                                       │ Bearer JWT (Cognito M2M)
+                                                       │ Bearer JWT (AgentCore Identity · Cognito M2M)
                                                        ▼
                                             AgentCore Gateway (CUSTOM_JWT)
                                                   └─ target: connector "web-search"
@@ -107,8 +107,15 @@ just destroy
   `disallowed_tools`, so the agents can only ever reach the managed Gateway
   `WebSearch` tool — never run a shell or search the web any other way.
 - **Inbound auth** — the Gateway uses a `CUSTOM_JWT` authorizer backed by a
-  Cognito machine-to-machine (client_credentials) app client. The agent mints a
-  bearer token at startup and passes it on the MCP connection.
+  Cognito machine-to-machine (client_credentials) app client. The runtime does
+  not run the token grant or hold the client secret itself: it asks an
+  **AgentCore Identity** OAuth2 credential provider (`identity.tf`) for the
+  token at invocation time (`@requires_access_token(auth_flow="M2M")`) and
+  passes it on the MCP connection. AgentCore Identity keeps the client_id/secret
+  in its KMS-encrypted token vault and runs the grant on the runtime's behalf,
+  authorized by the runtime's workload identity. Because invocations use IAM
+  (SigV4) inbound auth, `just invoke` passes `--runtime-user-id` so AgentCore
+  injects the workload access token the agent needs to reach the vault.
 - **Outbound auth** — the Gateway reaches the AWS-managed search backend with its
   service role (`GATEWAY_IAM_ROLE`), which holds `bedrock-agentcore:InvokeGateway`
   and `bedrock-agentcore:InvokeWebSearch`.
@@ -126,9 +133,11 @@ just destroy
 
 - Web Search is billed at **$7 per 1,000 queries** (us-east-1), plus OpenRouter
   model tokens and Runtime usage.
-- The Cognito client secret is passed to the runtime as a plain environment
-  variable for example simplicity. In production, store it in Secrets Manager and
-  grant the runtime role read access instead.
+- The Cognito client secret is **not** passed to the runtime. AgentCore Identity
+  holds it in its token vault (a KMS-encrypted Secrets Manager secret) and the
+  runtime reads only a short-lived token from the vault using its workload
+  identity (execution role: `bedrock-agentcore:GetResourceOauth2Token` +
+  `secretsmanager:GetSecretValue`, scoped to the provider and its secret).
 - Per the Web Search acceptable-use terms, keep and display the source citations
   the tool returns — the agents are prompted to do so.
 

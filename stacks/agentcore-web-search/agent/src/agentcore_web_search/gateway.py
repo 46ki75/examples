@@ -1,37 +1,51 @@
-"""AgentCore Gateway access: mint a Cognito M2M bearer token.
+# bedrock-agentcore ships partial type information, so the identity decorator is
+# reported as untyped under strict mode.
+# pyright: basic
+"""AgentCore Gateway access: obtain a bearer token via AgentCore Identity.
 
 The Claude Agent SDK opens and manages the MCP connection itself (given the
-Gateway URL and an ``Authorization`` header), so this module only needs to mint
+Gateway URL and an ``Authorization`` header), so this module only needs to obtain
 the bearer token the SDK attaches to that connection.
+
+Rather than hand-rolling the Cognito ``client_credentials`` POST, we delegate to
+AgentCore Identity: it runs the machine-to-machine grant using the client_id and
+secret stored in the OAuth2 credential provider's token vault. The client secret
+therefore never reaches this container — the runtime only holds a short-lived
+workload access token (injected by AgentCore Runtime) used to read the vault.
 """
 
 from __future__ import annotations
 
 import logging
 
-import httpx
+from bedrock_agentcore.identity.auth import requires_access_token
 
 from .config import Config
 
 logger = logging.getLogger(__name__)
 
-_TOKEN_TIMEOUT_SECONDS = 30
 
+async def fetch_gateway_token(config: Config) -> str:
+    """Obtain a Gateway bearer token via the AgentCore Identity OAuth2 provider.
 
-def fetch_gateway_token(config: Config) -> str:
-    """Mint a bearer token from Cognito using the client_credentials grant."""
+    Uses the ``M2M`` (2-legged / client_credentials) flow. The decorator reads
+    the workload access token from the runtime context, exchanges it for the
+    provider's OAuth2 token (``GetResourceOauth2Token``), and injects it as
+    ``access_token``.
+    """
     logger.debug(
-        "requesting client_credentials token from %s", config.cognito_token_url
+        "requesting M2M token from credential provider %s",
+        config.gateway_oauth_provider_name,
     )
-    response = httpx.post(
-        config.cognito_token_url,
-        data={"grant_type": "client_credentials", "scope": config.cognito_scope},
-        auth=(config.cognito_client_id, config.cognito_client_secret),
-        timeout=_TOKEN_TIMEOUT_SECONDS,
-    )
-    response.raise_for_status()
 
-    token = response.json().get("access_token")
-    if not isinstance(token, str):
-        raise RuntimeError("token endpoint did not return an access_token string")
-    return token
+    # ``access_token`` is injected by the decorator; the default only exists so a
+    # static checker doesn't flag the call below as missing the argument.
+    @requires_access_token(
+        provider_name=config.gateway_oauth_provider_name,
+        scopes=[config.cognito_scope],
+        auth_flow="M2M",
+    )
+    async def _with_token(*, access_token: str = "") -> str:
+        return access_token
+
+    return await _with_token()

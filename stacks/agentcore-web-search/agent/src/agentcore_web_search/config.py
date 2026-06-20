@@ -11,9 +11,10 @@ class Config:
     """Everything the agent needs to reach the Gateway and OpenRouter."""
 
     gateway_url: str
-    cognito_token_url: str
-    cognito_client_id: str
-    cognito_client_secret: str
+    # AgentCore Identity OAuth2 credential provider that mints the Gateway token.
+    gateway_oauth_provider_name: str
+    # OAuth scope requested for the client_credentials grant (Cognito resource
+    # server scope, e.g. ``agentcore-gateway/invoke``).
     cognito_scope: str
     worker_model_id: str
     synthesize_model_id: str
@@ -25,9 +26,7 @@ class Config:
     def from_env(cls) -> Config:
         return cls(
             gateway_url=_require("GATEWAY_URL"),
-            cognito_token_url=_require("COGNITO_TOKEN_URL"),
-            cognito_client_id=_require("COGNITO_CLIENT_ID"),
-            cognito_client_secret=_require("COGNITO_CLIENT_SECRET"),
+            gateway_oauth_provider_name=_require("GATEWAY_OAUTH_PROVIDER_NAME"),
             cognito_scope=_require("COGNITO_SCOPE"),
             worker_model_id=os.environ.get("WORKER_MODEL_ID", "minimax/minimax-m2.5"),
             synthesize_model_id=os.environ.get("SYNTHESIZE_MODEL_ID", "z-ai/glm-5.2"),
