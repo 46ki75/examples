@@ -23,6 +23,7 @@ import argparse
 import time
 
 import boto3
+from botocore.exceptions import ClientError
 
 CONNECTOR_ID = "web-search"
 TOOL_NAME = "WebSearch"
@@ -102,6 +103,35 @@ def create(args: argparse.Namespace) -> None:
     _wait_ready(client, args.gateway_id, target_id)
 
 
+def _wait_deleted(client, gateway_id: str, target_id: str, timeout: int = 180) -> None:
+    """Block until the target is fully gone (GetGatewayTarget 404s).
+
+    DeleteGatewayTarget is async — the target lingers in `Deleting` for a bit.
+    If we returned immediately, Terraform would move on to delete the Gateway,
+    whose own deletion also reaps targets and fails on one already `Deleting`
+    ("DeleteGatewayTarget can't be performed when in Deleting state"). Waiting
+    here serializes the two deleters: by the time the Gateway is deleted, it has
+    no targets left to reap.
+    """
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            resp = client.get_gateway_target(
+                gatewayIdentifier=gateway_id, targetId=target_id
+            )
+        except ClientError as err:
+            if err.response.get("Error", {}).get("Code") == "ResourceNotFoundException":
+                print(f"target {target_id} deleted")
+                return
+            raise
+        if time.monotonic() > deadline:
+            raise SystemExit(
+                f"timed out after {timeout}s waiting for {target_id} to delete "
+                f"(last status: {resp.get('status')})"
+            )
+        time.sleep(3)
+
+
 def delete(args: argparse.Namespace) -> None:
     client = _client(args.region)
     target_id = _find_target_id(client, args.gateway_id, args.name)
@@ -109,7 +139,8 @@ def delete(args: argparse.Namespace) -> None:
         print(f"target {args.name!r} not found; nothing to delete")
         return
     client.delete_gateway_target(gatewayIdentifier=args.gateway_id, targetId=target_id)
-    print(f"deleted target {args.name!r} ({target_id})")
+    print(f"deleting target {args.name!r} ({target_id})")
+    _wait_deleted(client, args.gateway_id, target_id)
 
 
 def main() -> None:
