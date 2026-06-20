@@ -1,0 +1,16 @@
+# Java/Kotlin task runner. Drives the Gradle multi-project build under java/aws
+# (subprojects: lambda-java, lambda-kotlin, lambda-spring).
+set working-directory := 'aws'
+
+default:
+    @just --justfile {{justfile()}} --list
+
+build:
+    ./gradlew build
+
+test:
+    ./gradlew test
+
+# `check` runs the test + verification tasks across every subproject.
+ci:
+    ./gradlew check

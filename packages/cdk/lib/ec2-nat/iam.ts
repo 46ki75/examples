@@ -23,7 +23,7 @@ export class IAMStack extends cdk.NestedStack {
       assumedBy: new iam.ServicePrincipal("ec2.amazonaws.com"),
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "AmazonSSMManagedInstanceCore"
+          "AmazonSSMManagedInstanceCore",
         ),
       ],
     });
@@ -35,7 +35,7 @@ export class IAMStack extends cdk.NestedStack {
       {
         instanceProfileName: ec2InstanceProfileName,
         roles: [ec2Role.roleName],
-      }
+      },
     );
   }
 }

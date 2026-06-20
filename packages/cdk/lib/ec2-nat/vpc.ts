@@ -9,7 +9,7 @@ export class VpcStack extends cdk.NestedStack {
   constructor(
     scope: Construct,
     id: string,
-    props: cdk.NestedStackProps & { DEPLOY_ENV: string }
+    props: cdk.NestedStackProps & { DEPLOY_ENV: string },
   ) {
     super(scope, id, props);
 
@@ -62,18 +62,14 @@ export class VpcStack extends cdk.NestedStack {
       internetGatewayName,
       {
         tags: [{ key: "Name", value: internetGatewayName }],
-      }
+      },
     );
 
     const internetGatewayAttachmentName = `${DEPLOY_ENV}-EC2-InternetGatewayAttachment-Main`;
-    const internetGatewayAttachment = new ec2.CfnVPCGatewayAttachment(
-      this,
-      internetGatewayAttachmentName,
-      {
-        vpcId: this.vpc.attrVpcId,
-        internetGatewayId: internetGateway.attrInternetGatewayId,
-      }
-    );
+    new ec2.CfnVPCGatewayAttachment(this, internetGatewayAttachmentName, {
+      vpcId: this.vpc.attrVpcId,
+      internetGatewayId: internetGateway.attrInternetGatewayId,
+    });
 
     // NAT Gateway Subnet Route Table and Routes
 
@@ -84,19 +80,15 @@ export class VpcStack extends cdk.NestedStack {
       {
         vpcId: this.vpc.attrVpcId,
         tags: [{ key: "Name", value: natGatewaySubnetRouteTableName }],
-      }
+      },
     );
 
     const natGatewayToInternetGatewayRouteName = `${DEPLOY_ENV}-EC2-Route-NAT2IGW`;
-    const natGatewayToInternetGatewayRoute = new ec2.CfnRoute(
-      this,
-      natGatewayToInternetGatewayRouteName,
-      {
-        routeTableId: natGatewaySubnetRouteTable.attrRouteTableId,
-        gatewayId: internetGateway.attrInternetGatewayId,
-        destinationCidrBlock: "0.0.0.0/0",
-      }
-    );
+    new ec2.CfnRoute(this, natGatewayToInternetGatewayRouteName, {
+      routeTableId: natGatewaySubnetRouteTable.attrRouteTableId,
+      gatewayId: internetGateway.attrInternetGatewayId,
+      destinationCidrBlock: "0.0.0.0/0",
+    });
 
     const natGatewaySubnetRouteTableAssociationName = `${DEPLOY_ENV}-EC2-SubnetRouteTableAssociation-NAT2IGW`;
     new ec2.CfnSubnetRouteTableAssociation(
@@ -105,7 +97,7 @@ export class VpcStack extends cdk.NestedStack {
       {
         routeTableId: natGatewaySubnetRouteTable.attrRouteTableId,
         subnetId: natGatewaySubnet.attrSubnetId,
-      }
+      },
     );
 
     // EC2 Subnet Route Table and Routes
@@ -117,19 +109,15 @@ export class VpcStack extends cdk.NestedStack {
       {
         vpcId: this.vpc.attrVpcId,
         tags: [{ key: "Name", value: ec2SubnetRouteTableName }],
-      }
+      },
     );
 
     const ec2ToNATGatewayRouteName = `${DEPLOY_ENV}-EC2-Route-EC22NAT`;
-    const ec2ToNATGatewayRoute = new ec2.CfnRoute(
-      this,
-      ec2ToNATGatewayRouteName,
-      {
-        routeTableId: ec2SubnetRouteTable.attrRouteTableId,
-        natGatewayId: natGateway.attrNatGatewayId,
-        destinationCidrBlock: "0.0.0.0/0",
-      }
-    );
+    new ec2.CfnRoute(this, ec2ToNATGatewayRouteName, {
+      routeTableId: ec2SubnetRouteTable.attrRouteTableId,
+      natGatewayId: natGateway.attrNatGatewayId,
+      destinationCidrBlock: "0.0.0.0/0",
+    });
 
     const ec2SubnetRouteTableAssociationName = `${DEPLOY_ENV}-EC2-SubnetRouteTableAssociation-EC22NAT`;
     new ec2.CfnSubnetRouteTableAssociation(
@@ -138,7 +126,7 @@ export class VpcStack extends cdk.NestedStack {
       {
         routeTableId: ec2SubnetRouteTable.attrRouteTableId,
         subnetId: this.ec2Subnet.attrSubnetId,
-      }
+      },
     );
   }
 }

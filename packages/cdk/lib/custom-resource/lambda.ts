@@ -25,7 +25,7 @@ const ITEMS: readonly { PK: string; name: string }[] = [
 const UUID = "565ca81d-2e9b-4e45-b5cc-886c55bf10e5";
 
 export const handler = async (
-  event: CloudFormationCustomResourceEvent
+  event: CloudFormationCustomResourceEvent,
 ): Promise<CloudFormationCustomResourceResponse> => {
   const resourceProperties = event.ResourceProperties as ResourceProperties;
   const tableName = resourceProperties.TableName;
@@ -36,7 +36,7 @@ export const handler = async (
   try {
     if (operation === "Create" || operation === "Update") {
       // Create or update the resource
-      const results = await Promise.all(
+      await Promise.all(
         ITEMS.map((item) => {
           const putItemCommand = new PutItemCommand({
             TableName: tableName,
@@ -46,18 +46,18 @@ export const handler = async (
             },
           });
           return client.send(putItemCommand);
-        })
+        }),
       );
     } else if (operation === "Delete") {
       // Delete the resource
-      const results = await Promise.all(
+      await Promise.all(
         ITEMS.map((item) => {
           const deleteItemCommand = new DeleteItemCommand({
             TableName: tableName,
             Key: { PK: { S: item.PK } },
           });
           return client.send(deleteItemCommand);
-        })
+        }),
       );
     }
 

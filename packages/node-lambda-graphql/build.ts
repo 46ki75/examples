@@ -25,7 +25,7 @@ const archive = archiver("zip", { zlib: { level: 9 } });
 
 output.on("close", () => {
   console.log(
-    `ZIP file created successfully! Total size: ${archive.pointer()} bytes`
+    `ZIP file created successfully! Total size: ${archive.pointer()} bytes`,
   );
 });
 archive.on("error", (err) => {

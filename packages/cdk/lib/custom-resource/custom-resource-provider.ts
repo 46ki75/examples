@@ -16,7 +16,7 @@ export class CustomStackProviderStack extends cdk.NestedStack {
   constructor(
     scope: Construct,
     id: string,
-    props: CustomStackProviderStackProps
+    props: CustomStackProviderStackProps,
   ) {
     super(scope, id, props);
 
@@ -27,21 +27,21 @@ export class CustomStackProviderStack extends cdk.NestedStack {
       {
         roleName: "shared-46ki75-examples-iam-role-lambda",
         assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
-      }
+      },
     );
 
     lambdaRole.addToPolicy(
       new iam.PolicyStatement({
         actions: ["lambda:InvokeFunction"],
         resources: ["*"],
-      })
+      }),
     );
 
     lambdaRole.addToPolicy(
       new iam.PolicyStatement({
         actions: ["dynamodb:*"],
         resources: ["*"],
-      })
+      }),
     );
 
     // Lambda Function
@@ -61,7 +61,7 @@ export class CustomStackProviderStack extends cdk.NestedStack {
         onEventHandler: lambdaFunction,
         providerFunctionName:
           "shared-46ki75-examples-lambda-function-custom_resource_provider",
-      }
+      },
     );
 
     // Custom Resource
@@ -73,7 +73,7 @@ export class CustomStackProviderStack extends cdk.NestedStack {
         properties: {
           TableName: props.TableName,
         },
-      }
+      },
     );
 
     new cdk.CfnOutput(this, "TableName", {

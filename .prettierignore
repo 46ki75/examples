@@ -1,0 +1,6 @@
+**/node_modules/
+**/dist/
+**/build/
+**/.nitro/
+**/.output/
+pnpm-lock.yaml

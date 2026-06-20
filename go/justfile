@@ -1,0 +1,44 @@
+# Go task runner. Covers every Go module under go/. go/ currently has no
+# module, so each stage is a no-op until one lands — it does not fail the build.
+
+default:
+    @just --justfile {{justfile()}} --list
+
+# Run a `go ...` command in every module under go/ (no-op while there are none).
+_each cmd:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mapfile -t mods < <(find . -name go.mod -not -path '*/vendor/*')
+    if [ ${#mods[@]} -eq 0 ]; then
+        echo "go: no modules under go/ yet — skipping '{{cmd}}'"
+        exit 0
+    fi
+    for mod in "${mods[@]}"; do
+        dir=$(dirname "$mod")
+        echo "==> ($dir) {{cmd}}"
+        ( cd "$dir" && {{cmd}} )
+    done
+
+fmt-check:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mapfile -t mods < <(find . -name go.mod -not -path '*/vendor/*')
+    if [ ${#mods[@]} -eq 0 ]; then
+        echo "go: no modules under go/ yet — skipping fmt-check"
+        exit 0
+    fi
+    for mod in "${mods[@]}"; do
+        dir=$(dirname "$mod")
+        echo "==> ($dir) gofmt -l ."
+        out=$(cd "$dir" && gofmt -l .)
+        if [ -n "$out" ]; then echo "unformatted:"; echo "$out"; exit 1; fi
+    done
+
+lint: (_each "go vet ./...")
+
+# `go build` is the type-check: it compiles every package without producing output.
+typecheck: (_each "go build ./...")
+
+test: (_each "go test ./...")
+
+ci: fmt-check lint typecheck test

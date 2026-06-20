@@ -9,7 +9,7 @@ export class VpcStack extends cdk.NestedStack {
   constructor(
     scope: Construct,
     id: string,
-    props: cdk.NestedStackProps & { DEPLOY_ENV: string }
+    props: cdk.NestedStackProps & { DEPLOY_ENV: string },
   ) {
     super(scope, id, props);
 
@@ -47,7 +47,7 @@ export class VpcStack extends cdk.NestedStack {
             value: `${props.DEPLOY_ENV}-46ki75-examples-vpc-igw-main`,
           },
         ],
-      }
+      },
     );
 
     const internetGatewayAttachment = new ec2.CfnVPCGatewayAttachment(
@@ -56,7 +56,7 @@ export class VpcStack extends cdk.NestedStack {
       {
         vpcId: this.vpc.attrVpcId,
         internetGatewayId: internetGateway.attrInternetGatewayId,
-      }
+      },
     );
 
     const routeTable = new ec2.CfnRouteTable(this, "RouteTable", {

@@ -1,6 +1,5 @@
 import type {
   LambdaFunctionURLEvent,
-  Context,
   LambdaFunctionURLResult,
 } from "aws-lambda";
 
@@ -20,7 +19,6 @@ export const gatewaySchema = stitchSchemas({
 
 export const handler = async (
   event: LambdaFunctionURLEvent,
-  context: Context
 ): Promise<LambdaFunctionURLResult | ReturnType<typeof graphql>> => {
   if (event.requestContext.http.method === "GET") {
     return {

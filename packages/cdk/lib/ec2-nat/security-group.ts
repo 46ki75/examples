@@ -34,7 +34,7 @@ export class SecurityGroupStack extends cdk.NestedStack {
             cidrIp: "0.0.0.0/0",
           },
         ],
-      }
+      },
     );
   }
 }

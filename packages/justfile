@@ -1,0 +1,31 @@
+# Node task runner. The pnpm workspace is rooted at the repo root, so recipes
+# run from there and cover every package under packages/. fmt/lint use the
+# shared root config (eslint.config.ts, .prettierignore); typecheck/test run
+# per package against each package's own tsconfig / test script.
+set working-directory := '..'
+
+default:
+    @just --justfile {{justfile()}} --list
+
+install:
+    pnpm install --frozen-lockfile
+
+fmt-check:
+    pnpm exec prettier --check "packages/**/*.ts"
+
+lint:
+    pnpm exec eslint packages
+
+# Per-package type check against each package's own tsconfig.json.
+# --skipLibCheck: check our code, not third-party .d.ts internals.
+typecheck:
+    pnpm -r exec tsc --noEmit --skipLibCheck
+
+# Runs the `test` script in each package that defines one; others are skipped.
+test:
+    pnpm -r run test
+
+build:
+    pnpm -r run build
+
+ci: install fmt-check lint typecheck test

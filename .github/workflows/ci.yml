@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Cancel superseded runs on the same ref (e.g. rapid PR pushes).
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Each job sets up only its toolchain and runs that target's `just ci`. The
+# recipes themselves (fmt / lint / typecheck / test) live in the per-target
+# justfiles, so CI and local runs stay in lockstep. Mirrors the root justfile's
+# orchestrator, but one job per target for isolation and per-toolchain caching.
+jobs:
+  crates:
+    name: crates (Rust)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt, clippy
+      - uses: extractions/setup-just@v3
+      - run: just ci
+        working-directory: crates
+
+  python:
+    name: python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+      - uses: extractions/setup-just@v3
+      - run: uv sync --frozen
+      - run: just ci
+        working-directory: python
+
+  packages:
+    name: packages (Node)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - uses: extractions/setup-just@v3
+      - run: just ci
+        working-directory: packages
+
+  go:
+    name: go
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: extractions/setup-just@v3
+      - run: just ci
+        working-directory: go
+
+  java:
+    name: java (Gradle)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - uses: extractions/setup-just@v3
+      - run: just ci
+        working-directory: java
+
+  stacks:
+    name: stacks (Terraform)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+      - uses: extractions/setup-just@v3
+      - run: just ci
+        working-directory: stacks

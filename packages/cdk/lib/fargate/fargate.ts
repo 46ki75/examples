@@ -9,7 +9,7 @@ export class FargateStack extends cdk.NestedStack {
       DEPLOY_ENV: string;
       vpcId: string;
       subnetId: string;
-    }
+    },
   ) {
     super(scope, id, props);
 
@@ -45,7 +45,7 @@ export class FargateStack extends cdk.NestedStack {
             ],
           }),
         },
-      }
+      },
     );
 
     const taskRole = new cdk.aws_iam.Role(this, "FargateTaskRole", {
@@ -71,7 +71,7 @@ export class FargateStack extends cdk.NestedStack {
 
     const LOG_GROUP_NAME = `/${props.DEPLOY_ENV}/ecs/46ki75-aws-fargate-task`;
 
-    const logGroup = new cdk.aws_logs.CfnLogGroup(this, "LogGroup", {
+    new cdk.aws_logs.CfnLogGroup(this, "LogGroup", {
       logGroupName: LOG_GROUP_NAME,
       retentionInDays: 1,
       logGroupClass: "STANDARD",
@@ -114,7 +114,7 @@ export class FargateStack extends cdk.NestedStack {
             },
           },
         ],
-      }
+      },
     );
 
     const sg = new cdk.aws_ec2.CfnSecurityGroup(this, "SG", {
@@ -127,7 +127,7 @@ export class FargateStack extends cdk.NestedStack {
       ],
     });
 
-    const fargateWebService = new cdk.aws_ecs.CfnService(this, "Service", {
+    new cdk.aws_ecs.CfnService(this, "Service", {
       serviceName: `${props.DEPLOY_ENV}-46ki75-examples-ecs-service-web`,
       cluster: fargateCluster.attrArn,
       networkConfiguration: {
