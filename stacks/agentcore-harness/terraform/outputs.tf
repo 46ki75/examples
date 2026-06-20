@@ -13,6 +13,16 @@ output "harness_status" {
   value       = awscc_bedrockagentcore_harness.this.status
 }
 
+output "gateway_id" {
+  description = "Identifier of the AgentCore Gateway backing the web-search tool."
+  value       = aws_bedrockagentcore_gateway.this.gateway_id
+}
+
+output "gateway_arn" {
+  description = "ARN of the AgentCore Gateway attached to the harness as the web-search tool."
+  value       = aws_bedrockagentcore_gateway.this.gateway_arn
+}
+
 output "invoke_command" {
   description = "Copy-paste command to stream two turns through the harness."
   value       = "uv run --script invoke.py ${awscc_bedrockagentcore_harness.this.arn}"

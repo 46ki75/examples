@@ -30,15 +30,38 @@ resource "awscc_bedrockagentcore_harness" "this" {
   model = {
     bedrock_model_config = {
       model_id = var.model_id
-      # Selects the protocol and Bedrock endpoint: chat_completions / responses
-      # route through the OpenAI-compatible bedrock-mantle endpoint (Kimi K2.5),
-      # converse_stream uses the native bedrock-runtime Converse API.
+      # Selects the protocol and Bedrock endpoint: converse_stream uses the
+      # native bedrock-runtime Converse API (its tool IDs satisfy the harness's
+      # tool-result schema, so it is required for the web_search tool below);
+      # chat_completions / responses route through the OpenAI-compatible
+      # bedrock-mantle endpoint, which is tool-free here (those models emit
+      # OpenAI-style tool IDs the harness rejects).
       api_format = var.api_format
     }
   }
 
+  # Web search as a governed tool surface. Reference the Gateway by ARN and every
+  # tool configured on it — here just the built-in "web-search" connector
+  # (gateway_target.tf) — becomes callable by the agent. `outbound_auth` is
+  # omitted, so it defaults to AWS IAM (SigV4) signed with this harness's
+  # execution role; that role's bedrock-agentcore:InvokeGateway grant (iam.tf)
+  # satisfies the Gateway's AWS_IAM inbound authorizer. `allowed_tools` is left
+  # unset, so all tools (the built-in shell + file_operations and this gateway's
+  # tools) stay available.
+  tools = [{
+    name = "web_search"
+    type = "agentcore_gateway"
+    config = {
+      agent_core_gateway = {
+        gateway_arn = aws_bedrockagentcore_gateway.this.gateway_arn
+      }
+    }
+  }]
+
   max_iterations  = var.max_iterations
   timeout_seconds = var.timeout_seconds
 
-  depends_on = [time_sleep.role_propagation]
+  # The connector target must be READY before the harness enumerates the
+  # gateway's tools, so order it ahead of (and the role delay alongside) create.
+  depends_on = [time_sleep.role_propagation, terraform_data.web_search_target]
 }

@@ -16,15 +16,15 @@ variable "harness_name" {
 }
 
 variable "model_id" {
-  description = "Default Bedrock model the harness reasons with. Kimi K2.5 is available in-region in us-east-1 (no geo/global inference profile), so the plain model ID is used. Override per InvokeHarness call to swap models mid-session."
+  description = "Default Bedrock model the harness reasons with. Defaults to Claude Sonnet 4.6 via its us geo inference profile (Sonnet 4.6 has no in-region profile in us-east-1). A native Converse tool-caller is required for the web_search tool: models served through the bedrock-mantle endpoint (e.g. moonshotai.kimi-k2.5) emit OpenAI-style tool IDs the harness rejects, so they only work tool-free. Override per InvokeHarness call to swap models mid-session."
   type        = string
-  default     = "moonshotai.kimi-k2.5"
+  default     = "us.anthropic.claude-sonnet-4-6"
 }
 
 variable "api_format" {
-  description = "Bedrock API protocol + endpoint the harness calls: 'converse_stream' (Converse on bedrock-runtime, the default for most models), or 'responses'/'chat_completions' (OpenAI-compatible, served by the bedrock-mantle endpoint). Kimi K2.5 is served via Mantle."
+  description = "Bedrock API protocol + endpoint the harness calls: 'converse_stream' (Converse on bedrock-runtime — required here for tool use, since its tool IDs satisfy the harness schema), or 'responses'/'chat_completions' (OpenAI-compatible, served by the bedrock-mantle endpoint; usable only without tools)."
   type        = string
-  default     = "chat_completions"
+  default     = "converse_stream"
 
   validation {
     condition     = contains(["converse_stream", "responses", "chat_completions"], var.api_format)

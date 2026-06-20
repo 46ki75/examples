@@ -122,6 +122,16 @@ data "aws_iam_policy_document" "harness" {
     ]
     resources = ["arn:aws:bedrock-agentcore:${local.region}:${local.account_id}:memory/harness_${var.harness_name}_*"]
   }
+
+  # The harness signs its Gateway calls with SigV4 using THIS role (the default
+  # `agentcore_gateway` outbound auth), and the Gateway's AWS_IAM inbound
+  # authorizer checks InvokeGateway. Scoped to the one gateway we attach.
+  statement {
+    sid       = "InvokeGateway"
+    effect    = "Allow"
+    actions   = ["bedrock-agentcore:InvokeGateway"]
+    resources = [aws_bedrockagentcore_gateway.this.gateway_arn]
+  }
 }
 
 resource "aws_iam_role_policy" "harness" {
