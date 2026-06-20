@@ -1,1 +1,14 @@
-{}
+{
+  "name": "examples-workspace",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "jiti": "^2.7.0",
+    "prettier": "^3.8.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.61.1"
+  }
+}

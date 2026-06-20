@@ -21,9 +21,9 @@ export class EC2NATStack extends cdk.Stack {
       {
         DEPLOY_ENV,
         vpcId: vpcStack.vpc.attrVpcId,
-      }
+      },
     );
-    const ec2Stack = new EC2Stack(this, "EC2Stack", {
+    new EC2Stack(this, "EC2Stack", {
       DEPLOY_ENV,
       vpcId: vpcStack.vpc.attrVpcId,
       subnetId: vpcStack.ec2Subnet.attrSubnetId,

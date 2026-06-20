@@ -12,7 +12,7 @@ export class FargatePublicStack extends cdk.Stack {
     const DEPLOY_ENV = "shared";
 
     const vpcStack = new VpcStack(this, "VpcStack", { DEPLOY_ENV });
-    const fargateStack = new FargateStack(this, "FargateStack", {
+    new FargateStack(this, "FargateStack", {
       DEPLOY_ENV,
       vpcId: vpcStack.vpc.attrVpcId,
       subnetId: vpcStack.fargateSubnet.attrSubnetId,

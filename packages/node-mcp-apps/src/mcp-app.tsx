@@ -9,7 +9,7 @@
 import type { App } from "@modelcontextprotocol/ext-apps";
 import { useApp } from "@modelcontextprotocol/ext-apps/react";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { StrictMode, useCallback, useEffect, useState } from "react";
+import { StrictMode, useCallback, useState } from "react";
 import { createRoot } from "react-dom/client";
 
 interface Todo {

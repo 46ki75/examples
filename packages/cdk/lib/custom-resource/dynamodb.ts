@@ -19,7 +19,7 @@ export class DynamodbStack extends cdk.NestedStack {
         writeCapacity: 1,
         deletionProtection: false,
         removalPolicy: cdk.RemovalPolicy.DESTROY,
-      }
+      },
     );
 
     this.TableName = table.tableName;

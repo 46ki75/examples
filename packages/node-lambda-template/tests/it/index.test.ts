@@ -15,7 +15,7 @@ describe("Lambda Function Handler", () => {
     assert.strictEqual(result.headers?.["Content-Type"], "application/json");
     assert.strictEqual(
       JSON.parse(String(result.body)).message,
-      "Hello, World!"
+      "Hello, World!",
     );
   });
 
@@ -29,7 +29,7 @@ describe("Lambda Function Handler", () => {
     assert.strictEqual(result.statusCode, 200);
     assert.strictEqual(
       JSON.parse(String(result.body)).message,
-      "Hello, Lambda!"
+      "Hello, Lambda!",
     );
   });
 
@@ -43,7 +43,7 @@ describe("Lambda Function Handler", () => {
     assert.strictEqual(result.statusCode, 200);
     assert.strictEqual(
       JSON.parse(String(result.body)).message,
-      "Hello, Lambda!"
+      "Hello, Lambda!",
     );
   });
 });

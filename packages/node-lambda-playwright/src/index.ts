@@ -6,7 +6,7 @@ export const handler = async (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _event: { key: string },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _context?: Context
+  _context?: Context,
 ): Promise<{ title: string }> => {
   const browser = await playwright.chromium.launch({
     args: chromium.args,

@@ -22,7 +22,7 @@ export class EC2Stack extends cdk.NestedStack {
 
     const userData = readFileSync(
       resolve(__dirname, "cloud-init.yaml"),
-      "utf-8"
+      "utf-8",
     );
     const base64UserData = Buffer.from(userData).toString("base64");
 

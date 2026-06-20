@@ -1,0 +1,27 @@
+# Stacks task runner. Each stack's app code is covered by the language
+# workspaces (e.g. the agentcore-web-search Python agent via python/justfile);
+# here we validate each stack's Terraform. Deploy/operate recipes live in the
+# per-stack justfiles (e.g. stacks/agentcore-web-search/justfile).
+
+default:
+    @just --justfile {{justfile()}} --list
+
+fmt-check:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for tf in */terraform; do
+        echo "==> ($tf) terraform fmt -check -recursive"
+        terraform fmt -check -recursive "$tf"
+    done
+
+# init -backend=false: validate config without touching any remote backend.
+validate:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for tf in */terraform; do
+        echo "==> ($tf) terraform validate"
+        terraform -chdir="$tf" init -backend=false -input=false >/dev/null
+        terraform -chdir="$tf" validate
+    done
+
+ci: fmt-check validate
