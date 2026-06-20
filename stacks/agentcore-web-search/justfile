@@ -47,12 +47,16 @@ invoke prompt="What did AWS recently announce about AgentCore web search?":
     SID="$(uuidgen | tr -d '-')$(uuidgen | tr -d '-')"
     # raw-in-base64-out: send --payload as the literal JSON bytes. Without it the
     # CLI v2 treats the blob as base64 and decodes it to garbage (runtime 400).
+    # cli-read-timeout 300: the orchestrator runs all its web_search tool calls
+    # (each a reasoning-model round-trip) before emitting any text, so the stream
+    # can be silent for >60s — well past the CLI's default read timeout.
     aws bedrock-agentcore invoke-agent-runtime \
       --region {{region}} \
       --agent-runtime-arn "$ARN" \
       --qualifier live \
       --runtime-session-id "$SID" \
       --cli-binary-format raw-in-base64-out \
+      --cli-read-timeout 300 \
       --payload '{"prompt":"{{prompt}}"}' \
       --content-type application/json \
       --accept application/json \
