@@ -1,14 +1,18 @@
+# Python task runner for the repo-root uv workspace. Recipes run from the repo
+# root (the workspace root) so they cover every member under python/ and stacks/.
+set working-directory := '..'
+
 default:
-    @just --list
+    @just --justfile {{justfile()}} --list
 
 fmt:
-    uv run ruff format .
+    uv run ruff format python stacks
 
 fmt-check:
-    uv run ruff format --check .
+    uv run ruff format --check python stacks
 
 lint:
-    uv run ruff check .
+    uv run ruff check python stacks
 
 typecheck:
     uv run pyright

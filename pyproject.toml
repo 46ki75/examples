@@ -1,0 +1,41 @@
+# uv workspace root for the whole repository, mirroring the repo-root Cargo and
+# pnpm workspaces. Members live under python/ (single-language projects) and
+# stacks/ (the Python part of a polyglot deployable unit). Shared dev tooling is
+# declared once here; members declare only their runtime dependencies.
+[tool.uv.workspace]
+members = [
+    "python/ansible-packer-molecule",
+    "python/python-lambda-adapter",
+    "python/python-lambda-fastapi",
+    "python/python-module",
+    "python/python-strands-agents",
+    "python/python-llama-index",
+    "stacks/agentcore-web-search/agent",
+]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.409",
+    "pytest>=9.1.0",
+    "ruff>=0.15.18",
+]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+# The workspace root is the repo root, so scope type checking to the dirs that
+# hold workspace members (otherwise pyright would scan pulumi/, others/, etc.).
+include = ["python", "stacks"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "python/python-lambda-adapter",
+    "python/python-lambda-fastapi",
+    "python/python-module",
+    "python/python-strands-agents",
+    "python/python-llama-index",
+    "stacks/agentcore-web-search/agent/tests",
+]
+markers = [
+    "live: hits real services, costs money, requires secrets",
+]
+addopts = '-m "not live"'
