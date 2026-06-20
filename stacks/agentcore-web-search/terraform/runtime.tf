@@ -104,8 +104,8 @@ resource "aws_iam_role_policy" "runtime" {
 }
 
 # --- Agent Runtime ------------------------------------------------------------
-# Serves the Strands orchestrator over HTTP (/invocations + /ping), provided by
-# BedrockAgentCoreApp. Requires the image tag to already be present in ECR.
+# Serves the Claude Agent SDK orchestrator over HTTP (/invocations + /ping),
+# provided by BedrockAgentCoreApp. Requires the image tag already present in ECR.
 
 resource "aws_bedrockagentcore_agent_runtime" "this" {
   agent_runtime_name = "agentcore_web_search"

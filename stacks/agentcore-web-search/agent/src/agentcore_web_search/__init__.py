@@ -1,1 +1,1 @@
-"""Strands web-search + synthesize agents running on Amazon Bedrock AgentCore."""
+"""Claude Agent SDK web-search + synthesize agents on Amazon Bedrock AgentCore."""

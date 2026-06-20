@@ -18,7 +18,7 @@ def _config() -> Config:
         synthesize_model_id="z-ai/glm-5.2",
         openrouter_api_key_param="/secret/openrouter-api-key",
         openrouter_api_key_region="ap-northeast-1",
-        openrouter_base_url="https://openrouter.ai/api/v1",
+        openrouter_base_url="https://openrouter.ai/api",
     )
 
 

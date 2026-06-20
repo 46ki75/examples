@@ -2,20 +2,20 @@
 
 A runnable example of [Web Search on Amazon Bedrock AgentCore][blog] — a fully
 managed, MCP-compliant web search tool exposed as a built-in connector on an
-AgentCore **Gateway**. Two [Strands Agents][strands] cooperate inside an
-AgentCore **Runtime**:
+AgentCore **Gateway**. Two [Claude Agent SDK][claude-agent-sdk] agents cooperate
+inside an AgentCore **Runtime**:
 
-- **Web Search Agent** — a specialist that calls the Gateway's `WebSearch` tool.
-- **Synthesize Agent** — an orchestrator that decomposes the question, fans out
-  searches through the web-search agent (the "agents as tools" pattern), and
-  synthesizes a single cited answer.
+- **Web Search Agent** — a specialist subagent that calls the Gateway's
+  `WebSearch` tool.
+- **Synthesize Agent** — an orchestrator that decomposes the question, delegates
+  searches to the web-search subagent (the "agents as tools" pattern, via the
+  SDK's built-in `Agent` tool), and synthesizes a single cited answer.
 
 ```txt
   caller ──InvokeAgentRuntime──▶ AgentCore Runtime (ECR image, arm64)
-                                   └─ Synthesize Agent (orchestrator, OpenRouter)
-                                        └─ tool: web_search  (agents as tools)
-                                             └─ Web Search Agent (OpenRouter)
-                                                  └─ MCP WebSearch tool
+                                   └─ Synthesize Agent (orchestrator · OpenRouter)
+                                        └─ Agent tool ▶ Web Search subagent (OpenRouter)
+                                             └─ MCP WebSearch tool
                                                        │ Bearer JWT (Cognito M2M)
                                                        ▼
                                             AgentCore Gateway (CUSTOM_JWT)
@@ -27,10 +27,10 @@ AgentCore **Runtime**:
 
 ## Layout
 
-| Path         | What                                                                           |
-| ------------ | ------------------------------------------------------------------------------ |
-| `terraform/` | ECR, Cognito (JWT authorizer), Gateway + web-search target, Runtime, IAM       |
-| `agent/`     | Python (Strands) agent + `Dockerfile` — a member of the repo-root uv workspace |
+| Path         | What                                                                                    |
+| ------------ | --------------------------------------------------------------------------------------- |
+| `terraform/` | ECR, Cognito (JWT authorizer), Gateway + web-search target, Runtime, IAM                |
+| `agent/`     | Python (Claude Agent SDK) agent + `Dockerfile` — a member of the repo-root uv workspace |
 
 ## Prerequisites
 
@@ -41,11 +41,12 @@ AgentCore **Runtime**:
   is read from `var.openrouter_api_key_region` (default `ap-northeast-1`) — Web
   Search pins the stack to us-east-1, so the key is read cross-region from
   wherever it lives. The runtime reads and decrypts it at startup; no model key
-  lives in the image or in plain env vars. The agents reason with OpenRouter
-  models — defaults
-  `minimax/minimax-m2.5` (worker) and `z-ai/glm-5.2` (synthesize). Use reliable
-  tool-callers — weak models answer from memory instead of invoking `web_search`,
-  so the agent never actually searches.
+  lives in the image or in plain env vars. The Claude Agent SDK speaks the
+  Anthropic Messages API, so it talks to OpenRouter's Anthropic-compatible
+  endpoint (`https://openrouter.ai/api`). The agents reason with OpenRouter
+  models — defaults `minimax/minimax-m2.5` (worker) and `z-ai/glm-5.2`
+  (synthesize). Use reliable tool-callers — weak models answer from memory
+  instead of invoking `WebSearch`, so the agent never actually searches.
 - Docker able to build `linux/arm64` (native on Apple Silicon / Graviton; on
   x86 hosts enable QEMU: `docker run --privileged --rm tonistiigi/binfmt --install arm64`).
 
@@ -96,18 +97,25 @@ just destroy
   version. The `live` endpoint pins `agent_runtime_version` to the runtime's
   current version (`runtime.tf`) so it always serves the latest; otherwise it
   keeps serving the version it was first created with.
-- **Sub-agent concurrency** — the orchestrator runs its fanned-out `web_search`
-  calls through a `SequentialToolExecutor`. The orchestrator and its sub-agents
-  share one Bedrock streaming client and one MCP session, which cannot be driven
-  by parallel tool calls in a single turn.
+- **Agents as tools** — the orchestrator delegates each sub-question to the
+  `web-search` subagent through the SDK's built-in `Agent` tool. The subagent is
+  defined with its own model (`worker_model_id`) and is restricted to the
+  Gateway's `WebSearch` tool; the SDK runs it in its own context and opens/closes
+  the MCP connection for it.
+- **Tool isolation** — the Claude Agent SDK ships Claude Code's built-in tools
+  (a shell, file editing, its own web search). All of them are hidden via
+  `disallowed_tools`, so the agents can only ever reach the managed Gateway
+  `WebSearch` tool — never run a shell or search the web any other way.
 - **Inbound auth** — the Gateway uses a `CUSTOM_JWT` authorizer backed by a
   Cognito machine-to-machine (client_credentials) app client. The agent mints a
   bearer token at startup and passes it on the MCP connection.
 - **Outbound auth** — the Gateway reaches the AWS-managed search backend with its
   service role (`GATEWAY_IAM_ROLE`), which holds `bedrock-agentcore:InvokeGateway`
   and `bedrock-agentcore:InvokeWebSearch`.
-- **Model** — the Strands agents reason with OpenRouter (OpenAI-compatible API):
-  the orchestrator uses `var.synthesize_model_id`, the web-search sub-agents use
+- **Model** — the Claude Agent SDK reasons with OpenRouter through its
+  Anthropic-compatible endpoint (`ANTHROPIC_BASE_URL=https://openrouter.ai/api`,
+  authenticated with the OpenRouter key as `ANTHROPIC_AUTH_TOKEN`): the
+  orchestrator uses `var.synthesize_model_id`, the web-search subagent uses
   `var.worker_model_id`. The runtime reads the OpenRouter API key from an SSM
   SecureString at startup (execution role: `ssm:GetParameter` + `kms:Decrypt`
   scoped to `kms:ViaService = ssm.*`), so no model key lives in the image or in
@@ -125,4 +133,4 @@ just destroy
   the tool returns — the agents are prompted to do so.
 
 [blog]: https://aws.amazon.com/blogs/aws/announcing-web-search-on-amazon-bedrock-agentcore-ground-your-ai-agents-in-current-accurate-web-knowledge/
-[strands]: https://strandsagents.com/
+[claude-agent-sdk]: https://github.com/anthropics/claude-agent-sdk-python

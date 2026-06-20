@@ -44,7 +44,7 @@ def test_defaults_when_optional_unset(monkeypatch: pytest.MonkeyPatch) -> None:
     assert config.synthesize_model_id == "z-ai/glm-5.2"
     assert config.openrouter_api_key_param == "/secret/openrouter-api-key"
     assert config.openrouter_api_key_region == "ap-northeast-1"
-    assert config.openrouter_base_url == "https://openrouter.ai/api/v1"
+    assert config.openrouter_base_url == "https://openrouter.ai/api"
 
 
 def test_missing_required_raises(monkeypatch: pytest.MonkeyPatch) -> None:

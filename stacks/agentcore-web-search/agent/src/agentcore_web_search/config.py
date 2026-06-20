@@ -40,8 +40,11 @@ class Config:
             openrouter_api_key_region=os.environ.get(
                 "OPENROUTER_API_KEY_REGION", "ap-northeast-1"
             ),
+            # The Claude Agent SDK speaks the Anthropic Messages API, so this
+            # points at OpenRouter's Anthropic-compatible endpoint (note: NOT the
+            # OpenAI-compatible `/api/v1`). It becomes ANTHROPIC_BASE_URL.
             openrouter_base_url=os.environ.get(
-                "OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"
+                "OPENROUTER_BASE_URL", "https://openrouter.ai/api"
             ),
         )
 
