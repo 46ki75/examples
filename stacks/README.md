@@ -25,4 +25,5 @@ time (e.g. `uv export` → `requirements.txt`) rather than shipping the whole wo
 
 | Stack                                            | What                                                                                                                              |
 | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| [`agentcore-harness`](./agentcore-harness)       | Minimal Amazon Bedrock AgentCore harness (managed, config-only agent): execution role + `awscc` harness with managed memory.       |
 | [`agentcore-web-search`](./agentcore-web-search) | Web Search on Amazon Bedrock AgentCore: Gateway + web-search connector, ECR, Runtime, and Strands web-search + synthesize agents. |
