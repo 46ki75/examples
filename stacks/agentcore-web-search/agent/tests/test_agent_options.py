@@ -13,10 +13,11 @@ def _config() -> Config:
         gateway_url="https://gw.example/mcp",
         gateway_oauth_provider_name="gateway-oauth-provider",
         cognito_scope="agentcore-gateway/invoke",
+        auth_mode="openrouter",
         worker_model_id="vendor/worker",
         synthesize_model_id="vendor/synth",
-        openrouter_api_key_param="/secret/openrouter-api-key",
-        openrouter_api_key_region="ap-northeast-1",
+        model_secret_param="/secret/openrouter-api-key",
+        model_secret_region="ap-northeast-1",
         openrouter_base_url="https://openrouter.ai/api",
     )
 

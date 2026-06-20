@@ -72,16 +72,18 @@ data "aws_iam_policy_document" "runtime" {
     ]
   }
 
+  # The model credential for the active auth mode (the OpenRouter API key, or the
+  # Claude Code subscription OAuth token) lives in this SSM SecureString.
   statement {
-    sid       = "ReadOpenRouterApiKey"
+    sid       = "ReadModelSecret"
     effect    = "Allow"
     actions   = ["ssm:GetParameter"]
-    resources = ["arn:aws:ssm:${var.openrouter_api_key_region}:${local.account_id}:parameter${var.openrouter_api_key_param}"]
+    resources = ["arn:aws:ssm:${local.model_secret_region}:${local.account_id}:parameter${local.model_secret_param}"]
   }
 
-  # The OpenRouter key is a SecureString. Decrypting it needs kms:Decrypt on the
-  # key that encrypted it (the AWS-managed `alias/aws/ssm` key by default). Scope
-  # the grant to calls made through SSM in the key's region rather than naming a
+  # That parameter is a SecureString. Decrypting it needs kms:Decrypt on the key
+  # that encrypted it (the AWS-managed `alias/aws/ssm` key by default). Scope the
+  # grant to calls made through SSM in the key's region rather than naming a
   # specific key ARN.
   statement {
     sid       = "DecryptViaSsm"
@@ -92,7 +94,7 @@ data "aws_iam_policy_document" "runtime" {
     condition {
       test     = "StringEquals"
       variable = "kms:ViaService"
-      values   = ["ssm.${var.openrouter_api_key_region}.amazonaws.com"]
+      values   = ["ssm.${local.model_secret_region}.amazonaws.com"]
     }
   }
 
@@ -145,21 +147,29 @@ resource "aws_bedrockagentcore_agent_runtime" "this" {
     server_protocol = "HTTP"
   }
 
-  environment_variables = {
-    GATEWAY_URL = aws_bedrockagentcore_gateway.this.gateway_url
-    # The Cognito client_id/secret are no longer passed to the runtime; the agent
-    # obtains the Gateway token from this AgentCore Identity credential provider,
-    # which holds them in its token vault. Only the provider name and the scope
-    # to request are needed here.
-    GATEWAY_OAUTH_PROVIDER_NAME = aws_bedrockagentcore_oauth2_credential_provider.gateway.name
-    COGNITO_SCOPE               = local.cognito_scope
-    # The OpenRouter API key itself is not passed here; the runtime reads it from
-    # SSM Parameter Store (SecureString) at startup using the name below.
-    OPENROUTER_API_KEY_PARAM  = var.openrouter_api_key_param
-    OPENROUTER_API_KEY_REGION = var.openrouter_api_key_region
-    WORKER_MODEL_ID           = var.worker_model_id
-    SYNTHESIZE_MODEL_ID       = var.synthesize_model_id
-  }
+  environment_variables = merge(
+    {
+      GATEWAY_URL = aws_bedrockagentcore_gateway.this.gateway_url
+      # The Cognito client_id/secret are no longer passed to the runtime; the agent
+      # obtains the Gateway token from this AgentCore Identity credential provider,
+      # which holds them in its token vault. Only the provider name and the scope
+      # to request are needed here.
+      GATEWAY_OAUTH_PROVIDER_NAME = aws_bedrockagentcore_oauth2_credential_provider.gateway.name
+      COGNITO_SCOPE               = local.cognito_scope
+      LLM_AUTH_MODE               = var.llm_auth_mode
+      WORKER_MODEL_ID             = local.worker_model_id
+      SYNTHESIZE_MODEL_ID         = local.synthesize_model_id
+    },
+    # The model credential itself is never passed here; the runtime reads it from
+    # SSM (SecureString) at startup using the name/region for the active mode.
+    var.llm_auth_mode == "subscription" ? {
+      CLAUDE_CODE_OAUTH_TOKEN_PARAM  = var.claude_code_oauth_token_param
+      CLAUDE_CODE_OAUTH_TOKEN_REGION = var.claude_code_oauth_token_region
+      } : {
+      OPENROUTER_API_KEY_PARAM  = var.openrouter_api_key_param
+      OPENROUTER_API_KEY_REGION = var.openrouter_api_key_region
+    }
+  )
 
   depends_on = [aws_iam_role_policy.runtime]
 }

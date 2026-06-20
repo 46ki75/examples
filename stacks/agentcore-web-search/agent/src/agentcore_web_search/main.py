@@ -13,7 +13,7 @@ from claude_agent_sdk import AssistantMessage, TextBlock, query
 from .agents import build_agent_options
 from .config import Config
 from .gateway import fetch_gateway_token
-from .openrouter import configure_sdk_env, fetch_openrouter_api_key
+from .model_auth import configure_sdk_env, fetch_model_secret
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -30,8 +30,8 @@ async def invoke(payload):
         return
 
     config = Config.from_env()
-    api_key = fetch_openrouter_api_key(config)
-    configure_sdk_env(config, api_key)
+    secret = fetch_model_secret(config)
+    configure_sdk_env(config, secret)
     token = await fetch_gateway_token(config)
     options = build_agent_options(config, token)
 

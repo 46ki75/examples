@@ -2,7 +2,8 @@
 FROM --platform=linux/arm64 python:3.13-slim
 
 # The Claude Agent SDK runs its bundled CLI as a subprocess; ca-certificates lets
-# that CLI's TLS reach OpenRouter (the Python deps bundle their own certifi).
+# that CLI's TLS reach the model endpoint — OpenRouter or Anthropic — (the Python
+# deps bundle their own certifi).
 RUN apt-get update \
   && apt-get install -y --no-install-recommends ca-certificates \
   && rm -rf /var/lib/apt/lists/*
@@ -16,7 +17,8 @@ ENV UV_LINK_MODE=copy \
     HOME=/app \
     CLAUDE_CONFIG_DIR=/app/.claude \
     # Keep the runtime hermetic: no telemetry, error reporting, or auto-update
-    # traffic from the CLI — it should only ever reach OpenRouter and the Gateway.
+    # traffic from the CLI — it should only ever reach the model endpoint
+    # (OpenRouter or Anthropic) and the Gateway.
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
     DISABLE_AUTOUPDATER=1 \
     # Tell the AgentCore Identity SDK it's running in a container, so a missing

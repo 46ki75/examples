@@ -4,6 +4,11 @@
 tf := "terraform -chdir=terraform"
 region := "us-east-1"
 
+# How the agent authenticates its model calls: "subscription" (default — Claude
+# Pro/Max OAuth token) or "openrouter" (OpenRouter API key). Override per run,
+# e.g. `just auth_mode=openrouter deploy` or `just auth_mode=openrouter apply`.
+auth_mode := "subscription"
+
 default:
     @just --list
 
@@ -34,7 +39,7 @@ push tag="latest":
 
 # Step 3: apply everything else (Cognito, gateway, web-search target, runtime).
 apply:
-    {{tf}} apply
+    {{tf}} apply -var llm_auth_mode={{auth_mode}}
 
 # Full deploy from scratch.
 deploy: init bootstrap-ecr push apply
