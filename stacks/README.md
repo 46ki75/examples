@@ -23,6 +23,6 @@ time (e.g. `uv export` → `requirements.txt`) rather than shipping the whole wo
 
 ## Stacks
 
-| Stack                                            | What                                                              |
-| ------------------------------------------------ | ---------------------------------------------------------------- |
+| Stack                                            | What                                                                                                                              |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | [`agentcore-web-search`](./agentcore-web-search) | Web Search on Amazon Bedrock AgentCore: Gateway + web-search connector, ECR, Runtime, and Strands web-search + synthesize agents. |
