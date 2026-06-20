@@ -10,12 +10,13 @@ default:
 init:
     {{tf}} init
 
-# Provision the execution role + harness (managed memory auto-provisions).
+# Provision the execution role, Gateway + web-search target, and harness
+# (managed memory auto-provisions).
 deploy: init
     {{tf}} apply
 
-# Stream two turns through the deployed harness, reusing one session id to show
-# managed short-term memory carrying the conversation.
+# Stream two turns through the deployed harness: the first triggers the
+# Gateway-backed web_search tool, the second is answered from managed memory.
 invoke:
     #!/usr/bin/env bash
     set -euo pipefail

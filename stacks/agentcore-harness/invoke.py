@@ -7,9 +7,11 @@
 # harness client and its streaming response are loosely typed here.
 """Invoke an AgentCore harness and stream the reply.
 
-Runs two turns with the SAME runtimeSessionId to show that the harness's managed
-short-term memory carries the conversation: the second turn asks about something
-stated in the first, and it is never re-sent.
+Runs two turns with the SAME runtimeSessionId. The first asks a question that
+needs current information, so the agent calls the Gateway-backed `web_search`
+tool; the second is a follow-up answered from the managed short-term memory of
+that result (it is never re-sent). Tool invocations are surfaced inline as
+``[tool: ...]`` so you can see the web search fire.
 
 Usage:
     uv run --script invoke.py <harnessArn> [region]
@@ -31,7 +33,11 @@ def stream(client, harness_arn: str, session_id: str, text: str) -> None:
         messages=[{"role": "user", "content": [{"text": text}]}],
     )
     for event in response["stream"]:
-        if "contentBlockDelta" in event:
+        if "contentBlockStart" in event:
+            tool = event["contentBlockStart"].get("start", {}).get("toolUse")
+            if tool:
+                print(f"\n  [tool: {tool.get('name')}]", flush=True)
+        elif "contentBlockDelta" in event:
             delta = event["contentBlockDelta"].get("delta", {})
             if "text" in delta:
                 print(delta["text"], end="", flush=True)
@@ -49,11 +55,23 @@ def main() -> None:
     client = boto3.client("bedrock-agentcore", region_name=region)
 
     # The session id must be >= 33 chars; reuse it across turns so the harness
-    # loads the prior history from memory before reasoning.
+    # loads the prior history (and the search results) from memory before
+    # reasoning on the follow-up.
     session_id = f"{uuid.uuid4().hex}{uuid.uuid4().hex}"
 
-    stream(client, harness_arn, session_id, "Hi! My name is Ikuma. Please remember it.")
-    stream(client, harness_arn, session_id, "What is my name?")
+    stream(
+        client,
+        harness_arn,
+        session_id,
+        "Use web search to find the latest stable Terraform release version, "
+        "then answer with the version number and cite the source URL.",
+    )
+    stream(
+        client,
+        harness_arn,
+        session_id,
+        "Without searching again, what version did you just report?",
+    )
 
 
 if __name__ == "__main__":
