@@ -27,7 +27,10 @@ push tag="latest":
     REGISTRY=${REPO%%/*}
     aws ecr get-login-password --region {{region}} \
       | docker login --username AWS --password-stdin "$REGISTRY"
-    docker buildx build --platform linux/arm64 -t "$REPO:{{tag}}" --push agent
+    # --provenance=false: AgentCore Runtime wants a single linux/arm64 manifest,
+    # not a buildx attestation/manifest-list (same gotcha as AWS Lambda images).
+    docker buildx build --platform linux/arm64 --provenance=false \
+      -t "$REPO:{{tag}}" --push agent
 
 # Step 3: apply everything else (Cognito, gateway, web-search target, runtime).
 apply:
@@ -42,11 +45,14 @@ invoke prompt="What did AWS recently announce about AgentCore web search?":
     set -euo pipefail
     ARN=$({{tf}} output -raw agent_runtime_arn)
     SID="$(uuidgen | tr -d '-')$(uuidgen | tr -d '-')"
+    # raw-in-base64-out: send --payload as the literal JSON bytes. Without it the
+    # CLI v2 treats the blob as base64 and decodes it to garbage (runtime 400).
     aws bedrock-agentcore invoke-agent-runtime \
       --region {{region}} \
       --agent-runtime-arn "$ARN" \
       --qualifier live \
       --runtime-session-id "$SID" \
+      --cli-binary-format raw-in-base64-out \
       --payload '{"prompt":"{{prompt}}"}' \
       --content-type application/json \
       --accept application/json \

@@ -8,11 +8,11 @@ from __future__ import annotations
 import logging
 
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
-from strands.models import BedrockModel
 
-from .agents import make_synthesize_agent, make_web_search_agent
+from .agents import make_synthesize_agent
 from .config import Config
 from .gateway import build_gateway_mcp_client, fetch_gateway_token
+from .models import build_model, fetch_openrouter_api_key
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -29,7 +29,9 @@ async def invoke(payload):
         return
 
     config = Config.from_env()
-    model = BedrockModel(model_id=config.bedrock_model_id)
+    api_key = fetch_openrouter_api_key(config)
+    synthesize_model = build_model(config, api_key, config.synthesize_model_id)
+    worker_model = build_model(config, api_key, config.worker_model_id)
     token = fetch_gateway_token(config)
     gateway = build_gateway_mcp_client(config, token)
 
@@ -39,8 +41,7 @@ async def invoke(payload):
         tools = gateway.list_tools_sync()
         logger.info("gateway exposes %d tool(s)", len(tools))
 
-        search_agent = make_web_search_agent(model, tools)
-        orchestrator = make_synthesize_agent(model, search_agent)
+        orchestrator = make_synthesize_agent(synthesize_model, worker_model, tools)
 
         async for event in orchestrator.stream_async(prompt):
             if "data" in event:

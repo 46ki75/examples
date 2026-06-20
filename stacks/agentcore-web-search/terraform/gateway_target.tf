@@ -1,48 +1,31 @@
-# The Web Search target uses the built-in "web-search" connector. The native
-# aws_bedrockagentcore_gateway_target resource does not yet model the `connector`
-# target type (only lambda / api_gateway / mcp_server / open_api_schema /
-# smithy_model), so we create it through the AWS CLI. Everything else in this
-# stack is native Terraform.
+# The Web Search target uses the built-in "web-search" connector. Neither the
+# native aws_bedrockagentcore_gateway_target resource nor the bundled aws CLI
+# model the `connector` target type yet (only lambda / api_gateway / mcp_server /
+# open_api_schema / smithy_model), so we create it with a small boto3 helper run
+# through `uv run` (the workspace's pinned boto3 is new enough to know the
+# `connector` shape). Everything else in this stack is native Terraform.
 #
-# To add a domain denylist, set:
-#   parameterValues = { domainFilter = { exclude = ["blocked-1.com", ...] } }
+# To add a domain denylist, append `--exclude-domain blocked-1.com` (repeatable)
+# to the create command below; see web_search_target.py.
 
 resource "terraform_data" "web_search_target" {
   triggers_replace = [aws_bedrockagentcore_gateway.this.gateway_id]
 
-  provisioner "local-exec" {
-    command = <<-EOT
-      aws bedrock-agentcore-control create-gateway-target \
-        --region ${local.region} \
-        --gateway-identifier ${aws_bedrockagentcore_gateway.this.gateway_id} \
-        --name web-search-tool \
-        --target-configuration '${jsonencode({
-    mcp = {
-      connector = {
-        source         = { connectorId = "web-search" }
-        configurations = [{ name = "WebSearch", parameterValues = {} }]
-      }
-    }
-})}' \
-        --credential-provider-configurations '[{"credentialProviderType":"GATEWAY_IAM_ROLE"}]'
-    EOT
-}
+  # Carried in `input` so the destroy-time provisioner can reach them via `self`
+  # (other resources, vars, and locals are not available during destroy).
+  input = {
+    region     = local.region
+    gateway_id = aws_bedrockagentcore_gateway.this.gateway_id
+    name       = "web-search-tool"
+    script     = abspath("${path.module}/web_search_target.py")
+  }
 
-# gateway_id is captured in triggers_replace so it is reachable as `self`
-# during destroy (other resources/locals are not available there).
-provisioner "local-exec" {
-  when    = destroy
-  command = <<-EOT
-      TARGET_ID=$(aws bedrock-agentcore-control list-gateway-targets \
-        --region us-east-1 \
-        --gateway-identifier ${self.triggers_replace[0]} \
-        --query "items[?name=='web-search-tool'].targetId | [0]" --output text)
-      if [ -n "$TARGET_ID" ] && [ "$TARGET_ID" != "None" ]; then
-        aws bedrock-agentcore-control delete-gateway-target \
-          --region us-east-1 \
-          --gateway-identifier ${self.triggers_replace[0]} \
-          --target-id "$TARGET_ID"
-      fi
-    EOT
-}
+  provisioner "local-exec" {
+    command = "env -u VIRTUAL_ENV uv run python ${self.input.script} create --region ${self.input.region} --gateway-id ${self.input.gateway_id} --name ${self.input.name}"
+  }
+
+  provisioner "local-exec" {
+    when    = destroy
+    command = "env -u VIRTUAL_ENV uv run python ${self.input.script} delete --region ${self.input.region} --gateway-id ${self.input.gateway_id} --name ${self.input.name}"
+  }
 }

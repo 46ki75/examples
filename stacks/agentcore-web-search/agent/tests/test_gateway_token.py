@@ -14,7 +14,11 @@ def _config() -> Config:
         cognito_client_id="client",
         cognito_client_secret="secret",
         cognito_scope="agentcore-gateway/invoke",
-        bedrock_model_id="us.amazon.nova-pro-v1:0",
+        worker_model_id="minimax/minimax-m2.5",
+        synthesize_model_id="z-ai/glm-5.2",
+        openrouter_api_key_param="/secret/openrouter-api-key",
+        openrouter_api_key_region="ap-northeast-1",
+        openrouter_base_url="https://openrouter.ai/api/v1",
     )
 
 

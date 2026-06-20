@@ -14,7 +14,8 @@ import logging
 from typing import Any
 
 from strands import Agent, tool
-from strands.models import BedrockModel
+from strands.models.openai import OpenAIModel
+from strands.tools.executors import SequentialToolExecutor
 
 logger = logging.getLogger(__name__)
 
@@ -34,13 +35,18 @@ well-structured answer that:
 Do not answer from memory alone; ground every claim in search results."""
 
 
-def make_web_search_agent(model: BedrockModel, tools: list[Any]) -> Agent:
+def make_web_search_agent(model: OpenAIModel, tools: list[Any]) -> Agent:
     """A specialist agent wired to the Gateway's WebSearch tool."""
     return Agent(model=model, tools=tools, system_prompt=WEB_SEARCH_SYSTEM_PROMPT)
 
 
-def make_web_search_tool(search_agent: Agent):
-    """Wrap the specialist agent as a tool the orchestrator can call."""
+def make_web_search_tool(worker_model: OpenAIModel, tools: list[Any]):
+    """Wrap the specialist agent as a tool the orchestrator can call.
+
+    A fresh specialist agent is built per call: the orchestrator fans sub-questions
+    out in parallel, and a Strands Agent cannot be invoked concurrently (nor should
+    one carry conversation state across unrelated searches).
+    """
 
     @tool
     def web_search(query: str) -> str:
@@ -52,16 +58,31 @@ def make_web_search_tool(search_agent: Agent):
         Returns:
             Findings, each with its source URL and publication date.
         """
-        logger.debug("web_search sub-agent query: %s", query)
-        return str(search_agent(query))
+        logger.info("web_search sub-agent query: %s", query)
+        try:
+            return str(make_web_search_agent(worker_model, tools)(query))
+        except Exception:
+            logger.exception("web_search sub-agent failed for query: %s", query)
+            raise
 
     return web_search
 
 
-def make_synthesize_agent(model: BedrockModel, search_agent: Agent) -> Agent:
-    """The orchestrator that fans out searches and synthesizes a cited answer."""
+def make_synthesize_agent(
+    synthesize_model: OpenAIModel, worker_model: OpenAIModel, tools: list[Any]
+) -> Agent:
+    """The orchestrator that fans out searches and synthesizes a cited answer.
+
+    The orchestrator reasons with `synthesize_model`; each fanned-out `web_search`
+    sub-agent reasons with `worker_model`.
+    """
     return Agent(
-        model=model,
-        tools=[make_web_search_tool(search_agent)],
+        model=synthesize_model,
+        tools=[make_web_search_tool(worker_model, tools)],
         system_prompt=SYNTHESIZE_SYSTEM_PROMPT,
+        # Run the fanned-out web_search calls one at a time. The orchestrator and
+        # its sub-agents share one Bedrock streaming client and one MCP session,
+        # neither of which is safe to drive from parallel tool calls in a single
+        # turn (Bedrock EventStreamError / MCP concurrency errors otherwise).
+        tool_executor=SequentialToolExecutor(),
     )

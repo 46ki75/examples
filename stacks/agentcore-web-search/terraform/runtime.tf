@@ -73,13 +73,27 @@ data "aws_iam_policy_document" "runtime" {
   }
 
   statement {
-    sid     = "InvokeModel"
-    effect  = "Allow"
-    actions = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
-    resources = [
-      "arn:aws:bedrock:*::foundation-model/*",
-      "arn:aws:bedrock:${local.region}:${local.account_id}:inference-profile/*",
-    ]
+    sid       = "ReadOpenRouterApiKey"
+    effect    = "Allow"
+    actions   = ["ssm:GetParameter"]
+    resources = ["arn:aws:ssm:${var.openrouter_api_key_region}:${local.account_id}:parameter${var.openrouter_api_key_param}"]
+  }
+
+  # The OpenRouter key is a SecureString. Decrypting it needs kms:Decrypt on the
+  # key that encrypted it (the AWS-managed `alias/aws/ssm` key by default). Scope
+  # the grant to calls made through SSM in the key's region rather than naming a
+  # specific key ARN.
+  statement {
+    sid       = "DecryptViaSsm"
+    effect    = "Allow"
+    actions   = ["kms:Decrypt"]
+    resources = ["*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "kms:ViaService"
+      values   = ["ssm.${var.openrouter_api_key_region}.amazonaws.com"]
+    }
   }
 }
 
@@ -120,7 +134,12 @@ resource "aws_bedrockagentcore_agent_runtime" "this" {
     # access instead.
     COGNITO_CLIENT_SECRET = aws_cognito_user_pool_client.gateway.client_secret
     COGNITO_SCOPE         = local.cognito_scope
-    BEDROCK_MODEL_ID      = var.bedrock_model_id
+    # The OpenRouter API key itself is not passed here; the runtime reads it from
+    # SSM Parameter Store (SecureString) at startup using the name below.
+    OPENROUTER_API_KEY_PARAM  = var.openrouter_api_key_param
+    OPENROUTER_API_KEY_REGION = var.openrouter_api_key_region
+    WORKER_MODEL_ID           = var.worker_model_id
+    SYNTHESIZE_MODEL_ID       = var.synthesize_model_id
   }
 
   depends_on = [aws_iam_role_policy.runtime]
@@ -130,4 +149,9 @@ resource "aws_bedrockagentcore_agent_runtime_endpoint" "live" {
   name             = "live"
   agent_runtime_id = aws_bedrockagentcore_agent_runtime.this.agent_runtime_id
   description      = "Primary endpoint for the web-search agent."
+
+  # Pin the endpoint to the runtime's current version. Every code/config change
+  # creates a new runtime version; without this the endpoint keeps serving the
+  # version it was first created with (v1) and never picks up updates.
+  agent_runtime_version = aws_bedrockagentcore_agent_runtime.this.agent_runtime_version
 }
