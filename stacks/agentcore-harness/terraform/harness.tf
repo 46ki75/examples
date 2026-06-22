@@ -61,6 +61,18 @@ resource "awscc_bedrockagentcore_harness" "this" {
   max_iterations  = var.max_iterations
   timeout_seconds = var.timeout_seconds
 
+  # Tune the managed runtime that backs the harness. `agent_core_runtime_environment`
+  # is the only environment provider; its `agent_runtime_*` fields are read-only (the
+  # runtime is auto-provisioned), so we set only the lifecycle knobs. Omitting this
+  # block leaves the platform default idle timeout of 900s. Valid range 60-28800s.
+  environment = {
+    agent_core_runtime_environment = {
+      lifecycle_configuration = {
+        idle_runtime_session_timeout = 60
+      }
+    }
+  }
+
   # The connector target must be READY before the harness enumerates the
   # gateway's tools, so order it ahead of (and the role delay alongside) create.
   depends_on = [time_sleep.role_propagation, terraform_data.web_search_target]
