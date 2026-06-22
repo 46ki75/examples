@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "pnpm@10.33.0",
   "devDependencies": {
-    "@types/node": "^25.9.3",
+    "@types/node": "^26.0.0",
     "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",
     "jiti": "^2.7.0",
