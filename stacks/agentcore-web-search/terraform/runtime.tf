@@ -147,6 +147,10 @@ resource "aws_bedrockagentcore_agent_runtime" "this" {
     server_protocol = "HTTP"
   }
 
+  lifecycle_configuration {
+    idle_runtime_session_timeout = 60
+  }
+
   environment_variables = merge(
     {
       GATEWAY_URL = aws_bedrockagentcore_gateway.this.gateway_url
