@@ -1,0 +1,62 @@
+# Orchestration for the aws-lambda-microvms stack.
+# Requires: terraform, the aws CLI, just, and uv. (No local Docker — AWS Lambda
+# builds the MicroVM image server-side from the uploaded zip.)
+
+tf := "terraform -chdir=terraform"
+region := "us-east-1"
+image_name := "microvm-code-sandbox"
+
+# The control CLI is a uv workspace member; uv discovers the workspace by walking
+# up from here, so it runs with the stack dir as cwd (where .microvm-last.json lands).
+control := "uv run --package microvm-control microvm-control"
+
+default:
+    @just --list
+
+init:
+    {{tf}} init
+
+# Create the S3 artifact bucket and the build/execution IAM roles.
+infra:
+    {{tf}} apply
+
+# Package image/ -> S3 -> create-microvm-image, then wait for the build.
+build:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    {{control}} build \
+      --region {{region}} \
+      --name {{image_name}} \
+      --image-dir image \
+      --artifact-bucket "$({{tf}} output -raw artifact_bucket)" \
+      --build-role-arn "$({{tf}} output -raw build_role_arn)" \
+      --base-image-arn "$({{tf}} output -raw base_image_arn_hint)"
+
+# Launch a MicroVM from the built image (prints microvmId + endpoint).
+run:
+    {{control}} run --region {{region}} --image {{image_name}} \
+      --execution-role-arn "$({{tf}} output -raw execution_role_arn)"
+
+# Run a code snippet against the last-run MicroVM, e.g. `just exec code='print(2+2)'`.
+exec code='print("hello from the microvm")':
+    {{control}} exec --region {{region}} --code '{{code}}'
+
+status:
+    {{control}} status --region {{region}}
+
+suspend:
+    {{control}} suspend --region {{region}}
+
+resume:
+    {{control}} resume --region {{region}}
+
+terminate:
+    {{control}} terminate --region {{region}}
+
+# Full showcase: run -> exec -> suspend -> resume -> exec (state survived) -> terminate.
+demo:
+    {{control}} demo --region {{region}} --image {{image_name}} \
+      --execution-role-arn "$({{tf}} output -raw execution_role_arn)"
+
+destroy:
+    {{tf}} destroy

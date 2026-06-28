@@ -1,0 +1,17 @@
+# A member of the repo-root uv workspace. Dev tooling (ruff/pyright/pytest) and
+# the lockfile live at the workspace root; this file declares only the sandbox's
+# runtime dependencies. NOTE: the container image is built by AWS Lambda from the
+# Dockerfile (not from this file), so the Dockerfile pins fastapi/uvicorn too.
+[project]
+name = "microvm-sandbox"
+version = "0.1.0"
+description = "Code-execution sandbox + lifecycle hooks served inside an AWS Lambda MicroVM"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.116.0",
+    "uvicorn>=0.35.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.7.0,<0.9.0"]
+build-backend = "uv_build"

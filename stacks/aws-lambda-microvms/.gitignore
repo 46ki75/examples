@@ -1,0 +1,11 @@
+# Pointer to the most recently run MicroVM, written by the control CLI.
+.microvm-last.json
+
+# Local image artifacts.
+*.zip
+
+# Terraform local state / providers.
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
