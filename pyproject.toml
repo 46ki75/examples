@@ -11,6 +11,8 @@ members = [
     "python/python-strands-agents",
     "python/python-llama-index",
     "stacks/agentcore-web-search/agent",
+    "stacks/aws-lambda-microvms/image",
+    "stacks/aws-lambda-microvms/control",
 ]
 
 [dependency-groups]
@@ -34,6 +36,7 @@ testpaths = [
     "python/python-strands-agents",
     "python/python-llama-index",
     "stacks/agentcore-web-search/agent/tests",
+    "stacks/aws-lambda-microvms/image/tests",
 ]
 markers = [
     "live: hits real services, costs money, requires secrets",
