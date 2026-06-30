@@ -271,7 +271,7 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^2.0.6
-        version: 2.0.6(hono@4.12.26)
+        version: 2.0.6(hono@4.12.27)
       '@modelcontextprotocol/ext-apps':
         specifier: ^1.7.0
         version: 1.7.4(@modelcontextprotocol/sdk@1.29.0(@cfworker/json-schema@4.1.1)(zod@4.4.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(zod@4.4.3)
@@ -279,8 +279,8 @@ importers:
         specifier: ^1.29.0
         version: 1.29.0(@cfworker/json-schema@4.1.1)(zod@4.4.3)
       hono:
-        specifier: ^4.12.26
-        version: 4.12.26
+        specifier: ^4.12.27
+        version: 4.12.27
       react:
         specifier: ^19.2.0
         version: 19.2.7
@@ -320,7 +320,7 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^2.0.6
-        version: 2.0.6(hono@4.12.26)
+        version: 2.0.6(hono@4.12.27)
       '@modelcontextprotocol/ext-apps':
         specifier: ^1.7.0
         version: 1.7.4(@modelcontextprotocol/sdk@1.29.0(@cfworker/json-schema@4.1.1)(zod@4.4.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(zod@4.4.3)
@@ -331,8 +331,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       hono:
-        specifier: ^4.12.26
-        version: 4.12.26
+        specifier: ^4.12.27
+        version: 4.12.27
       react:
         specifier: ^19.2.0
         version: 19.2.7
@@ -2069,6 +2069,10 @@ packages:
     resolution: {integrity: sha512-mLUktFAn+Pa2agl1J7VgtYNFWCX8/b4GMJSK1hCu4YCvtBfM6F8Os3EP4ry+DFFlXOf3wyvlgXhuUdFoy52D3g==}
     engines: {node: '>=18.0.0'}
 
+  '@smithy/core@3.28.0':
+    resolution: {integrity: sha512-N/LoLG8pZ1zv5cIWpdF6vmSjtZtXKK9G0OqT5yYCOZU+CzPq1+nYA95VoKJBGWRScs7YbMugZ7lZx8Fj1vdHoA==}
+    engines: {node: '>=18.0.0'}
+
   '@smithy/credential-provider-imds@4.4.2':
     resolution: {integrity: sha512-18UMDMyrAbDcpmL1gLUA7ww0fRTcdCrSjSJOi2Sbld+tVjwD/pW+OAwjlScFLR7vvBnhZrIPQ7kVuTf1mnJLug==}
     engines: {node: '>=18.0.0'}
@@ -2105,8 +2109,8 @@ packages:
     resolution: {integrity: sha512-IJdWBbTcMQ6DA0gdNhh/BwrLkDR+ADW5Kr1aZmd4k3DIF6ezMV4R2NIAmT08wQJ3yUK82thHWmC/TnK/wpMMIA==}
     engines: {node: '>=14.0.0'}
 
-  '@smithy/util-buffer-from@4.4.2':
-    resolution: {integrity: sha512-4OC4Y7tCxfPZde7AHj4g5ythl6svtn3SvuPbWuXHyoWSVxfBhWHJJ5/YX4NQDsj+WjGmWIPYykS77LnpGuYqeQ==}
+  '@smithy/util-buffer-from@4.4.4':
+    resolution: {integrity: sha512-d9QySE58szTj0YlYQ5KRWfAtK2K7DECk1T/NKuWOIzg+II8agqv3sx41rvtfWbUTMsTMZMpURtS2Xgmnj7Xupg==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/util-utf8@2.3.0':
@@ -3607,8 +3611,8 @@ packages:
     resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
     engines: {node: '>= 0.4'}
 
-  hono@4.12.26:
-    resolution: {integrity: sha512-uyZtpnYxM9CmQ7QsQknM4zN8EftNqhON1qYeIKM0Se67CCEe2c44xyGURwB0axX2fBDu1dqHrHAc1hmNT8ITkw==}
+  hono@4.12.27:
+    resolution: {integrity: sha512-1yrb/+w6HWQJrUCLkJ2IF5jNIPvvFkblV5RNOYl6bV+OA6p9GLcMpHFFGTosSvHvcAUibuUukRqhlYI4z32C7Q==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -6437,13 +6441,13 @@ snapshots:
     dependencies:
       graphql: 17.0.1
 
-  '@hono/node-server@1.19.14(hono@4.12.26)':
+  '@hono/node-server@1.19.14(hono@4.12.27)':
     dependencies:
-      hono: 4.12.26
+      hono: 4.12.27
 
-  '@hono/node-server@2.0.6(hono@4.12.26)':
+  '@hono/node-server@2.0.6(hono@4.12.27)':
     dependencies:
-      hono: 4.12.26
+      hono: 4.12.27
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -6841,7 +6845,7 @@ snapshots:
 
   '@modelcontextprotocol/sdk@1.29.0(@cfworker/json-schema@4.1.1)(zod@4.4.3)':
     dependencies:
-      '@hono/node-server': 1.19.14(hono@4.12.26)
+      '@hono/node-server': 1.19.14(hono@4.12.27)
       ajv: 8.20.0
       ajv-formats: 3.0.1(ajv@8.20.0)
       content-type: 1.0.5
@@ -6851,7 +6855,7 @@ snapshots:
       eventsource-parser: 3.1.0
       express: 5.2.1
       express-rate-limit: 8.5.2(express@5.2.1)
-      hono: 4.12.26
+      hono: 4.12.27
       jose: 6.2.3
       json-schema-typed: 8.0.2
       pkce-challenge: 5.0.1
@@ -7220,6 +7224,12 @@ snapshots:
       '@smithy/types': 4.15.0
       tslib: 2.8.1
 
+  '@smithy/core@3.28.0':
+    dependencies:
+      '@smithy/types': 4.15.0
+      tslib: 2.8.1
+    optional: true
+
   '@smithy/credential-provider-imds@4.4.2':
     dependencies:
       '@smithy/core': 3.26.0
@@ -7268,9 +7278,9 @@ snapshots:
       '@smithy/is-array-buffer': 2.2.0
       tslib: 2.8.1
 
-  '@smithy/util-buffer-from@4.4.2':
+  '@smithy/util-buffer-from@4.4.4':
     dependencies:
-      '@smithy/core': 3.26.0
+      '@smithy/core': 3.28.0
       tslib: 2.8.1
     optional: true
 
@@ -7281,7 +7291,7 @@ snapshots:
 
   '@smithy/util-utf8@4.2.2':
     dependencies:
-      '@smithy/util-buffer-from': 4.4.2
+      '@smithy/util-buffer-from': 4.4.4
       tslib: 2.8.1
     optional: true
 
@@ -8833,7 +8843,7 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  hono@4.12.26: {}
+  hono@4.12.27: {}
 
   hookable@5.5.3: {}
 
