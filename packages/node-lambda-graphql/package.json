@@ -19,7 +19,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@graphql-tools/schema": "^10.0.33",
+    "@graphql-tools/schema": "^10.0.34",
     "@graphql-tools/stitch": "^10.1.22",
     "@graphql-tools/utils": "^11.1.0",
     "@graphql-tools/wrap": "^11.1.16",
