@@ -1,0 +1,50 @@
+# Orchestration for the aws-blocks stack.
+# Requires: Node.js >= 22, pnpm >= 10. AWS CLI + a CDK-bootstrapped account are
+# only needed for sandbox/deploy -- local dev needs neither.
+
+pnpm := "pnpm --dir app"
+
+default:
+    @just --list
+
+install:
+    {{pnpm}} install
+
+# Local dev server: mocked auth/DB/realtime, no AWS account needed. http://localhost:3000
+dev:
+    {{pnpm}} run dev
+
+typecheck:
+    {{pnpm}} run typecheck
+
+# Spawns its own throwaway local dev server if one isn't already running.
+test:
+    {{pnpm}} run test:e2e
+
+# Needs aws-blocks/client.js, which `dev`/`sandbox`/`deploy` generate as a side
+# effect -- run `just dev` at least once first if this is a fresh checkout.
+build:
+    {{pnpm}} run build
+
+# One-time per AWS account + Region. The `cdk` CLI isn't a project dependency
+# -- only `deploy`/`sandbox` need the CDK toolkit library, which
+# @aws-blocks/blocks calls programmatically -- so fetch it ad hoc via dlx.
+cdk-bootstrap account region="us-east-1":
+    cd app && pnpm dlx cdk bootstrap aws://{{account}}/{{region}}
+
+# Fast, ephemeral per-developer deployment to real AWS services (Lambda hot-swap).
+sandbox:
+    {{pnpm}} run sandbox
+
+sandbox-destroy:
+    {{pnpm}} run sandbox:destroy
+
+# Full CloudFormation deployment: backend + CloudFront/S3 hosting.
+deploy:
+    {{pnpm}} run deploy
+
+destroy:
+    {{pnpm}} run destroy
+
+clean:
+    rm -rf app/node_modules app/dist app/.bb-data app/.blocks-sandbox app/cdk.out app/build-temp
