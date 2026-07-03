@@ -36,8 +36,8 @@ importers:
         specifier: ^3.1078.0
         version: 3.1078.0
       aws-cdk-lib:
-        specifier: 2.260.0
-        version: 2.260.0(constructs@10.6.0)
+        specifier: 2.261.0
+        version: 2.261.0(constructs@10.6.0)
       constructs:
         specifier: ^10.6.0
         version: 10.6.0
@@ -154,7 +154,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^1.1.29
-        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1078.0)(@aws-sdk/client-lambda@3.1078.0)(@aws-sdk/credential-provider-node@3.972.61)(@browserbasehq/sdk@2.14.1)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.1(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.5)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.1)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
+        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1078.0)(@aws-sdk/client-lambda@3.1078.0)(@aws-sdk/credential-provider-node@3.972.61)(@browserbasehq/sdk@2.15.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.1(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.5)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.1)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
       '@langchain/core':
         specifier: ^1.2.1
         version: 1.2.1(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
@@ -249,7 +249,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^1.1.29
-        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1078.0)(@aws-sdk/client-lambda@3.1078.0)(@aws-sdk/credential-provider-node@3.972.61)(@browserbasehq/sdk@2.14.1)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.1(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.5)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.1)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
+        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1078.0)(@aws-sdk/client-lambda@3.1078.0)(@aws-sdk/credential-provider-node@3.972.61)(@browserbasehq/sdk@2.15.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.1(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.5)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.1)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
       '@langchain/core':
         specifier: ^1.2.1
         version: 1.2.1(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
@@ -379,8 +379,8 @@ packages:
   '@aws-cdk/asset-node-proxy-agent-v6@2.1.2':
     resolution: {integrity: sha512-pDiuqH+qY3zM9lhhLjbKJ1tnKOHzQ2V4Wr/3qsxyKeKAkuPMI/BVGvZG1PbrikUw949cGVTfVEt4ETKKYnrj0Q==}
 
-  '@aws-cdk/cloud-assembly-schema@54.3.0':
-    resolution: {integrity: sha512-1dCM2TXo4PFFKu6sO4qvS0i3d6kxdjuzEFkN7S4xu8nJ+edJRO+DHE7/ttym5ZfAZShAyMY20BhnyTycQN1/jg==}
+  '@aws-cdk/cloud-assembly-schema@54.8.0':
+    resolution: {integrity: sha512-f891G+Uv4x0/PWTYkA7psEoxHj4//uXEYklB853uFZVHq2zwoH5Eko+uL07wUXZsUiXpZZl8c72KJVnEidR+zg==}
     engines: {node: '>= 18.0.0'}
     bundledDependencies:
       - jsonschema
@@ -659,8 +659,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@browserbasehq/sdk@2.14.1':
-    resolution: {integrity: sha512-Ahmzb5+82ePgSGwouKEoAhiGy8mJ3RbCl+uigfGfVc60zseYIftcMiDPXSmrTQr1NHaATRx4cJlynP8ZUweXtg==}
+  '@browserbasehq/sdk@2.15.0':
+    resolution: {integrity: sha512-yWT7URYwpON1MvYRAA18Vmhg3iIhvj1VMqHC9igdh1CdS740xhYerxlvrm5GxMX5ExnjNbf7tf0k1VOUIvZbbg==}
 
   '@browserbasehq/stagehand@1.14.0':
     resolution: {integrity: sha512-Hi/EzgMFWz+FKyepxHTrqfTPjpsuBS4zRy3e9sbMpBgLPv+9c0R+YZEvS7Bw4mTS66QtvvURRT6zgDGFotthVQ==}
@@ -2052,6 +2052,10 @@ packages:
     resolution: {integrity: sha512-sEvpvkBVoMxjoek35XyJFn2ZD3EJ1RpiZrT47WaZodxzAIWS44zkdvbqGE/ZlugtjiQp62cffYZ9ldyRkjAGnA==}
     engines: {node: '>=18.0.0'}
 
+  '@smithy/core@3.29.1':
+    resolution: {integrity: sha512-qoiY4nrk5OCu1+eIR1VB8l5DmON/oKiqrd5zZFAhXJXjJlLWQusKEW/SkBDAtGDcPaz86m9kfcE1lngU0GlM6A==}
+    engines: {node: '>=18.0.0'}
+
   '@smithy/credential-provider-imds@4.4.5':
     resolution: {integrity: sha512-LnjUTNG0GgQlKIq7IioeOrPaEmC5xOd1WtAz24TLSiYQnWX2uHr53GrFuQhkrJBktPYCMga/NbUOW7hFbSA2Cg==}
     engines: {node: '>=18.0.0'}
@@ -2088,8 +2092,8 @@ packages:
     resolution: {integrity: sha512-IJdWBbTcMQ6DA0gdNhh/BwrLkDR+ADW5Kr1aZmd4k3DIF6ezMV4R2NIAmT08wQJ3yUK82thHWmC/TnK/wpMMIA==}
     engines: {node: '>=14.0.0'}
 
-  '@smithy/util-buffer-from@4.4.5':
-    resolution: {integrity: sha512-neoGHMUwMoXDPJeDmx1EMlmX/1K7zdeQ++y2s+Oq0Z1MXA9EBZll0IFQCB3IUoj6lmP5Z0pRi/2aw5VVwyo1ag==}
+  '@smithy/util-buffer-from@4.4.6':
+    resolution: {integrity: sha512-xJPlHmHVnEXFpO1Z1JZ0Labweqkzty5RjpnTH2C7niM0nI7cJSw3LEVfhIYG6zK4EpYtiiB14SUeaTH8R/9G5Q==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/util-utf8@2.3.0':
@@ -2545,8 +2549,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  aws-cdk-lib@2.260.0:
-    resolution: {integrity: sha512-2PPG+hbPDot8+ibkb5Jl9y3OY5rBE6TFwjzOi+yEyU4ZG6u8bM4DDKhhBi/S20NqqSFDso9rH1txVJAdwXNiuQ==}
+  aws-cdk-lib@2.261.0:
+    resolution: {integrity: sha512-e52e3Abjg0HkuRWlWwtSv5+ZiMW1rhCDdL9ff7lzWXInU8xdfLJpuoimfa0IJwjiNGyphppgg52Azx9M80OA0g==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
       constructs: ^10.5.0
@@ -2560,7 +2564,6 @@ packages:
       - minimatch
       - punycode
       - semver
-      - table
       - yaml
       - mime-types
 
@@ -3335,8 +3338,8 @@ packages:
   fast-uri@3.1.2:
     resolution: {integrity: sha512-rVjf7ArG3LTk+FS6Yw81V1DLuZl1bRbNrev6Tmd/9RaroeeRRJhAt7jg/6YFxbvAQXUCavSoZhPPj6oOx+5KjQ==}
 
-  fast-xml-builder@1.2.0:
-    resolution: {integrity: sha512-00aAWieqff+ZJhsXA4g1g7M8k+7AYoMUUHF+/zFb5U6Uv/P0Vl4QZo84/IcufzYalLuEj9928bXN9PbbFzMF0Q==}
+  fast-xml-builder@1.2.1:
+    resolution: {integrity: sha512-tPb5TTWfgfVx5BNSi2xV0eLr89POeXXn0dXIsCJ9m1narrWxeIyx6je9d7Rce/3NyXLbvuQmLkxq+RuxMWejvw==}
 
   fast-xml-parser@5.7.3:
     resolution: {integrity: sha512-C0AaNuC+mscy6vrAQKAc/rMq+zAPHodfHGZu4sGVehvAQt/JLG1O5zEcYcXSY5zSqr4YVgxsB+pHXTq0i7eDlg==}
@@ -5709,7 +5712,7 @@ snapshots:
 
   '@aws-cdk/asset-node-proxy-agent-v6@2.1.2': {}
 
-  '@aws-cdk/cloud-assembly-schema@54.3.0': {}
+  '@aws-cdk/cloud-assembly-schema@54.8.0': {}
 
   '@aws-crypto/sha256-js@5.2.0':
     dependencies:
@@ -6119,7 +6122,7 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@browserbasehq/sdk@2.14.1':
+  '@browserbasehq/sdk@2.15.0':
     dependencies:
       '@types/node': 18.19.130
       '@types/node-fetch': 2.6.13
@@ -6134,7 +6137,7 @@ snapshots:
   '@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3)':
     dependencies:
       '@anthropic-ai/sdk': 0.27.3
-      '@browserbasehq/sdk': 2.14.1
+      '@browserbasehq/sdk': 2.15.0
       '@playwright/test': 1.54.1
       deepmerge: 4.3.1
       dotenv: 17.4.0
@@ -6687,7 +6690,7 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1078.0)(@aws-sdk/client-lambda@3.1078.0)(@aws-sdk/credential-provider-node@3.972.61)(@browserbasehq/sdk@2.14.1)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.1(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.5)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.1)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)':
+  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1078.0)(@aws-sdk/client-lambda@3.1078.0)(@aws-sdk/credential-provider-node@3.972.61)(@browserbasehq/sdk@2.15.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.1(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.5)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.1)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.5)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3)
       '@ibm-cloud/watsonx-ai': 1.6.8
@@ -6708,7 +6711,7 @@ snapshots:
       '@aws-sdk/client-dynamodb': 3.1078.0
       '@aws-sdk/client-lambda': 3.1078.0
       '@aws-sdk/credential-provider-node': 3.972.61
-      '@browserbasehq/sdk': 2.14.1
+      '@browserbasehq/sdk': 2.15.0
       '@smithy/eventstream-codec': 4.4.5
       '@smithy/protocol-http': 5.3.14
       '@smithy/signature-v4': 5.6.1
@@ -7156,6 +7159,12 @@ snapshots:
       '@smithy/types': 4.15.1
       tslib: 2.8.1
 
+  '@smithy/core@3.29.1':
+    dependencies:
+      '@smithy/types': 4.15.1
+      tslib: 2.8.1
+    optional: true
+
   '@smithy/credential-provider-imds@4.4.5':
     dependencies:
       '@smithy/core': 3.29.0
@@ -7206,9 +7215,9 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@smithy/util-buffer-from@4.4.5':
+  '@smithy/util-buffer-from@4.4.6':
     dependencies:
-      '@smithy/core': 3.29.0
+      '@smithy/core': 3.29.1
       tslib: 2.8.1
     optional: true
 
@@ -7220,7 +7229,7 @@ snapshots:
 
   '@smithy/util-utf8@4.2.2':
     dependencies:
-      '@smithy/util-buffer-from': 4.4.5
+      '@smithy/util-buffer-from': 4.4.6
       tslib: 2.8.1
     optional: true
 
@@ -7689,11 +7698,11 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  aws-cdk-lib@2.260.0(constructs@10.6.0):
+  aws-cdk-lib@2.261.0(constructs@10.6.0):
     dependencies:
       '@aws-cdk/asset-awscli-v1': 2.2.282
       '@aws-cdk/asset-node-proxy-agent-v6': 2.1.2
-      '@aws-cdk/cloud-assembly-schema': 54.3.0
+      '@aws-cdk/cloud-assembly-schema': 54.8.0
       constructs: 10.6.0
 
   aws-cdk@2.1129.0: {}
@@ -8485,7 +8494,7 @@ snapshots:
 
   fast-uri@3.1.2: {}
 
-  fast-xml-builder@1.2.0:
+  fast-xml-builder@1.2.1:
     dependencies:
       path-expression-matcher: 1.6.1
       xml-naming: 0.1.0
@@ -8494,7 +8503,7 @@ snapshots:
   fast-xml-parser@5.7.3:
     dependencies:
       '@nodable/entities': 2.2.0
-      fast-xml-builder: 1.2.0
+      fast-xml-builder: 1.2.1
       path-expression-matcher: 1.6.1
       strnum: 2.4.1
     optional: true
