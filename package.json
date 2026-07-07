@@ -9,6 +9,6 @@
     "jiti": "^2.7.0",
     "prettier": "^3.9.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.62.1"
+    "typescript-eslint": "^8.63.0"
   }
 }
