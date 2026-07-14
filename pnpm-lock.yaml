@@ -119,8 +119,8 @@ importers:
         specifier: ^10.0.36
         version: 10.0.36(graphql@17.0.2)
       '@graphql-tools/stitch':
-        specifier: ^10.1.23
-        version: 10.1.23(graphql@17.0.2)
+        specifier: ^10.1.24
+        version: 10.1.24(graphql@17.0.2)
       '@graphql-tools/utils':
         specifier: ^11.2.0
         version: 11.2.0(graphql@17.0.2)
@@ -154,7 +154,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^1.1.29
-        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1085.0)(@aws-sdk/client-lambda@3.1085.0)(@aws-sdk/credential-provider-node@3.972.66)(@browserbasehq/sdk@2.15.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.2(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.8)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.4)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
+        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1085.0)(@aws-sdk/client-lambda@3.1085.0)(@aws-sdk/credential-provider-node@3.972.66)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.2(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.8)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.4)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
       '@langchain/core':
         specifier: ^1.2.2
         version: 1.2.2(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
@@ -249,7 +249,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^1.1.29
-        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1085.0)(@aws-sdk/client-lambda@3.1085.0)(@aws-sdk/credential-provider-node@3.972.66)(@browserbasehq/sdk@2.15.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.2(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.8)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.4)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
+        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1085.0)(@aws-sdk/client-lambda@3.1085.0)(@aws-sdk/credential-provider-node@3.972.66)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.2(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.8)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.4)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
       '@langchain/core':
         specifier: ^1.2.2
         version: 1.2.2(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)
@@ -659,8 +659,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@browserbasehq/sdk@2.15.0':
-    resolution: {integrity: sha512-yWT7URYwpON1MvYRAA18Vmhg3iIhvj1VMqHC9igdh1CdS740xhYerxlvrm5GxMX5ExnjNbf7tf0k1VOUIvZbbg==}
+  '@browserbasehq/sdk@2.16.0':
+    resolution: {integrity: sha512-mPAuLRU9jWR7o0KJi9+gQnOBDUSIkoKbbFv4HjrA+80qWVcFacrNPlZmf4mguQnfZ0oP2t5c3ws6yuFyAX9vpA==}
 
   '@browserbasehq/stagehand@1.14.0':
     resolution: {integrity: sha512-Hi/EzgMFWz+FKyepxHTrqfTPjpsuBS4zRy3e9sbMpBgLPv+9c0R+YZEvS7Bw4mTS66QtvvURRT6zgDGFotthVQ==}
@@ -886,8 +886,8 @@ packages:
   '@fastify/busboy@3.2.0':
     resolution: {integrity: sha512-m9FVDXU3GT2ITSe0UaMA5rU3QkfC/UXtCU8y0gSN/GugTqtVldOBWIB5V6V3sbmenVZUIpU6f+mPEO2+m5iTaA==}
 
-  '@graphql-tools/batch-delegate@10.0.25':
-    resolution: {integrity: sha512-SPCi06ujIvoY7nmdNsg0NHi343otIgFAfwmJS/IR7iJs7BxT7MA2c5ZxJz0/VIonMtaVMnL1v/gvuAMjzTOCZg==}
+  '@graphql-tools/batch-delegate@10.0.26':
+    resolution: {integrity: sha512-3d7QrTvYb8Qe+pzP109vEwN/KxW+IGK88H48WEUPHQMrNeYaQL+XL/E96up+kUauBC8rkXdSZ5nNhxxgrkBG0A==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -904,14 +904,14 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/executor@1.5.4':
-    resolution: {integrity: sha512-6CdAENBTtVIXmOoJWJvYNFpE0b8zzwAMZ+VGkyLY2QT5dRGCjZTnGpDIFtxQa8IvRjnPpY3iUptgPlqTLOw3VA==}
-    engines: {node: '>=16.0.0'}
+  '@graphql-tools/delegate@12.0.19':
+    resolution: {integrity: sha512-TFDKalXQub5dV7FO1y+3kwwJm337jwUFkTmXHlmYAtTZTxDuSVeHc74OfnepFe+6zEDriHqhHKvxSq5TpHCTvA==}
+    engines: {node: '>=20.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/merge@9.1.10':
-    resolution: {integrity: sha512-CsUCcPXv/HMWpPZ/xoOioSWFuAaAsGGPIdqQbjDv9X1sHGs0muQRW5FK7vUBN4OH/D7aPqpiHvKmRsrHz+ScuQ==}
+  '@graphql-tools/executor@1.5.5':
+    resolution: {integrity: sha512-JAdn4G+ehthnGdJABS+wO6LxAIcoGPiSRHIz1ECYLtaQGkpFIdqH6BLUbZcToX/W/nmOG0kTFLoepCGkugbsBA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -928,8 +928,8 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/stitch@10.1.23':
-    resolution: {integrity: sha512-h2rLnsbYx2SKHETjPQAAi8wzV26otn8AIn6oEZ+HPGnxPY/xaYgnhSyttYzPx1c4gZn6r+DICZTeSQndkxVyzA==}
+  '@graphql-tools/stitch@10.1.24':
+    resolution: {integrity: sha512-uRLUzGMtxHvyYE03PtPkqLsHEtAekQDkOK49V9hMp77cBaWWvw9zgrOJ0BUJp4mQSsqglu8hhd0XLoWYN2/94Q==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -942,6 +942,12 @@ packages:
 
   '@graphql-tools/wrap@11.1.17':
     resolution: {integrity: sha512-eY5dh9ZewdzSbYNtrfhXvpaKvMyGNCGrH2VBMTs5hnyE9tncsmZjcaVRW+CGiUJUIp184D+FYrK7tmW/hUm0dQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+
+  '@graphql-tools/wrap@11.1.18':
+    resolution: {integrity: sha512-qSstY1hw8rY3bTvy8NlRrJ4QOLtPdo6ykiv4y9EHaeYtNO3TWiIs0nLbUZX2F9wKT/i7T1aMbVysfeQoNmJvdQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -6128,7 +6134,7 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@browserbasehq/sdk@2.15.0':
+  '@browserbasehq/sdk@2.16.0':
     dependencies:
       '@types/node': 18.19.130
       '@types/node-fetch': 2.6.13
@@ -6143,7 +6149,7 @@ snapshots:
   '@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3)':
     dependencies:
       '@anthropic-ai/sdk': 0.27.3
-      '@browserbasehq/sdk': 2.15.0
+      '@browserbasehq/sdk': 2.16.0
       '@playwright/test': 1.54.1
       deepmerge: 4.3.1
       dotenv: 17.4.0
@@ -6302,9 +6308,9 @@ snapshots:
   '@fastify/busboy@3.2.0':
     optional: true
 
-  '@graphql-tools/batch-delegate@10.0.25(graphql@17.0.2)':
+  '@graphql-tools/batch-delegate@10.0.26(graphql@17.0.2)':
     dependencies:
-      '@graphql-tools/delegate': 12.0.18(graphql@17.0.2)
+      '@graphql-tools/delegate': 12.0.19(graphql@17.0.2)
       '@graphql-tools/utils': 11.2.0(graphql@17.0.2)
       '@whatwg-node/promise-helpers': 1.3.2
       dataloader: 2.2.3
@@ -6322,7 +6328,7 @@ snapshots:
   '@graphql-tools/delegate@12.0.18(graphql@17.0.2)':
     dependencies:
       '@graphql-tools/batch-execute': 10.0.9(graphql@17.0.2)
-      '@graphql-tools/executor': 1.5.4(graphql@17.0.2)
+      '@graphql-tools/executor': 1.5.5(graphql@17.0.2)
       '@graphql-tools/schema': 10.0.36(graphql@17.0.2)
       '@graphql-tools/utils': 11.2.0(graphql@17.0.2)
       '@repeaterjs/repeater': 3.1.0
@@ -6331,19 +6337,25 @@ snapshots:
       graphql: 17.0.2
       tslib: 2.8.1
 
-  '@graphql-tools/executor@1.5.4(graphql@17.0.2)':
+  '@graphql-tools/delegate@12.0.19(graphql@17.0.2)':
+    dependencies:
+      '@graphql-tools/batch-execute': 10.0.9(graphql@17.0.2)
+      '@graphql-tools/executor': 1.5.5(graphql@17.0.2)
+      '@graphql-tools/schema': 10.0.36(graphql@17.0.2)
+      '@graphql-tools/utils': 11.2.0(graphql@17.0.2)
+      '@repeaterjs/repeater': 3.1.0
+      '@whatwg-node/promise-helpers': 1.3.2
+      dataloader: 2.2.3
+      graphql: 17.0.2
+      tslib: 2.8.1
+
+  '@graphql-tools/executor@1.5.5(graphql@17.0.2)':
     dependencies:
       '@graphql-tools/utils': 11.2.0(graphql@17.0.2)
       '@graphql-typed-document-node/core': 3.2.0(graphql@17.0.2)
       '@repeaterjs/repeater': 3.1.0
       '@whatwg-node/disposablestack': 0.0.6
       '@whatwg-node/promise-helpers': 1.3.2
-      graphql: 17.0.2
-      tslib: 2.8.1
-
-  '@graphql-tools/merge@9.1.10(graphql@17.0.2)':
-    dependencies:
-      '@graphql-tools/utils': 11.2.0(graphql@17.0.2)
       graphql: 17.0.2
       tslib: 2.8.1
 
@@ -6360,15 +6372,15 @@ snapshots:
       graphql: 17.0.2
       tslib: 2.8.1
 
-  '@graphql-tools/stitch@10.1.23(graphql@17.0.2)':
+  '@graphql-tools/stitch@10.1.24(graphql@17.0.2)':
     dependencies:
-      '@graphql-tools/batch-delegate': 10.0.25(graphql@17.0.2)
-      '@graphql-tools/delegate': 12.0.18(graphql@17.0.2)
-      '@graphql-tools/executor': 1.5.4(graphql@17.0.2)
-      '@graphql-tools/merge': 9.1.10(graphql@17.0.2)
+      '@graphql-tools/batch-delegate': 10.0.26(graphql@17.0.2)
+      '@graphql-tools/delegate': 12.0.19(graphql@17.0.2)
+      '@graphql-tools/executor': 1.5.5(graphql@17.0.2)
+      '@graphql-tools/merge': 9.2.0(graphql@17.0.2)
       '@graphql-tools/schema': 10.0.36(graphql@17.0.2)
       '@graphql-tools/utils': 11.2.0(graphql@17.0.2)
-      '@graphql-tools/wrap': 11.1.17(graphql@17.0.2)
+      '@graphql-tools/wrap': 11.1.18(graphql@17.0.2)
       '@whatwg-node/promise-helpers': 1.3.2
       graphql: 17.0.2
       tslib: 2.8.1
@@ -6384,6 +6396,15 @@ snapshots:
   '@graphql-tools/wrap@11.1.17(graphql@17.0.2)':
     dependencies:
       '@graphql-tools/delegate': 12.0.18(graphql@17.0.2)
+      '@graphql-tools/schema': 10.0.36(graphql@17.0.2)
+      '@graphql-tools/utils': 11.2.0(graphql@17.0.2)
+      '@whatwg-node/promise-helpers': 1.3.2
+      graphql: 17.0.2
+      tslib: 2.8.1
+
+  '@graphql-tools/wrap@11.1.18(graphql@17.0.2)':
+    dependencies:
+      '@graphql-tools/delegate': 12.0.19(graphql@17.0.2)
       '@graphql-tools/schema': 10.0.36(graphql@17.0.2)
       '@graphql-tools/utils': 11.2.0(graphql@17.0.2)
       '@whatwg-node/promise-helpers': 1.3.2
@@ -6707,7 +6728,7 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1085.0)(@aws-sdk/client-lambda@3.1085.0)(@aws-sdk/credential-provider-node@3.972.66)(@browserbasehq/sdk@2.15.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.2(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.8)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.4)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)':
+  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1085.0)(@aws-sdk/client-lambda@3.1085.0)(@aws-sdk/credential-provider-node@3.972.66)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.2(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0))(@smithy/eventstream-codec@4.4.8)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.4)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(ws@8.21.0)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.0)(zod@4.4.3))(zod@4.4.3)
       '@ibm-cloud/watsonx-ai': 1.6.8
@@ -6728,7 +6749,7 @@ snapshots:
       '@aws-sdk/client-dynamodb': 3.1085.0
       '@aws-sdk/client-lambda': 3.1085.0
       '@aws-sdk/credential-provider-node': 3.972.66
-      '@browserbasehq/sdk': 2.15.0
+      '@browserbasehq/sdk': 2.16.0
       '@smithy/eventstream-codec': 4.4.8
       '@smithy/protocol-http': 5.3.14
       '@smithy/signature-v4': 5.6.4
@@ -8848,7 +8869,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.18.1(debug@4.4.3))
+      retry-axios: 2.6.0(axios@1.18.1)
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -10242,7 +10263,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.18.1(debug@4.4.3)):
+  retry-axios@2.6.0(axios@1.18.1):
     dependencies:
       axios: 1.18.1(debug@4.4.3)
 
