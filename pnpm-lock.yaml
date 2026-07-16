@@ -270,8 +270,8 @@ importers:
   packages/node-mcp-apps:
     dependencies:
       '@hono/node-server':
-        specifier: ^2.0.9
-        version: 2.0.9(hono@4.12.30)
+        specifier: ^2.0.10
+        version: 2.0.10(hono@4.12.30)
       '@modelcontextprotocol/ext-apps':
         specifier: ^1.7.0
         version: 1.7.4(@modelcontextprotocol/sdk@1.29.0(@cfworker/json-schema@4.1.1)(zod@4.4.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(zod@4.4.3)
@@ -319,8 +319,8 @@ importers:
   packages/node-mcp-apps-wordle:
     dependencies:
       '@hono/node-server':
-        specifier: ^2.0.9
-        version: 2.0.9(hono@4.12.30)
+        specifier: ^2.0.10
+        version: 2.0.10(hono@4.12.30)
       '@modelcontextprotocol/ext-apps':
         specifier: ^1.7.0
         version: 1.7.4(@modelcontextprotocol/sdk@1.29.0(@cfworker/json-schema@4.1.1)(zod@4.4.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(zod@4.4.3)
@@ -467,6 +467,10 @@ packages:
 
   '@aws-sdk/types@3.974.1':
     resolution: {integrity: sha512-W0IQZR0eaBqlBFIIofMapaWkw1W0U+Xi4dvW+BqwmCEMd8Ng2U6IhkxuPSjMVnR8klLjfuS9PeZWUl1N6UaZdg==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/types@3.974.2':
+    resolution: {integrity: sha512-3W6IUtSxFbH6X7Wb7DzGCV5QiFQsd0g8bOfntpmDxQlzBoKWUMBu/JPQR0DwkE+Hpnxd6db1tXbOwdeHddG6cA==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/xml-builder@3.972.35':
@@ -951,8 +955,8 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/node-server@2.0.9':
-    resolution: {integrity: sha512-cNMw3ziCdDcx0+ldta60zvUL5XO0OLt521n2hjPp0PB0ugczDCEczXsf33qQbkKIXWGFQ03f0LC85u6YK8pCLA==}
+  '@hono/node-server@2.0.10':
+    resolution: {integrity: sha512-ZcnNVhKTmyDJeg0UlnZjvM73JBsTAuhrH/J4fjwGOw59PwOW51r4J+p6CsKZWXdKSme4MFqU62CZMOsdDrU4CA==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4
@@ -5713,13 +5717,13 @@ snapshots:
   '@aws-crypto/sha256-js@5.2.0':
     dependencies:
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.974.1
+      '@aws-sdk/types': 3.974.2
       tslib: 2.8.1
     optional: true
 
   '@aws-crypto/util@5.2.0':
     dependencies:
-      '@aws-sdk/types': 3.974.1
+      '@aws-sdk/types': 3.974.2
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
     optional: true
@@ -5905,6 +5909,12 @@ snapshots:
     dependencies:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
+
+  '@aws-sdk/types@3.974.2':
+    dependencies:
+      '@smithy/types': 4.16.1
+      tslib: 2.8.1
+    optional: true
 
   '@aws-sdk/xml-builder@3.972.35':
     dependencies:
@@ -6382,7 +6392,7 @@ snapshots:
     dependencies:
       hono: 4.12.30
 
-  '@hono/node-server@2.0.9(hono@4.12.30)':
+  '@hono/node-server@2.0.10(hono@4.12.30)':
     dependencies:
       hono: 4.12.30
 
