@@ -88,8 +88,8 @@ importers:
         specifier: ^3.1088.0
         version: 3.1088.0
       '@aws/durable-execution-sdk-js':
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.2.0
+        version: 2.2.0
     devDependencies:
       '@aws-sdk/client-lambda':
         specifier: ^3.1088.0
@@ -473,8 +473,8 @@ packages:
     resolution: {integrity: sha512-RdGmS1GLrtaTOLE1ElSluMldNrpk9Emq6uYs8SS8iHlu5xTAmM9rRkM91o48+rIRryBtyO9t+uLYCoMG6jVMVA==}
     engines: {node: '>=20.0.0'}
 
-  '@aws/durable-execution-sdk-js@2.1.0':
-    resolution: {integrity: sha512-PTPqCGrdLfL1EPFZs4xVFn9FxRtVCF1soWf/CfRiA+AYqciiKDKaB56mMYFph1QFmEu3m9t3/NsvXcBsv6VrUA==}
+  '@aws/durable-execution-sdk-js@2.2.0':
+    resolution: {integrity: sha512-W4vcy8uZAxQqWMVINCUoc7NCLZoooc85Qc7RH+vMImNTOBc2YRYdRK6ZvjAut68VCuG99Nd+aCv2atSVYPhXEg==}
     engines: {node: '>=22'}
 
   '@aws/lambda-invoke-store@0.3.0':
@@ -2052,6 +2052,10 @@ packages:
     resolution: {integrity: sha512-G1GRglAabzEhqghJMBAd54FkRS7SAFGHEwbhcI9r+O+LIMuFsLyXkLZkCoFSgAglRu8s/URVXJB0hglq3ZipIg==}
     engines: {node: '>=18.0.0'}
 
+  '@smithy/core@3.29.5':
+    resolution: {integrity: sha512-i0dk2t5B+CwV/dcJdUHILYkOQF5lof8f44dFCfDWToGCxjT9YQ+CgHqTAvJxzc3+zqQwm2QtVoJ5IqiNar/CnQ==}
+    engines: {node: '>=18.0.0'}
+
   '@smithy/credential-provider-imds@4.4.9':
     resolution: {integrity: sha512-2nfV4qRKiYeXU4zD2vvSCfg5dfp/BuhrM73vt7q9gzBhxs4rbPxXY21wo+kyI3bRmXcEGRnCLTaW8O437jzHIg==}
     engines: {node: '>=18.0.0'}
@@ -2088,8 +2092,8 @@ packages:
     resolution: {integrity: sha512-IJdWBbTcMQ6DA0gdNhh/BwrLkDR+ADW5Kr1aZmd4k3DIF6ezMV4R2NIAmT08wQJ3yUK82thHWmC/TnK/wpMMIA==}
     engines: {node: '>=14.0.0'}
 
-  '@smithy/util-buffer-from@4.4.9':
-    resolution: {integrity: sha512-8HhygO/nyBWAxohQnRDmeNUQG+kpk4ZH7b1TZYL07kdWQ96rnPqMvBFsnZX6XQJIdpUmup9MaYfEEdJgP4JEyw==}
+  '@smithy/util-buffer-from@4.4.10':
+    resolution: {integrity: sha512-DcPJ8L79nxi/6QA29F9m+OcIR9/KIXN80i5YMQEVy3fZUUgsE9d5HRj5WVKt9id9XucnnxlSpChg8qNkRApPPg==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/util-utf8@2.3.0':
@@ -5911,7 +5915,7 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
-  '@aws/durable-execution-sdk-js@2.1.0':
+  '@aws/durable-execution-sdk-js@2.2.0':
     dependencies:
       '@aws-sdk/client-lambda': 3.1088.0
 
@@ -7160,6 +7164,12 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
+  '@smithy/core@3.29.5':
+    dependencies:
+      '@smithy/types': 4.16.1
+      tslib: 2.8.1
+    optional: true
+
   '@smithy/credential-provider-imds@4.4.9':
     dependencies:
       '@smithy/core': 3.29.4
@@ -7210,9 +7220,9 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@smithy/util-buffer-from@4.4.9':
+  '@smithy/util-buffer-from@4.4.10':
     dependencies:
-      '@smithy/core': 3.29.4
+      '@smithy/core': 3.29.5
       tslib: 2.8.1
     optional: true
 
@@ -7224,7 +7234,7 @@ snapshots:
 
   '@smithy/util-utf8@4.2.2':
     dependencies:
-      '@smithy/util-buffer-from': 4.4.9
+      '@smithy/util-buffer-from': 4.4.10
       tslib: 2.8.1
     optional: true
 
