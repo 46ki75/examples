@@ -55,8 +55,8 @@ importers:
         specifier: 26.1.1
         version: 26.1.1
       aws-cdk:
-        specifier: 2.1131.0
-        version: 2.1131.0
+        specifier: 2.1132.0
+        version: 2.1132.0
       aws-lambda:
         specifier: ^1.0.7
         version: 1.0.7
@@ -2052,6 +2052,10 @@ packages:
     resolution: {integrity: sha512-G1GRglAabzEhqghJMBAd54FkRS7SAFGHEwbhcI9r+O+LIMuFsLyXkLZkCoFSgAglRu8s/URVXJB0hglq3ZipIg==}
     engines: {node: '>=18.0.0'}
 
+  '@smithy/core@3.29.5':
+    resolution: {integrity: sha512-i0dk2t5B+CwV/dcJdUHILYkOQF5lof8f44dFCfDWToGCxjT9YQ+CgHqTAvJxzc3+zqQwm2QtVoJ5IqiNar/CnQ==}
+    engines: {node: '>=18.0.0'}
+
   '@smithy/credential-provider-imds@4.4.9':
     resolution: {integrity: sha512-2nfV4qRKiYeXU4zD2vvSCfg5dfp/BuhrM73vt7q9gzBhxs4rbPxXY21wo+kyI3bRmXcEGRnCLTaW8O437jzHIg==}
     engines: {node: '>=18.0.0'}
@@ -2088,8 +2092,8 @@ packages:
     resolution: {integrity: sha512-IJdWBbTcMQ6DA0gdNhh/BwrLkDR+ADW5Kr1aZmd4k3DIF6ezMV4R2NIAmT08wQJ3yUK82thHWmC/TnK/wpMMIA==}
     engines: {node: '>=14.0.0'}
 
-  '@smithy/util-buffer-from@4.4.9':
-    resolution: {integrity: sha512-8HhygO/nyBWAxohQnRDmeNUQG+kpk4ZH7b1TZYL07kdWQ96rnPqMvBFsnZX6XQJIdpUmup9MaYfEEdJgP4JEyw==}
+  '@smithy/util-buffer-from@4.4.10':
+    resolution: {integrity: sha512-DcPJ8L79nxi/6QA29F9m+OcIR9/KIXN80i5YMQEVy3fZUUgsE9d5HRj5WVKt9id9XucnnxlSpChg8qNkRApPPg==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/util-utf8@2.3.0':
@@ -2563,8 +2567,8 @@ packages:
       - yaml
       - mime-types
 
-  aws-cdk@2.1131.0:
-    resolution: {integrity: sha512-02oAVG4IBFwPtPlDE95H8tDJFfDuxJLdvyrdav6rn72mup/LIZRCfp95IB9kfM+FL4vQ9gn/QCEI7y7aNDTpKA==}
+  aws-cdk@2.1132.0:
+    resolution: {integrity: sha512-kcIzBZQO+2v+F97iaeI29fdOUQEx44wr0qDb9HXNqdU82V+1ZKI1KuFlHwH2nq7+6iNc1bu60se4hFf+2d7vXg==}
     engines: {node: '>= 18.0.0'}
     hasBin: true
 
@@ -7160,6 +7164,12 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
+  '@smithy/core@3.29.5':
+    dependencies:
+      '@smithy/types': 4.16.1
+      tslib: 2.8.1
+    optional: true
+
   '@smithy/credential-provider-imds@4.4.9':
     dependencies:
       '@smithy/core': 3.29.4
@@ -7210,9 +7220,9 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@smithy/util-buffer-from@4.4.9':
+  '@smithy/util-buffer-from@4.4.10':
     dependencies:
-      '@smithy/core': 3.29.4
+      '@smithy/core': 3.29.5
       tslib: 2.8.1
     optional: true
 
@@ -7224,7 +7234,7 @@ snapshots:
 
   '@smithy/util-utf8@4.2.2':
     dependencies:
-      '@smithy/util-buffer-from': 4.4.9
+      '@smithy/util-buffer-from': 4.4.10
       tslib: 2.8.1
     optional: true
 
@@ -7700,7 +7710,7 @@ snapshots:
       '@aws-cdk/cloud-assembly-schema': 54.8.0
       constructs: 10.7.0
 
-  aws-cdk@2.1131.0: {}
+  aws-cdk@2.1132.0: {}
 
   aws-lambda@1.0.7:
     dependencies:
