@@ -15,7 +15,7 @@
     "@modelcontextprotocol/ext-apps": "^1.7.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "hono": "^4.12.31",
-    "react": "^19.2.0",
+    "react": "^19.2.8",
     "react-dom": "^19.2.0",
     "zod": "^4.1.13"
   },
