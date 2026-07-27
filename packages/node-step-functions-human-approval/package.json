@@ -1,0 +1,23 @@
+{
+  "name": "node-step-functions-human-approval",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "human-approval": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "cli": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sfn": "^3.1095.0",
+    "@aws-sdk/client-sqs": "^3.1095.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^5.9.3"
+  }
+}

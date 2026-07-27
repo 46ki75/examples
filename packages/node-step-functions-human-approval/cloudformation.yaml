@@ -1,0 +1,140 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Step Functions human approval callback example using Amazon SQS
+
+Parameters:
+  ApprovalTimeoutSeconds:
+    Type: Number
+    Default: 86400
+    MinValue: 60
+    MaxValue: 1209600
+    Description: Maximum time that an execution waits for a human response
+
+Resources:
+  ApprovalQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      MessageRetentionPeriod: 1209600
+      ReceiveMessageWaitTimeSeconds: 20
+      SqsManagedSseEnabled: true
+      VisibilityTimeout: 300
+
+  StateMachineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: states.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: SendApprovalRequest
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: sqs:SendMessage
+                Resource:
+                  Fn::GetAtt: [ApprovalQueue, Arn]
+
+  ApprovalStateMachine:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      RoleArn:
+        Fn::GetAtt: [StateMachineRole, Arn]
+      StateMachineType: STANDARD
+      DefinitionString:
+        Fn::Sub: |
+          {
+            "Comment": "Wait for a human to approve or reject a request",
+            "StartAt": "RequestHumanApproval",
+            "States": {
+              "RequestHumanApproval": {
+                "Type": "Task",
+                "Resource": "arn:${AWS::Partition}:states:::sqs:sendMessage.waitForTaskToken",
+                "Parameters": {
+                  "QueueUrl": "${ApprovalQueue}",
+                  "MessageBody": {
+                    "taskToken.$": "$$.Task.Token",
+                    "executionArn.$": "$$.Execution.Id",
+                    "approvalRequest.$": "$"
+                  }
+                },
+                "TimeoutSeconds": ${ApprovalTimeoutSeconds},
+                "Catch": [
+                  {
+                    "ErrorEquals": ["HumanRejected"],
+                    "ResultPath": "$.rejection",
+                    "Next": "Rejected"
+                  },
+                  {
+                    "ErrorEquals": ["States.Timeout"],
+                    "ResultPath": "$.timeout",
+                    "Next": "ApprovalTimedOut"
+                  }
+                ],
+                "Next": "Approved"
+              },
+              "Approved": {
+                "Type": "Succeed"
+              },
+              "Rejected": {
+                "Type": "Fail",
+                "Error": "HumanRejected",
+                "Cause": "The request was rejected by a human reviewer"
+              },
+              "ApprovalTimedOut": {
+                "Type": "Fail",
+                "Error": "ApprovalTimedOut",
+                "Cause": "No human response was received before the approval timeout"
+              }
+            }
+          }
+
+  CliPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Permissions required by the human approval example CLI
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: states:StartExecution
+            Resource:
+              Ref: ApprovalStateMachine
+          - Effect: Allow
+            Action: states:DescribeExecution
+            Resource:
+              Fn::Sub:
+                - arn:${AWS::Partition}:states:${AWS::Region}:${AWS::AccountId}:execution:${StateMachineName}:*
+                - StateMachineName:
+                    Fn::GetAtt: [ApprovalStateMachine, Name]
+          - Effect: Allow
+            Action:
+              - states:SendTaskFailure
+              - states:SendTaskSuccess
+            Resource: "*"
+          - Effect: Allow
+            Action:
+              - sqs:DeleteMessage
+              - sqs:ReceiveMessage
+            Resource:
+              Fn::GetAtt: [ApprovalQueue, Arn]
+
+Outputs:
+  StateMachineArn:
+    Description: Set this value as STATE_MACHINE_ARN for the CLI
+    Value:
+      Ref: ApprovalStateMachine
+  ApprovalQueueUrl:
+    Description: Set this value as APPROVAL_QUEUE_URL for the CLI
+    Value:
+      Ref: ApprovalQueue
+  ApprovalQueueArn:
+    Value:
+      Fn::GetAtt: [ApprovalQueue, Arn]
+  CliPolicyArn:
+    Description: Optional managed policy to attach to the IAM principal running the CLI
+    Value:
+      Ref: CliPolicy
