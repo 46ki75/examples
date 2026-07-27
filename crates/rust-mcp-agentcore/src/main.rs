@@ -39,7 +39,7 @@ impl Counter {
     async fn increment(&self) -> Result<CallToolResult, rmcp::ErrorData> {
         let mut counter = self.counter.lock().await;
         *counter += 1;
-        Ok(CallToolResult::success(vec![Content::text(
+        Ok(CallToolResult::success(vec![ContentBlock::text(
             counter.to_string(),
         )]))
     }
@@ -51,7 +51,7 @@ impl Counter {
     ) -> Result<CallToolResult, rmcp::ErrorData> {
         let mut counter = self.counter.lock().await;
         *counter += value;
-        Ok(CallToolResult::success(vec![Content::text(
+        Ok(CallToolResult::success(vec![ContentBlock::text(
             counter.to_string(),
         )]))
     }
@@ -59,7 +59,7 @@ impl Counter {
     #[tool(description = "Get the current counter value")]
     async fn get(&self, _: Parameters<NoParams>) -> Result<CallToolResult, rmcp::ErrorData> {
         let counter = self.counter.lock().await;
-        Ok(CallToolResult::success(vec![Content::text(
+        Ok(CallToolResult::success(vec![ContentBlock::text(
             counter.to_string(),
         )]))
     }
