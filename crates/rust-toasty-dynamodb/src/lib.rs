@@ -17,8 +17,8 @@ pub struct User {
 
 // Many-to-many: an Image can have many Tags, and a Tag can be on many Images.
 // Toasty doesn't ship a `has_many_through` macro — model the relationship
-// explicitly with a join entity (`ImageTag`) that has a `BelongsTo` on each
-// side. On DynamoDB, the join model needs a GSI on each foreign-key column so
+// explicitly with a join entity (`ImageTag`) that has a `belongs_to` relation
+// on each side. On DynamoDB, the join model needs a GSI on each foreign-key column so
 // `image.image_tags()` and `tag.image_tags()` both compile to a Query rather
 // than a Scan.
 
@@ -31,7 +31,7 @@ pub struct Image {
     pub filename: String,
 
     #[has_many]
-    pub image_tags: toasty::HasMany<ImageTag>,
+    pub image_tags: toasty::Deferred<Vec<ImageTag>>,
 }
 
 #[derive(Debug, toasty::Model)]
@@ -44,7 +44,7 @@ pub struct Tag {
     pub name: String,
 
     #[has_many]
-    pub image_tags: toasty::HasMany<ImageTag>,
+    pub image_tags: toasty::Deferred<Vec<ImageTag>>,
 }
 
 #[derive(Debug, toasty::Model)]
@@ -60,10 +60,10 @@ pub struct ImageTag {
     pub tag_id: Uuid,
 
     #[belongs_to(key = image_id, references = id)]
-    pub image: toasty::BelongsTo<Image>,
+    pub image: toasty::Deferred<Image>,
 
     #[belongs_to(key = tag_id, references = id)]
-    pub tag: toasty::BelongsTo<Tag>,
+    pub tag: toasty::Deferred<Tag>,
 }
 
 pub async fn connect_db() -> toasty::Result<toasty::Db> {
