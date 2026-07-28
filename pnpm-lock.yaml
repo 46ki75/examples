@@ -172,8 +172,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0(puppeteer-core@10.4.0)
       playwright-core:
-        specifier: ^1.61.1
-        version: 1.61.1
+        specifier: ^1.62.0
+        version: 1.62.0
     devDependencies:
       '@types/archiver':
         specifier: ^7.0.0
@@ -4688,9 +4688,9 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright-core@1.61.1:
-    resolution: {integrity: sha512-h7Qlt6m4REp25qvIdvbDtVmD4LqVXfpRxhORv9L0jzETM05p4fuPJ3dKyuSXQxDSbXnmS79HAgi9589lGSpLkg==}
-    engines: {node: '>=18'}
+  playwright-core@1.62.0:
+    resolution: {integrity: sha512-nsNRyq0r2zsG8AcRHWknc9QRA5XCueC7gWMrs+Gx2tlZn9hcl8zudfh00lhJPY1DE7NmZ6bDsT9g2yey8mXljA==}
+    engines: {node: '>=20'}
     hasBin: true
 
   playwright@1.54.1:
@@ -10101,7 +10101,7 @@ snapshots:
 
   playwright-core@1.54.1: {}
 
-  playwright-core@1.61.1: {}
+  playwright-core@1.62.0: {}
 
   playwright@1.54.1:
     dependencies:
