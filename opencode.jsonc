@@ -1,0 +1,12 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "lsp": true,
+    "formatter": true,
+    "mcp": {
+        "aws-knowledge": {
+            "type": "remote",
+            "url": "https://knowledge-mcp.global.api.aws",
+            "enabled": true
+        }
+    }
+}
