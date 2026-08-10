@@ -20,7 +20,7 @@
     "@types/node": "^26.1.2",
     "archiver": "^8.0.0",
     "esbuild": "^0.28.1",
-    "tsx": "^4.23.5",
+    "tsx": "^4.23.11",
     "typescript": "^5.9.3"
   },
   "dependencies": {
