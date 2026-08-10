@@ -33,8 +33,8 @@ importers:
   packages/cdk:
     dependencies:
       '@aws-sdk/client-dynamodb':
-        specifier: ^3.1102.0
-        version: 3.1102.0
+        specifier: ^3.1105.0
+        version: 3.1105.0
       aws-cdk-lib:
         specifier: 2.263.0
         version: 2.263.0(constructs@10.8.1)
@@ -85,15 +85,15 @@ importers:
   packages/node-lambda-durable-function:
     dependencies:
       '@aws-sdk/client-ssm':
-        specifier: ^3.1102.0
-        version: 3.1102.0
+        specifier: ^3.1105.0
+        version: 3.1105.0
       '@aws/durable-execution-sdk-js':
         specifier: ^2.2.0
         version: 2.2.0
     devDependencies:
       '@aws-sdk/client-lambda':
-        specifier: ^3.1102.0
-        version: 3.1102.0
+        specifier: ^3.1105.0
+        version: 3.1105.0
       '@types/archiver':
         specifier: ^7.0.0
         version: 7.0.0
@@ -154,7 +154,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^1.1.29
-        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1102.0)(@aws-sdk/client-lambda@3.1102.0)(@aws-sdk/client-sfn@3.1102.0)(@aws-sdk/credential-provider-node@3.972.78)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.5(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(@smithy/eventstream-codec@4.4.16)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.12)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)
+        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1105.0)(@aws-sdk/client-lambda@3.1105.0)(@aws-sdk/client-sfn@3.1105.0)(@aws-sdk/credential-provider-node@3.972.78)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.5(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(@smithy/eventstream-codec@4.4.16)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.12)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)
       '@langchain/core':
         specifier: ^1.2.5
         version: 1.2.5(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)
@@ -249,7 +249,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^1.1.29
-        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1102.0)(@aws-sdk/client-lambda@3.1102.0)(@aws-sdk/client-sfn@3.1102.0)(@aws-sdk/credential-provider-node@3.972.78)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.5(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(@smithy/eventstream-codec@4.4.16)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.12)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)
+        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1105.0)(@aws-sdk/client-lambda@3.1105.0)(@aws-sdk/client-sfn@3.1105.0)(@aws-sdk/credential-provider-node@3.972.78)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.5(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(@smithy/eventstream-codec@4.4.16)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.12)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)
       '@langchain/core':
         specifier: ^1.2.5
         version: 1.2.5(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)
@@ -371,11 +371,11 @@ importers:
   packages/node-step-functions-human-approval:
     dependencies:
       '@aws-sdk/client-sfn':
-        specifier: ^3.1102.0
-        version: 3.1102.0
+        specifier: ^3.1105.0
+        version: 3.1105.0
       '@aws-sdk/client-sqs':
-        specifier: ^3.1102.0
-        version: 3.1102.0
+        specifier: ^3.1105.0
+        version: 3.1105.0
     devDependencies:
       '@types/node':
         specifier: ^26.1.2
@@ -412,24 +412,24 @@ packages:
   '@aws-crypto/util@5.2.0':
     resolution: {integrity: sha512-4RkU9EsI6ZpBve5fseQlGNUWKMa1RLPQ1dnjnQoe07ldfIzcsGb5hC5W0Dm7u423KWzawlrpbjXBrXCEv9zazQ==}
 
-  '@aws-sdk/client-dynamodb@3.1102.0':
-    resolution: {integrity: sha512-+nQIQXX8sN1+YdwLZEciHmWHuu4CL2RcWb1KRZQ1dNGQZW6ZHFLRdkNCQ/eYG7Cfwq8tjrseGthN+K0w+YgiTw==}
+  '@aws-sdk/client-dynamodb@3.1105.0':
+    resolution: {integrity: sha512-CNtPFuLR3wn1U7cH1svRuouWl2VO+uP/LOUpNlhJe4rkPSBr8Y6eMmsWPwkIGAsASAN7ChyJ7ZJHtJ+aLZl9Hw==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-lambda@3.1102.0':
-    resolution: {integrity: sha512-8RogHSIb5CKz+8oIhA3scL1Cx4wt2tpEIt0MfpUMn391dEXlBPux7MKkTdU66F77tCn9hQ/Xn6D1Szge3ZzwLg==}
+  '@aws-sdk/client-lambda@3.1105.0':
+    resolution: {integrity: sha512-jgfkglaEYQAVE0wZD1JjK2AsJr1xPmZtyc8jKHhb8zZPE2TFVG3mni/AYO77psl1OfTauU7OvAlZWmhN+da6Ww==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-sfn@3.1102.0':
-    resolution: {integrity: sha512-2cBG5PEEE3MSUiUwMTu74Q+Fs6oW97xuKkM8a2TU7eKP1qrzlmQ79VUbjGGk7l0uqANWD4FjDTI8Ajom80Zt+w==}
+  '@aws-sdk/client-sfn@3.1105.0':
+    resolution: {integrity: sha512-7YlnK9+VL5N4+wpDIW7PD/yi0Hzmr4aiunTGB5GR2szJoFIMJQsfmxQE6gKQh8zMCMQ12OdPAFmuULsLg/l51A==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-sqs@3.1102.0':
-    resolution: {integrity: sha512-yvXG4ch2FtmOg4QoRXtvV0qmtrHBPYjn4nZSlWdgROaE099qhqNlgkl6K8EuxKLx74eWfSKzb/bbSiGzZNnFJA==}
+  '@aws-sdk/client-sqs@3.1105.0':
+    resolution: {integrity: sha512-3VfR9ceXpDZwZ8oQWPbP7IUfWBfeoWDwvC5OEtrD0P2A0AW9i1dyZIZVTYli+xl8puECtPqt0C4VIAU1CwDESQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-ssm@3.1102.0':
-    resolution: {integrity: sha512-V9HC9VFd96LPhwdj5lJvgOlyxk05ZiC4ruH4WNhAVF4C96Lvk/yIXYk5UYEvbdVRkWNLGX3oEltKNn6xNHmXtQ==}
+  '@aws-sdk/client-ssm@3.1105.0':
+    resolution: {integrity: sha512-en67sA8qjVnbDDZCSl79++rckLwQ9FF4uwpTrW6y4BdiZPnpP+5izhM6PzT26f38wFMdd0ROO/6kOzogaVx0Cw==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.977.6':
@@ -5736,7 +5736,7 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@aws-sdk/client-dynamodb@3.1102.0':
+  '@aws-sdk/client-dynamodb@3.1105.0':
     dependencies:
       '@aws-sdk/core': 3.977.6
       '@aws-sdk/credential-provider-node': 3.972.78
@@ -5749,7 +5749,7 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
-  '@aws-sdk/client-lambda@3.1102.0':
+  '@aws-sdk/client-lambda@3.1105.0':
     dependencies:
       '@aws-sdk/core': 3.977.6
       '@aws-sdk/credential-provider-node': 3.972.78
@@ -5760,7 +5760,7 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
-  '@aws-sdk/client-sfn@3.1102.0':
+  '@aws-sdk/client-sfn@3.1105.0':
     dependencies:
       '@aws-sdk/core': 3.977.6
       '@aws-sdk/credential-provider-node': 3.972.78
@@ -5771,7 +5771,7 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
-  '@aws-sdk/client-sqs@3.1102.0':
+  '@aws-sdk/client-sqs@3.1105.0':
     dependencies:
       '@aws-sdk/core': 3.977.6
       '@aws-sdk/credential-provider-node': 3.972.78
@@ -5783,7 +5783,7 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
-  '@aws-sdk/client-ssm@3.1102.0':
+  '@aws-sdk/client-ssm@3.1105.0':
     dependencies:
       '@aws-sdk/core': 3.977.6
       '@aws-sdk/credential-provider-node': 3.972.78
@@ -5955,7 +5955,7 @@ snapshots:
 
   '@aws/durable-execution-sdk-js@2.2.0':
     dependencies:
-      '@aws-sdk/client-lambda': 3.1102.0
+      '@aws-sdk/client-lambda': 3.1105.0
 
   '@aws/lambda-invoke-store@0.3.0': {}
 
@@ -6718,7 +6718,7 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1102.0)(@aws-sdk/client-lambda@3.1102.0)(@aws-sdk/client-sfn@3.1102.0)(@aws-sdk/credential-provider-node@3.972.78)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.5(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(@smithy/eventstream-codec@4.4.16)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.12)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)':
+  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-dynamodb@3.1105.0)(@aws-sdk/client-lambda@3.1105.0)(@aws-sdk/client-sfn@3.1105.0)(@aws-sdk/credential-provider-node@3.972.78)(@browserbasehq/sdk@2.16.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(zod@4.4.3))(@ibm-cloud/watsonx-ai@1.6.8)(@langchain/core@1.2.5(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(@smithy/eventstream-codec@4.4.16)(@smithy/protocol-http@5.3.14)(@smithy/signature-v4@5.6.12)(@smithy/util-utf8@4.2.2)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.0)(ignore@7.0.6)(ioredis@5.10.1)(jsonwebtoken@9.0.3)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.54.1)(deepmerge@4.3.1)(dotenv@17.4.0)(openai@6.36.0(ws@8.21.3)(zod@4.4.3))(zod@4.4.3)
       '@ibm-cloud/watsonx-ai': 1.6.8
@@ -6736,9 +6736,9 @@ snapshots:
       zod: 4.4.3
     optionalDependencies:
       '@aws-crypto/sha256-js': 5.2.0
-      '@aws-sdk/client-dynamodb': 3.1102.0
-      '@aws-sdk/client-lambda': 3.1102.0
-      '@aws-sdk/client-sfn': 3.1102.0
+      '@aws-sdk/client-dynamodb': 3.1105.0
+      '@aws-sdk/client-lambda': 3.1105.0
+      '@aws-sdk/client-sfn': 3.1105.0
       '@aws-sdk/credential-provider-node': 3.972.78
       '@browserbasehq/sdk': 2.16.0
       '@smithy/eventstream-codec': 4.4.16
