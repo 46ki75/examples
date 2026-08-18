@@ -88,8 +88,8 @@ importers:
         specifier: ^3.1107.0
         version: 3.1107.0
       '@aws/durable-execution-sdk-js':
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^2.3.0
+        version: 2.3.0
     devDependencies:
       '@aws-sdk/client-lambda':
         specifier: ^3.1107.0
@@ -508,8 +508,8 @@ packages:
     resolution: {integrity: sha512-grf7mzfVxBS5AlsuTvBN7uDpzqohFww9fRPCO+EBSUdvtsYMcPSKdz54h/7XiscqNcUM1Ae1MF7JLHmiYYuzbQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws/durable-execution-sdk-js@2.2.0':
-    resolution: {integrity: sha512-W4vcy8uZAxQqWMVINCUoc7NCLZoooc85Qc7RH+vMImNTOBc2YRYdRK6ZvjAut68VCuG99Nd+aCv2atSVYPhXEg==}
+  '@aws/durable-execution-sdk-js@2.3.0':
+    resolution: {integrity: sha512-9ppdEpGQYDEMO6rRsO1rzgLAXMH7lXjTR6qaLabdJiefnekiT59Dna1uMLG2wL1JHol86z0caYt4pGqe5/0dNA==}
     engines: {node: '>=22'}
 
   '@aws/lambda-invoke-store@0.3.0':
@@ -5965,7 +5965,7 @@ snapshots:
       '@smithy/types': 4.17.0
       tslib: 2.8.1
 
-  '@aws/durable-execution-sdk-js@2.2.0':
+  '@aws/durable-execution-sdk-js@2.3.0':
     dependencies:
       '@aws-sdk/client-lambda': 3.1107.0
 
@@ -8878,7 +8878,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.19.0)
+      retry-axios: 2.6.0(axios@1.19.0(debug@4.4.3))
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -10265,7 +10265,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.19.0):
+  retry-axios@2.6.0(axios@1.19.0(debug@4.4.3)):
     dependencies:
       axios: 1.19.0(debug@4.4.3)
 
