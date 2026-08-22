@@ -1,6 +1,6 @@
-// Shared ESLint flat config for every package under packages/. Mirrors the
-// node-lambda-template convention (typescript-eslint recommended + Prettier
-// compatibility). Run from the repo root via `packages/justfile`'s `lint`.
+// Shared ESLint flat config for every package under packages/.
+// Uses typescript-eslint's recommended rules with Prettier compatibility.
+// Run from the repo root via `packages/justfile`'s `lint`.
 import { defineConfig, globalIgnores } from "eslint/config";
 import type { Linter } from "eslint";
 

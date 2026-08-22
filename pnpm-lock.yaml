@@ -113,45 +113,6 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/node-lambda-template:
-    devDependencies:
-      '@types/archiver':
-        specifier: ^7.0.0
-        version: 7.0.0
-      '@types/aws-lambda':
-        specifier: ^8.10.162
-        version: 8.10.162
-      '@types/node':
-        specifier: ^26.2.0
-        version: 26.2.0
-      archiver:
-        specifier: ^8.0.0
-        version: 8.0.0
-      esbuild:
-        specifier: ^0.28.2
-        version: 0.28.2
-      eslint:
-        specifier: ^10.8.1
-        version: 10.8.1(jiti@2.7.0)
-      eslint-config-prettier:
-        specifier: ^10.1.8
-        version: 10.1.8(eslint@10.8.1(jiti@2.7.0))
-      jiti:
-        specifier: ^2.7.0
-        version: 2.7.0
-      prettier:
-        specifier: ^3.9.5
-        version: 3.9.6
-      tsx:
-        specifier: ^4.23.12
-        version: 4.23.12
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-      typescript-eslint:
-        specifier: ^8.67.0
-        version: 8.67.0(eslint@10.8.1(jiti@2.7.0))(typescript@5.9.3)
-
   packages/node-mcp-apps:
     dependencies:
       '@hono/node-server':
