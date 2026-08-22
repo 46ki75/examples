@@ -7,8 +7,6 @@ members = [
     "python/ansible-packer-molecule",
     "python/python-lambda-adapter",
     "python/python-lambda-fastapi",
-    "python/python-module",
-    "python/python-strands-agents",
     "python/python-llama-index",
     "stacks/agentcore-web-search/agent",
     "stacks/aws-lambda-microvms/image",
@@ -32,8 +30,6 @@ include = ["python", "stacks"]
 testpaths = [
     "python/python-lambda-adapter",
     "python/python-lambda-fastapi",
-    "python/python-module",
-    "python/python-strands-agents",
     "python/python-llama-index",
     "stacks/agentcore-web-search/agent/tests",
     "stacks/aws-lambda-microvms/image/tests",

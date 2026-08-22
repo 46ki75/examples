@@ -1,5 +1,5 @@
-# Java/Kotlin task runner. Drives the Gradle multi-project build under java/aws
-# (subprojects: lambda-java, lambda-kotlin, lambda-spring).
+# Java task runner. Drives the Gradle multi-project build under java/aws
+# (subprojects: lambda-java and lambda-spring).
 set working-directory := 'aws'
 
 default:

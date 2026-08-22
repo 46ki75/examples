@@ -1,7 +1,7 @@
 # Repo-root orchestrator. Each target directory owns a justfile with a `ci`
 # recipe; the language-specific recipes (fmt, coverage, …) live there, not here.
 # Run a single group with e.g. `cd crates && just ci`.
-targets := "crates python packages go java stacks"
+targets := "crates python packages java stacks"
 
 default:
     @just --list
