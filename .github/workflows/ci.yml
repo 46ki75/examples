@@ -58,18 +58,6 @@ jobs:
       - run: just ci
         working-directory: packages
 
-  go:
-    name: go
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: stable
-      - uses: extractions/setup-just@v3
-      - run: just ci
-        working-directory: go
-
   java:
     name: java (Gradle)
     runs-on: ubuntu-latest
