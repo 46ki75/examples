@@ -421,9 +421,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-bedrockruntime"
-version = "1.141.0"
+version = "1.142.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6418b1f5feb3a8cc0fa10fb9af5693c88135ee03bae3ff48c8cdbf6a918daa07"
+checksum = "4844547a354fb4e41895f4c9c423e7a7de13e3b2adc3f3493a2f2d8aa397c294"
 dependencies = [
  "arc-swap",
  "aws-credential-types",
@@ -450,9 +450,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-dynamodb"
-version = "1.122.0"
+version = "1.123.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da6141acba66f1db7da2b3c7b2c0ee5178f86240cee676ed5c37cf74b9a2b37b"
+checksum = "dcd10d92058d5da989a7838fd09d70e9457390a81ba672abf5685099f3562bce"
 dependencies = [
  "arc-swap",
  "aws-credential-types",
