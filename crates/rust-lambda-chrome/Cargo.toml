@@ -14,7 +14,7 @@ workspace = true
 serde = { workspace = true }
 tokio = { workspace = true }
 
-fast_html2md = "0.0.62"
+fast_html2md = "0.0.63"
 headless_chrome = "1.0.21"
 lambda_runtime = "1.2.1"
 tracing = "0.1.44"
