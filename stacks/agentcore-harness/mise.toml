@@ -1,0 +1,24 @@
+[env]
+REGION = "{{ env.REGION | default(value='us-east-1') }}"
+
+[tasks.init]
+run = "terraform -chdir=terraform init"
+
+[tasks.deploy]
+description = "Provision the execution role, Gateway, web-search target, and harness"
+run = [{ task = ":init" }, "terraform -chdir=terraform apply"]
+raw = true
+
+[tasks.invoke]
+description = "Stream two turns through the deployed harness with shared managed memory"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+ARN=$(terraform -chdir=terraform output -raw harness_arn)
+uv run --script invoke.py "$ARN" "$REGION"
+'''
+
+[tasks.destroy]
+description = "Tear down the harness and its managed memory"
+run = "terraform -chdir=terraform destroy"
+raw = true

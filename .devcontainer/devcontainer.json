@@ -38,29 +38,12 @@
   "features": {
     "ghcr.io/devcontainers-extra/features/starship": {},
     "ghcr.io/devcontainers/features/github-cli": {},
-    "ghcr.io/devcontainers/features/aws-cli": {},
-    // Python
-    "ghcr.io/devcontainers/features/python": {},
-    // Terraform
-    "ghcr.io/devcontainers/features/terraform": {},
-    // Node.js
-    "ghcr.io/devcontainers/features/node": {},
-    // Rust
-    "ghcr.io/devcontainers/features/rust": {},
-    // Go
-    "ghcr.io/devcontainers/features/go": {},
-    // Java
-    "ghcr.io/devcontainers/features/java": {
-      "version": "21",
-      "gradleVersion": "8.5"
-    },
-    // .NET
-    "ghcr.io/devcontainers/features/dotnet": {},
     // DooD
     "ghcr.io/devcontainers/features/docker-outside-of-docker": {
       "moby": false
     }
   },
+  "postCreateCommand": "mise trust && mise run setup",
   "remoteEnv": {
     "AWS_PROFILE": "46ki75-examples"
   },

@@ -1,0 +1,72 @@
+[env]
+REGION = "{{ env.REGION | default(value='us-east-1') }}"
+# Override per run with AUTH_MODE=openrouter mise run deploy (or apply).
+AUTH_MODE = "{{ env.AUTH_MODE | default(value='subscription') }}"
+
+[tasks.init]
+run = "terraform -chdir=terraform init"
+
+[tasks.bootstrap-ecr]
+description = "Create the ECR repository before building the runtime image"
+run = "terraform -chdir=terraform apply -target=aws_ecr_repository.agent"
+raw = true
+
+[tasks.push]
+description = "Build the linux/arm64 image and push it to ECR"
+usage = 'arg "[tag]" default="latest"'
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(git rev-parse --show-toplevel)"
+# Pin third-party dependencies from the workspace lock into the build context.
+uv export --directory "$ROOT" --package agentcore-web-search \
+  --no-dev --no-emit-workspace --frozen --no-hashes \
+  -o "$ROOT/stacks/agentcore-web-search/agent/requirements.txt"
+REPO=$(terraform -chdir=terraform output -raw ecr_repository_url)
+REGISTRY=${REPO%%/*}
+aws ecr get-login-password --region "$REGION" \
+  | docker login --username AWS --password-stdin "$REGISTRY"
+# AgentCore requires a single arm64 manifest, not a buildx attestation list.
+docker buildx build --platform linux/arm64 --provenance=false \
+  -t "$REPO:${usage_tag?}" --push agent
+'''
+
+[tasks.apply]
+description = "Provision Cognito, the gateway, web-search target, and runtime"
+run = 'terraform -chdir=terraform apply -var "llm_auth_mode=$AUTH_MODE"'
+raw = true
+
+[tasks.deploy]
+description = "Initialize, bootstrap ECR, push the image, then apply the stack"
+run = [{ task = ":init" }, { task = ":bootstrap-ecr" }, { task = ":push" }, { task = ":apply" }]
+
+[tasks.invoke]
+description = "Invoke the deployed web-search agent"
+usage = 'flag "--prompt <prompt>" default="What did AWS recently announce about AgentCore web search?"'
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+ARN=$(terraform -chdir=terraform output -raw agent_runtime_arn)
+SID="$(uuidgen | tr -d '-')$(uuidgen | tr -d '-')"
+# Encode arbitrary prompts as JSON without interpreting them as shell syntax.
+PAYLOAD=$(python -c 'import json, os; print(json.dumps({"prompt": os.environ["usage_prompt"]}))')
+# CLI v2 otherwise decodes the literal JSON as base64. Model round-trips can
+# remain silent for >60s, so allow 300s. IAM inbound auth also needs a user ID
+# for AgentCore Identity, and the runtime session ID must be at least 33 chars.
+aws bedrock-agentcore invoke-agent-runtime \
+  --region "$REGION" \
+  --agent-runtime-arn "$ARN" \
+  --qualifier live \
+  --runtime-session-id "$SID" \
+  --runtime-user-id web-search-cli \
+  --cli-binary-format raw-in-base64-out \
+  --cli-read-timeout 300 \
+  --payload "$PAYLOAD" \
+  --content-type application/json \
+  --accept application/json \
+  /dev/stdout
+'''
+
+[tasks.destroy]
+run = "terraform -chdir=terraform destroy"
+raw = true

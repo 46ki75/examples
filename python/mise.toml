@@ -1,0 +1,28 @@
+# The repo-root uv workspace covers members under both python/ and stacks/.
+[task_config]
+dir = "{{ config_root }}/.."
+
+[tasks.install]
+run = "uv sync --frozen"
+
+[tasks.fmt]
+run = "uv run ruff format python stacks"
+
+[tasks.fmt-check]
+run = "uv run ruff format --check python stacks"
+
+[tasks.lint]
+run = "uv run ruff check python stacks"
+
+[tasks.typecheck]
+run = "uv run pyright"
+
+[tasks.test]
+run = "uv run pytest"
+
+[tasks.test-live]
+run = "uv run pytest -m live"
+
+[tasks.ci]
+description = "Install locked dependencies, then format-check, lint, type-check, and test Python"
+run = [{ task = ":install" }, { task = ":fmt-check" }, { task = ":lint" }, { task = ":typecheck" }, { task = ":test" }]

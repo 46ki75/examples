@@ -10,7 +10,7 @@ and tool it needs side by side.
 ```txt
 stacks/{unit}/
   README.md          # what it is, architecture, deploy order
-  justfile           # orchestration across the sub-parts
+  mise.toml          # orchestration across the sub-parts
   terraform/         # infrastructure as code
   agent/ | app/ | …  # application code (a member of the repo-root workspace)
 ```
@@ -23,8 +23,8 @@ time (e.g. `uv export` → `requirements.txt`) rather than shipping the whole wo
 
 ## Stacks
 
-| Stack                                            | What                                                                                                                                                                       |
-| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`agentcore-harness`](./agentcore-harness)       | Minimal Amazon Bedrock AgentCore harness (managed, config-only agent): `awscc` harness with managed memory + a Gateway-backed web-search tool (AWS_IAM/SigV4, no Cognito). |
-| [`agentcore-web-search`](./agentcore-web-search) | Web Search on Amazon Bedrock AgentCore: Gateway + web-search connector, ECR, Runtime, and Strands web-search + synthesize agents.                                          |
+| Stack                                            | What                                                                                                                                                                        |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`agentcore-harness`](./agentcore-harness)       | Minimal Amazon Bedrock AgentCore harness (managed, config-only agent): `awscc` harness with managed memory + a Gateway-backed web-search tool (AWS_IAM/SigV4, no Cognito).  |
+| [`agentcore-web-search`](./agentcore-web-search) | Web Search on Amazon Bedrock AgentCore: Gateway + web-search connector, ECR, Runtime, and Strands web-search + synthesize agents.                                           |
 | [`aws-blocks`](./aws-blocks)                     | AWS Blocks (Preview): scaffolded real-time todo app — one IFC layer (`aws-blocks/index.ts`) runs local-only, then deploys unchanged to Lambda/DynamoDB/API Gateway via CDK. |

@@ -47,15 +47,14 @@ a `claude setup-token` OAuth token — Claude models only):
 Dev tooling and the lockfile live at the workspace root. From the repo root:
 
 ```bash
-uv sync                      # syncs the whole workspace, this agent included
-just -f python/justfile ci   # ruff, pyright (strict), pytest over python/ + stacks/
+mise run //python:ci   # sync, ruff, pyright (strict), pytest over python/ + stacks/
 ```
 
 Tests are split into hermetic (default) and `live` tiers:
 
 ```bash
-uv run pytest             # hermetic only
-AGENT_RUNTIME_ARN=... uv run pytest -m live   # invokes the deployed runtime
+mise run //python:test             # hermetic only
+AGENT_RUNTIME_ARN=... mise run //python:test-live   # invokes the deployed runtime
 ```
 
 ## Build the image manually
@@ -68,4 +67,4 @@ uv export --package agentcore-web-search --no-dev --no-emit-workspace \
 docker buildx build --platform linux/arm64 -t <ecr-url>:latest --push .
 ```
 
-(Normally done via the stack's `just push`.)
+(Normally done via the stack's `mise run push`.)

@@ -1,4 +1,6 @@
 .env
+mise.local.toml
+mise.*.local.toml
 
 # AWS SAM
 .aws-sam/

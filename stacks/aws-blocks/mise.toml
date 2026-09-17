@@ -1,0 +1,51 @@
+[vars]
+pnpm = "pnpm --dir app"
+
+[tasks.install]
+run = "{{ vars.pnpm }} install"
+
+[tasks.dev]
+description = "Start local dev with mocked auth, DB, and realtime at localhost:3000"
+run = "{{ vars.pnpm }} run dev"
+
+[tasks.typecheck]
+run = "{{ vars.pnpm }} run typecheck"
+
+[tasks.test]
+description = "Run e2e tests, starting a throwaway local dev server if needed"
+run = "{{ vars.pnpm }} run test:e2e"
+
+# dev/sandbox/deploy generate aws-blocks/client.js; run dev once in a new checkout.
+[tasks.build]
+run = "{{ vars.pnpm }} run build"
+
+# CDK is not a project dependency; fetch its CLI ad hoc for one-time bootstrapping.
+[tasks.cdk-bootstrap]
+usage = '''
+arg "<account>"
+arg "[region]" default="us-east-1"
+'''
+dir = "{{ config_root }}/app"
+run = 'pnpm dlx cdk bootstrap "aws://${usage_account?}/${usage_region?}"'
+raw = true
+
+[tasks.sandbox]
+description = "Deploy an ephemeral per-developer stack with Lambda hot-swap"
+run = "{{ vars.pnpm }} run sandbox"
+raw = true
+
+[tasks.sandbox-destroy]
+run = "{{ vars.pnpm }} run sandbox:destroy"
+raw = true
+
+[tasks.deploy]
+description = "Deploy the full CloudFormation stack, including CloudFront/S3 hosting"
+run = "{{ vars.pnpm }} run deploy"
+raw = true
+
+[tasks.destroy]
+run = "{{ vars.pnpm }} run destroy"
+raw = true
+
+[tasks.clean]
+run = "rm -rf app/node_modules app/dist app/.bb-data app/.blocks-sandbox app/cdk.out app/build-temp"

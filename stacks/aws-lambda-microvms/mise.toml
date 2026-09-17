@@ -1,0 +1,64 @@
+[env]
+REGION = "{{ env.REGION | default(value='us-east-1') }}"
+IMAGE_NAME = "{{ env.IMAGE_NAME | default(value='microvm-code-sandbox') }}"
+
+[vars]
+# Keep the stack as cwd so .microvm-last.json lands here, not at the uv root.
+control = "uv run --package microvm-control microvm-control"
+
+[tasks.init]
+run = "terraform -chdir=terraform init"
+
+[tasks.infra]
+description = "Create the S3 artifact bucket and build/execution IAM roles"
+run = "terraform -chdir=terraform apply"
+raw = true
+
+[tasks.build]
+description = "Upload image/ to S3, create the MicroVM image, and wait for the build"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+{{ vars.control }} build \
+  --region "$REGION" \
+  --name "$IMAGE_NAME" \
+  --image-dir image \
+  --artifact-bucket "$(terraform -chdir=terraform output -raw artifact_bucket)" \
+  --build-role-arn "$(terraform -chdir=terraform output -raw build_role_arn)" \
+  --base-image-arn "$(terraform -chdir=terraform output -raw base_image_arn_hint)"
+'''
+
+[tasks.run]
+description = "Launch a MicroVM and cache its ID and endpoint"
+run = '''
+{{ vars.control }} run --region "$REGION" --image "$IMAGE_NAME" \
+  --execution-role-arn "$(terraform -chdir=terraform output -raw execution_role_arn)"
+'''
+
+[tasks.exec]
+description = "Execute Python code against the last-run MicroVM"
+usage = 'flag "--code <code>" default="print(\"hello from the microvm\")"'
+run = '{{ vars.control }} exec --region "$REGION" --code "${usage_code?}"'
+
+[tasks.status]
+run = '{{ vars.control }} status --region "$REGION"'
+
+[tasks.suspend]
+run = '{{ vars.control }} suspend --region "$REGION"'
+
+[tasks.resume]
+run = '{{ vars.control }} resume --region "$REGION"'
+
+[tasks.terminate]
+run = '{{ vars.control }} terminate --region "$REGION"'
+
+[tasks.demo]
+description = "Run, execute, suspend, resume, execute again, and terminate a MicroVM"
+run = '''
+{{ vars.control }} demo --region "$REGION" --image "$IMAGE_NAME" \
+  --execution-role-arn "$(terraform -chdir=terraform output -raw execution_role_arn)"
+'''
+
+[tasks.destroy]
+run = "terraform -chdir=terraform destroy"
+raw = true
