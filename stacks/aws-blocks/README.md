@@ -82,24 +82,25 @@ Inside `app/`:
 
 ## Prerequisites
 
-- **Node.js ≥ 22** and **pnpm ≥ 10** (`corepack enable` or `npm i -g pnpm`)
-  for local dev — that's it, no AWS account needed.
+- **mise**, with the repository tools installed (`mise trust && mise install`
+  at the repo root; see [setup](../../README.md#development-setup)). mise provides
+  Node.js and pnpm for local dev; no AWS account is needed.
 - For `sandbox`/`deploy` only: the **AWS CLI** configured with credentials, and
   the account/Region pair bootstrapped once for CDK
-  (`just cdk-bootstrap <account-id>`).
+  (`mise run cdk-bootstrap <account-id>`).
 
 ## Local dev (no AWS account)
 
 ```sh
 cd stacks/aws-blocks
-just install
-just dev     # http://localhost:3000 — sign up, add todos, open a second tab
+mise run install
+mise run dev     # http://localhost:3000 — sign up, add todos, open a second tab
 ```
 
 ```sh
-just typecheck
-just test     # 16 e2e tests: auth, CRUD, secondary-index sorts, optimistic-locking
-               # conflicts, the AsyncJob-queued activity log, and KVStore settings
+mise run typecheck
+mise run test     # 16 e2e tests: auth, CRUD, secondary-index sorts, optimistic-locking
+                  # conflicts, the AsyncJob-queued activity log, and KVStore settings
 ```
 
 <a id="local-resources"></a>
@@ -142,12 +143,12 @@ No AWS account, no credentials, no outbound network calls, no cost.
 ## Deploy to AWS
 
 ```sh
-just cdk-bootstrap <account-id>   # once per account + Region
-just sandbox                      # ephemeral, per-developer, Lambda hot-swap (seconds)
-just sandbox-destroy
+mise run cdk-bootstrap <account-id>   # once per account + Region
+mise run sandbox                      # ephemeral, per-developer, Lambda hot-swap (seconds)
+mise run sandbox-destroy
 
-just deploy                       # full CloudFormation stack, incl. CloudFront/S3 hosting
-just destroy
+mise run deploy                       # full CloudFormation stack, incl. CloudFront/S3 hosting
+mise run destroy
 ```
 
 `sandbox` and `deploy` both regenerate `aws-blocks/client.js` (gitignored)
@@ -198,7 +199,7 @@ The 6 DynamoDB tables:
 
 `sandbox` skips `Hosting` entirely (`app/aws-blocks/index.cdk.ts`'s
 `if (!sandboxMode)`), so the S3/CloudFront/SNS/alarm resources only appear
-after a full `just deploy`. Also created regardless of the above: an
+after a full `mise run deploy`. Also created regardless of the above: an
 auto-generated Lambda execution role with scoped grants (DynamoDB, SQS, API
 Gateway `postToConnection`, SSM read), CloudWatch log groups per Lambda, and
 an AWS Resource Groups group tagging everything for console visibility.
@@ -291,7 +292,7 @@ of npm-managed. Two things npm did implicitly that pnpm requires spelling out:
   gets provisioned — DynamoDB, Lambda, API Gateway (REST + WebSocket), SQS
   (the `AsyncJob` queue), CloudFront/S3 for `Hosting`, and CloudWatch.
   `sandbox` avoids a full CloudFormation deploy (Lambda hot-swap) but still
-  creates and bills for real resources; remember `just sandbox-destroy`.
+  creates and bills for real resources; remember `mise run sandbox-destroy`.
 - Per the [announcement][whats-new], AWS Blocks **deploys to all commercial
   AWS Regions**; no GovCloud/China statement was published at preview launch.
 - This is a **preview**: every `@aws-blocks/*` package is versioned `0.1.x`

@@ -1,0 +1,53 @@
+# Cargo owns the repo-root workspace, including every crate under crates/.
+[task_config]
+dir = "{{ config_root }}/.."
+
+[tasks.fmt]
+run = "cargo fmt --all"
+
+[tasks.fmt-check]
+run = "cargo fmt --all -- --check"
+
+[tasks.lint]
+run = "cargo clippy --workspace --all-targets -- -D warnings"
+
+# clippy already type-checks; this is the explicit, uniform stage.
+[tasks.typecheck]
+run = "cargo check --workspace --all-targets"
+
+[tasks.test]
+run = "cargo test --workspace"
+
+[tasks.ci]
+description = "Check formatting, lint, type-check, and test the Rust workspace"
+run = [{ task = ":fmt-check" }, { task = ":lint" }, { task = ":typecheck" }, { task = ":test" }]
+
+[tasks.test-cov]
+description = "Run instrumented tests without generating a report"
+run = "cargo llvm-cov --no-report --workspace"
+
+[tasks.coverage]
+description = "Show per-file coverage and uncovered lines, omitting 100% files"
+depends = [":test-cov"]
+run = 'cargo llvm-cov report --show-missing-lines --color=always 2>&1 | grep -v " 100.00%"'
+
+[tasks.coverage-html]
+depends = [":test-cov"]
+run = "cargo llvm-cov report --html --open"
+
+[tasks.coverage-ci]
+depends = [":test-cov"]
+run = "cargo llvm-cov report --lcov --output-path lcov.info"
+
+[tasks.test-live]
+run = "cargo test --workspace -- --ignored"
+
+[tasks.test-live-cov]
+run = "cargo llvm-cov --no-report --workspace -- --ignored"
+
+[tasks.coverage-live]
+depends = [":test-live-cov"]
+run = 'cargo llvm-cov report --show-missing-lines --color=always 2>&1 | grep -v " 100.00%"'
+
+[tasks.ci-live]
+run = [{ task = ":fmt-check" }, { task = ":lint" }, { task = ":test" }, { task = ":test-live" }]

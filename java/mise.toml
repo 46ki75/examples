@@ -1,0 +1,12 @@
+[task_config]
+dir = "{{ config_root }}/aws"
+
+[tasks.build]
+run = "./gradlew build"
+
+[tasks.test]
+run = "./gradlew test"
+
+[tasks.ci]
+description = "Run Gradle tests and verification across every subproject"
+run = "./gradlew check"

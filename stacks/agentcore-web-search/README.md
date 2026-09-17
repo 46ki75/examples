@@ -34,7 +34,8 @@ inside an AgentCore **Runtime**:
 
 ## Prerequisites
 
-- `terraform`, `docker` (with `buildx`), the `aws` CLI, `just`, and `uv`.
+- Complete the repository's [mise setup](../../README.md#development-setup) for
+  Terraform, the AWS CLI, Python, and uv. Install Docker with Buildx separately.
 - AWS credentials for **us-east-1** (the only region where Web Search is offered).
 - A model credential in SSM, depending on `var.llm_auth_mode`:
   - **`subscription` (default)** — a **Claude Pro/Max** OAuth token from
@@ -60,30 +61,31 @@ inside an AgentCore **Runtime**:
 ## Deploy
 
 The Runtime needs its container image to already exist in ECR, so deploy in order
-(all wrapped in the `justfile`):
+(all wrapped in `mise.toml`):
 
 ```bash
-just deploy        # init → create ECR → build/push image → apply the rest
-just invoke prompt="What changed in the AWS CLI this week?"
+cd stacks/agentcore-web-search
+mise run deploy        # init → create ECR → build/push image → apply the rest
+mise run invoke --prompt "What changed in the AWS CLI this week?"
 ```
 
-`just deploy` uses the **default `subscription` mode**, so store your Claude token
+`mise run deploy` uses the **default `subscription` mode**, so store your Claude token
 first (see [Model auth](#model-auth-subscription-default-vs-openrouter) below), or
-pass `auth_mode=openrouter` to use OpenRouter instead.
+set `AUTH_MODE=openrouter` to use OpenRouter instead.
 
 Or step by step:
 
 ```bash
-just init
-just bootstrap-ecr     # terraform apply -target=aws_ecr_repository.agent
-just push              # buildx build --platform linux/arm64 + push :latest
-just apply             # gateway, web-search target, runtime, endpoint
+mise run init
+mise run bootstrap-ecr     # terraform apply -target=aws_ecr_repository.agent
+mise run push              # buildx build --platform linux/arm64 + push :latest
+mise run apply             # gateway, web-search target, runtime, endpoint
 ```
 
 ### Redeploying after a code change
 
 ```bash
-just push v2
+mise run push v2
 terraform -chdir=terraform apply -var image_tag=v2   # new tag ⇒ new runtime version
 ```
 
@@ -104,7 +106,7 @@ aws ssm put-parameter --type SecureString \
   --region ap-northeast-1
 ```
 
-`just deploy` / `just apply` then use it (Claude models only; defaults
+`mise run deploy` / `mise run apply` then use it (Claude models only; defaults
 `claude-sonnet-4-6` / `claude-haiku-4-5`). The token is valid for one year and
 does not auto-refresh — regenerate it (`put-parameter … --overwrite`) before it
 expires; the runtime re-reads SSM each invocation, so no redeploy is needed.
@@ -114,8 +116,8 @@ To route through **OpenRouter** instead, store an OpenRouter key at
 runtime env vars — `apply` alone creates a new runtime version, no image rebuild):
 
 ```bash
-just auth_mode=openrouter apply     # switch an already-deployed stack
-just auth_mode=openrouter deploy    # or a full deploy from scratch
+AUTH_MODE=openrouter mise run apply     # switch an already-deployed stack
+AUTH_MODE=openrouter mise run deploy    # or a full deploy from scratch
 ```
 
 See [Model auth modes](#model-auth-modes) for the constraints.
@@ -123,7 +125,7 @@ See [Model auth modes](#model-auth-modes) for the constraints.
 ## Tear down
 
 ```bash
-just destroy
+mise run destroy
 ```
 
 ## How the pieces fit
@@ -155,7 +157,7 @@ just destroy
   passes it on the MCP connection. AgentCore Identity keeps the client_id/secret
   in its KMS-encrypted token vault and runs the grant on the runtime's behalf,
   authorized by the runtime's workload identity. Because invocations use IAM
-  (SigV4) inbound auth, `just invoke` passes `--runtime-user-id` so AgentCore
+  (SigV4) inbound auth, `mise run invoke` passes `--runtime-user-id` so AgentCore
   injects the workload access token the agent needs to reach the vault.
 - **Outbound auth** — the Gateway reaches the AWS-managed search backend with its
   service role (`GATEWAY_IAM_ROLE`), which holds `bedrock-agentcore:InvokeGateway`

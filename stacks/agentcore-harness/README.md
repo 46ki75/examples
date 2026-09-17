@@ -42,13 +42,16 @@ the harness.
 
 ## Deploy & invoke
 
+Complete the repository's [mise setup](../../README.md#development-setup) first.
+
 ```sh
-just deploy     # terraform init + apply (role, gateway + web-search target, harness)
-just invoke     # streams two turns through the deployed harness
-just destroy
+cd stacks/agentcore-harness
+mise run deploy     # terraform init + apply (role, gateway + web-search target, harness)
+mise run invoke     # streams two turns through the deployed harness
+mise run destroy
 ```
 
-`just invoke` runs `invoke.py` twice with the **same** `runtimeSessionId`. The
+`mise run invoke` runs `invoke.py` twice with the **same** `runtimeSessionId`. The
 first turn asks for current information, so the agent calls the Gateway's
 `web_search` tool and answers with cited sources; the second is a follow-up
 answered from managed memory (the result is never re-sent). Tool calls are

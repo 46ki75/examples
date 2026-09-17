@@ -24,10 +24,10 @@ ENV UV_LINK_MODE=copy \
     # Tell the AgentCore Identity SDK it's running in a container, so a missing
     # workload access token fails fast instead of falling back to local-dev auth
     # (which would create a stray workload identity). Invocations must therefore
-    # carry a user identity — `just invoke` passes --runtime-user-id.
+    # carry a user identity — `mise run invoke` passes --runtime-user-id.
     DOCKER_CONTAINER=1
 
-# requirements.txt is exported from the workspace lock by `just push`, so the
+# requirements.txt is exported from the workspace lock by `mise run push`, so the
 # image is reproducible without shipping the whole workspace into the build.
 COPY requirements.txt ./
 RUN uv pip install --system --no-cache -r requirements.txt

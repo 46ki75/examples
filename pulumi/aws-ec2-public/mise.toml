@@ -1,0 +1,9 @@
+[tasks.tidy]
+run = "go mod tidy"
+
+[tasks.test]
+run = "go test ./..."
+
+[tasks.ci]
+description = "Tidy modules and run Pulumi unit tests"
+run = [{ task = ":tidy" }, { task = ":test" }]

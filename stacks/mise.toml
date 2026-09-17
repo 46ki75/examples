@@ -1,0 +1,26 @@
+# App code is checked by the language workspaces; these tasks validate Terraform.
+# Deployment and operation tasks live in each stack's mise.toml.
+[tasks.fmt-check]
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+for tf in */terraform; do
+    echo "==> ($tf) terraform fmt -check -recursive"
+    terraform fmt -check -recursive "$tf"
+done
+'''
+
+[tasks.validate]
+description = "Validate stack Terraform without accessing remote backends"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+for tf in */terraform; do
+    echo "==> ($tf) terraform validate"
+    terraform -chdir="$tf" init -backend=false -input=false >/dev/null
+    terraform -chdir="$tf" validate
+done
+'''
+
+[tasks.ci]
+run = [{ task = ":fmt-check" }, { task = ":validate" }]

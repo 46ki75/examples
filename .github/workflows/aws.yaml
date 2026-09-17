@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 env:
-  AWS_REGION: 'ap-northeast-1'
+  AWS_REGION: "ap-northeast-1"
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -15,6 +15,11 @@ jobs:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v3
+        with:
+          version: "2026.9.9"
+          install_args: awscli
 
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4

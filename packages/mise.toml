@@ -1,0 +1,27 @@
+# Use the root pnpm workspace and shared lint/format configuration.
+[task_config]
+dir = "{{ config_root }}/.."
+
+[tasks.install]
+run = "pnpm install --frozen-lockfile"
+
+[tasks.fmt-check]
+run = 'pnpm exec prettier --check "packages/**/*.ts"'
+
+[tasks.lint]
+run = "pnpm exec eslint packages"
+
+# Check each package's tsconfig, excluding third-party .d.ts internals.
+[tasks.typecheck]
+run = "pnpm -r exec tsc --noEmit --skipLibCheck"
+
+# Packages without a test script are skipped.
+[tasks.test]
+run = "pnpm -r run test"
+
+[tasks.build]
+run = "pnpm -r run build"
+
+[tasks.ci]
+description = "Install locked dependencies, then format-check, lint, type-check, and test Node packages"
+run = [{ task = ":install" }, { task = ":fmt-check" }, { task = ":lint" }, { task = ":typecheck" }, { task = ":test" }]

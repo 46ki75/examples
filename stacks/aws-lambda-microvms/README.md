@@ -38,7 +38,7 @@ capability.
 | `image/`     | uv-workspace member — the sandbox baked into the MicroVM image. `/exec` on the 8080 traffic port; the four lifecycle hooks on the 9000 control port. `Dockerfile` is built **by Lambda**, not locally. |
 | `control/`   | uv-workspace member — the boto3 + httpx operator CLI (`microvm-control`) driving the imperative lifecycle.                                                                                             |
 | `terraform/` | supporting infra only: S3 artifact bucket + build/execution IAM roles. The lifecycle itself is imperative and lives in the CLI, not in IaC.                                                            |
-| `justfile`   | wires terraform outputs into the CLI: `infra` → `build` → `run`/`demo`.                                                                                                                                |
+| `mise.toml`  | wires terraform outputs into the CLI: `infra` → `build` → `run`/`demo`.                                                                                                                                |
 
 ## Why no Terraform for the MicroVM itself
 
@@ -49,7 +49,8 @@ lifecycle is driven through `microvm-control` (boto3 `lambda-microvms`).
 
 ## Prerequisites
 
-- `terraform`, `just`, and `uv`. **No Docker** — the image is built server-side
+- Complete the repository's [mise setup](../../README.md#development-setup) for
+  Terraform, Python, and uv. **No Docker** — the image is built server-side
   by Lambda. (The `aws` CLI is optional; the control plane is driven through
   boto3, and older CLI builds don't yet ship the `lambda-microvms` command.)
 - AWS credentials in a MicroVMs Region (default `us-east-1`).
@@ -68,27 +69,27 @@ lifecycle is driven through `microvm-control` (boto3 `lambda-microvms`).
 ```sh
 cd stacks/aws-lambda-microvms
 
-just init          # terraform init
-just infra         # S3 bucket + build/execution roles
-just build         # zip image/ -> S3 -> create-microvm-image -> wait for CREATED
-just demo          # run -> exec -> suspend -> resume -> exec -> terminate
+mise run init          # terraform init
+mise run infra         # S3 bucket + build/execution roles
+mise run build         # zip image/ -> S3 -> create-microvm-image -> wait for CREATED
+mise run demo          # run -> exec -> suspend -> resume -> exec -> terminate
 ```
 
-`just demo` proves the point: it sets `counter = 100`, increments it, **suspends
+`mise run demo` proves the point: it sets `counter = 100`, increments it, **suspends
 and resumes** the MicroVM, then reads `counter` back — still `105`, because the
 session lives in the snapshotted memory.
 
 Step through it manually instead:
 
 ```sh
-just run                       # prints microvmId + endpoint (cached in .microvm-last.json)
-just exec code='x = 21'
-just exec code='print(x * 2)'  # -> 42  (state from the previous call)
-just suspend
-just resume
-just exec code='print(x * 2)'  # -> 42  (survived the snapshot)
-just terminate
-just destroy                   # tear down the bucket + roles
+mise run run                       # prints microvmId + endpoint (cached in .microvm-last.json)
+mise run exec --code 'x = 21'
+mise run exec --code 'print(x * 2)'  # -> 42  (state from the previous call)
+mise run suspend
+mise run resume
+mise run exec --code 'print(x * 2)'  # -> 42  (survived the snapshot)
+mise run terminate
+mise run destroy                   # tear down the bucket + roles
 ```
 
 ## How it works
