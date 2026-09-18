@@ -8,7 +8,7 @@
  */
 import type { App } from "@modelcontextprotocol/ext-apps";
 import { useApp } from "@modelcontextprotocol/ext-apps/react";
-import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import type { CallToolResult } from "@modelcontextprotocol/client";
 import { StrictMode, useCallback, useState } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -90,7 +90,13 @@ function TodoList({
   }, [text, call]);
 
   return (
-    <main style={{ fontFamily: "system-ui, sans-serif", padding: 16, maxWidth: 480 }}>
+    <main
+      style={{
+        fontFamily: "system-ui, sans-serif",
+        padding: 16,
+        maxWidth: 480,
+      }}
+    >
       <h2 style={{ marginTop: 0 }}>To-Do</h2>
 
       <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
@@ -108,17 +114,29 @@ function TodoList({
         {todos.map((todo) => (
           <li
             key={todo.id}
-            style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 0" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "4px 0",
+            }}
           >
             <input
               type="checkbox"
               checked={todo.done}
               onChange={() => call("toggle-todo", { id: todo.id })}
             />
-            <span style={{ flex: 1, textDecoration: todo.done ? "line-through" : "none" }}>
+            <span
+              style={{
+                flex: 1,
+                textDecoration: todo.done ? "line-through" : "none",
+              }}
+            >
               {todo.text}
             </span>
-            <button onClick={() => call("remove-todo", { id: todo.id })}>✕</button>
+            <button onClick={() => call("remove-todo", { id: todo.id })}>
+              ✕
+            </button>
           </li>
         ))}
         {todos.length === 0 && <li style={{ color: "#888" }}>Nothing yet.</li>}

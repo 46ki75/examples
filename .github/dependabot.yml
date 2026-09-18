@@ -15,6 +15,9 @@ updates:
       eslint:
         patterns:
           - "*eslint*"
+      modelcontextprotocol:
+        patterns:
+          - "@modelcontextprotocol/*"
 
   - package-ecosystem: "uv"
     directory: "/python"

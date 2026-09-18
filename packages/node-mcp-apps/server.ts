@@ -7,17 +7,18 @@
  * the tool result is pushed into the app. The app then drives the list by
  * calling `add-todo` / `toggle-todo` / `remove-todo` back through the host.
  */
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import {
+  type CallToolResult,
+  McpServer,
+  WebStandardStreamableHTTPServerTransport,
+} from "@modelcontextprotocol/server";
+import { StdioServerTransport } from "@modelcontextprotocol/server/stdio";
 import {
   RESOURCE_MIME_TYPE,
   registerAppResource,
   registerAppTool,
 } from "@modelcontextprotocol/ext-apps/server";
 import { type HttpBindings, serve } from "@hono/node-server";
-import { RESPONSE_ALREADY_SENT } from "@hono/node-server/utils/response";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import fs from "node:fs/promises";
@@ -60,7 +61,7 @@ registerAppTool(
   {
     title: "View To-Dos",
     description: "Open the interactive to-do list.",
-    inputSchema: {},
+    inputSchema: z.object({}),
     _meta: { ui: { resourceUri } },
   },
   async () => todosResult(),
@@ -73,7 +74,9 @@ server.registerTool(
   {
     title: "Add To-Do",
     description: "Add a new item to the to-do list.",
-    inputSchema: { text: z.string().min(1).describe("The to-do item text") },
+    inputSchema: z.object({
+      text: z.string().min(1).describe("The to-do item text"),
+    }),
   },
   async ({ text }) => {
     todos.push({ id: String(nextId++), text, done: false });
@@ -86,7 +89,9 @@ server.registerTool(
   {
     title: "Toggle To-Do",
     description: "Toggle the done state of a to-do item by id.",
-    inputSchema: { id: z.string().describe("The id of the item to toggle") },
+    inputSchema: z.object({
+      id: z.string().describe("The id of the item to toggle"),
+    }),
   },
   async ({ id }) => {
     const todo = todos.find((t) => t.id === id);
@@ -100,7 +105,9 @@ server.registerTool(
   {
     title: "Remove To-Do",
     description: "Remove a to-do item by id.",
-    inputSchema: { id: z.string().describe("The id of the item to remove") },
+    inputSchema: z.object({
+      id: z.string().describe("The id of the item to remove"),
+    }),
   },
   async ({ id }) => {
     const i = todos.findIndex((t) => t.id === id);
@@ -138,23 +145,19 @@ if (process.argv.includes("--stdio")) {
   await server.connect(transport);
   console.error("MCP Apps To-Do server running on stdio");
 } else {
-  // `HttpBindings` exposes the raw Node req/res as `c.env.incoming`/`outgoing`,
-  // which is what the MCP transport writes to directly.
   const app = new Hono<{ Bindings: HttpBindings }>();
   app.use("/mcp", cors());
 
+  // Let Hono send the web-standard response and apply CORS. Writing directly
+  // to its Node response would let middleware attempt to send headers twice.
   app.post("/mcp", async (c) => {
-    const transport = new StreamableHTTPServerTransport({
+    const transport = new WebStandardStreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
     });
-    const { incoming, outgoing } = c.env;
-    outgoing.on("close", () => transport.close());
+    c.env.outgoing.on("close", () => transport.close());
     await server.connect(transport);
-    // Pass the parsed body since Hono has already consumed the request stream.
-    await transport.handleRequest(incoming, outgoing, await c.req.json());
-    // The transport owns the response; tell Hono not to send its own.
-    return RESPONSE_ALREADY_SENT;
+    return transport.handleRequest(c.req.raw);
   });
 
   serve({ fetch: app.fetch, port: 3001 }, (info) => {
