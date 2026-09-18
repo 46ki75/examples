@@ -18,9 +18,9 @@ mise tasks --all
 workspace dependencies using their frozen lockfiles.
 
 The root `mise.toml` pins Node.js, pnpm, Python, uv, Rust (including rustfmt,
-Clippy, and LLVM coverage tools), cargo-llvm-cov, Java, Go, .NET, Terraform, and
-the AWS CLI. Gradle uses the checked-in wrapper. pnpm, uv, Cargo, and Go still
-manage project dependencies and their lockfiles.
+Clippy, and LLVM coverage tools), cargo-llvm-cov, Java, Go, .NET, Terraform,
+the AWS CLI, and Caddy. Gradle uses the checked-in wrapper. pnpm, uv, Cargo, and
+Go still manage project dependencies and their lockfiles.
 
 Activate mise in your shell (for example, `eval "$(mise activate zsh)"`) to use
 the selected tools directly, or prefix commands with `mise exec --`:
@@ -50,6 +50,7 @@ mise run //packages:ci
 mise run //java:ci
 mise run //stacks:ci
 mise run //pulumi/aws-ec2-public:ci   # separate Pulumi/Go pipeline
+mise run //terraform/aws-ecs-cloudmap:check
 ```
 
 Tasks live in each group's or stack's `mise.toml`. Workspace tasks run from the
