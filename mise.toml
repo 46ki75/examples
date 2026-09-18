@@ -2,13 +2,14 @@ min_version = "2026.9.9"
 monorepo_root = true
 
 [monorepo]
-config_roots = ["crates", "python", "packages", "java", "stacks", "stacks/*", "pulumi/aws-ec2-public"]
+config_roots = ["crates", "python", "packages", "java", "stacks", "stacks/*", "pulumi/aws-ec2-public", "terraform/aws-ecs-cloudmap"]
 
 [vars]
 python_version = "3.13.15"
 
 [tools]
 awscli = "2.36.46"
+caddy = "2.11.4"
 cargo-llvm-cov = "0.9.1"
 dotnet = "10.0.401"
 go = "1.26.6"

@@ -1,0 +1,62 @@
+[tasks.init]
+description = "Initialize this project's Terraform providers and local state"
+run = "terraform init -input=false"
+
+[tasks.fmt]
+description = "Format Terraform, Caddy, and smoke-check code"
+run = ["terraform fmt", "caddy fmt --overwrite Caddyfile", "uv run --no-sync ruff format scripts"]
+
+[tasks.fmt-check]
+description = "Check Terraform, Caddy, and Python formatting"
+run = ["terraform fmt -check", "caddy fmt --diff Caddyfile", "uv run --no-sync ruff format --check scripts"]
+
+[tasks.lint]
+description = "Validate Terraform and Caddy without provisioning resources"
+run = [
+  "terraform validate",
+  "caddy validate --config Caddyfile --adapter caddyfile",
+  "uv run --no-sync ruff check scripts",
+  "uv run --no-sync pyright scripts",
+]
+
+[tasks.check]
+description = "Run all local configuration checks (run init first)"
+run = [{ task = ":fmt-check" }, { task = ":lint" }]
+
+[tasks.plan]
+description = "Preview Terraform changes"
+run = "terraform plan"
+
+[tasks.apply]
+description = "Plan and apply Terraform changes"
+run = "terraform apply"
+raw = true
+
+[tasks.smoke]
+description = "Check live routing, healthy AZ placement, private tasks, and regional NAT"
+run = "python scripts/smoke.py"
+
+[tasks.workload]
+description = "Send paced concurrent GET/POST traffic and report latency, errors, and AZ distribution"
+run = "python scripts/workload.py"
+
+[tasks.egress]
+description = "Run a short-lived Fargate HTTPS egress probe in every selected AZ"
+run = "python scripts/egress.py"
+
+[tasks.discover]
+description = "Show healthy Cloud Map instances using the deployed region"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+aws servicediscovery discover-instances \
+  --region "$(terraform output -raw region)" \
+  --namespace-name "$(terraform output -raw cloudmap_namespace)" \
+  --service-name "$(terraform output -raw cloudmap_service_name)" \
+  --health-status HEALTHY
+'''
+
+[tasks.destroy]
+description = "Destroy all resources managed by this project's local state"
+run = "terraform destroy"
+raw = true

@@ -1,0 +1,25 @@
+{
+	admin off
+	auto_https off
+}
+
+:8080 {
+	log {
+		output stdout
+		format json
+	}
+
+	header {
+		Content-Type "text/plain; charset=utf-8"
+		X-Backend-Id "{system.hostname}"
+	}
+
+	respond /health "ok" 200
+	respond <<BODY
+		Hello from Caddy on ECS!
+		instance={system.hostname}
+		method={method}
+		path={path}
+		query={query}
+		BODY 200
+}
