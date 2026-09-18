@@ -11,17 +11,18 @@
  * answer is never sent to clients while the game is in progress, so neither the
  * human nor the agent can cheat by reading the tool result.
  */
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import {
+  type CallToolResult,
+  McpServer,
+  WebStandardStreamableHTTPServerTransport,
+} from "@modelcontextprotocol/server";
+import { StdioServerTransport } from "@modelcontextprotocol/server/stdio";
 import {
   RESOURCE_MIME_TYPE,
   registerAppResource,
   registerAppTool,
 } from "@modelcontextprotocol/ext-apps/server";
 import { type HttpBindings, serve } from "@hono/node-server";
-import { RESPONSE_ALREADY_SENT } from "@hono/node-server/utils/response";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { createConsola } from "consola";
@@ -196,7 +197,7 @@ registerAppTool(
       "Open the interactive Wordle board and read the current game state. " +
       "Feedback per letter: 🟩 right letter & position, 🟨 right letter wrong " +
       "position, ⬜ not in the word. Use guess-word to make a guess.",
-    inputSchema: {},
+    inputSchema: z.object({}),
     _meta: { ui: { resourceUri } },
   },
   async () => {
@@ -215,9 +216,9 @@ server.registerTool(
     description:
       "Submit a 5-letter guess for the current Wordle game. Returns the updated " +
       "board with per-letter feedback.",
-    inputSchema: {
+    inputSchema: z.object({
       word: z.string().length(5).describe("A 5-letter guess"),
-    },
+    }),
   },
   async ({ word }) => {
     const w = word.toLowerCase().trim();
@@ -255,7 +256,7 @@ server.registerTool(
   {
     title: "New Game",
     description: "Start a fresh Wordle game with a new random word.",
-    inputSchema: {},
+    inputSchema: z.object({}),
   },
   async () => {
     game = newGame();
@@ -296,17 +297,17 @@ if (process.argv.includes("--stdio")) {
   const app = new Hono<{ Bindings: HttpBindings }>();
   app.use("/mcp", cors());
 
+  // Let Hono send the web-standard response and apply CORS. Writing directly
+  // to its Node response would let middleware attempt to send headers twice.
   app.post("/mcp", async (c) => {
     logger.debug("POST /mcp");
-    const transport = new StreamableHTTPServerTransport({
+    const transport = new WebStandardStreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
     });
-    const { incoming, outgoing } = c.env;
-    outgoing.on("close", () => transport.close());
+    c.env.outgoing.on("close", () => transport.close());
     await server.connect(transport);
-    await transport.handleRequest(incoming, outgoing, await c.req.json());
-    return RESPONSE_ALREADY_SENT;
+    return transport.handleRequest(c.req.raw);
   });
 
   serve({ fetch: app.fetch, port: 3002, hostname: "127.0.0.1" }, (info) => {
