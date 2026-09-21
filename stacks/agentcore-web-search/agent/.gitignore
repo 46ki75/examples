@@ -5,5 +5,5 @@ __pycache__/
 .ruff_cache/
 dist/
 
-# Generated from the workspace lock by `just push`.
+# Generated from the workspace lock by `mise run //stacks/agentcore-web-search:push`.
 /requirements.txt
