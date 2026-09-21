@@ -1,2 +1,6 @@
 packages:
   - "packages/*"
+
+# Keep transitive Node types on the same exact version as the root dependency.
+overrides:
+  "@types/node": "$@types/node"

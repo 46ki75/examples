@@ -16,7 +16,7 @@
     "@aws-sdk/client-sqs": "^3.1132.0"
   },
   "devDependencies": {
-    "@types/node": "^26.5.1",
+    "@types/node": "22.20.4",
     "tsx": "^4.23.13",
     "typescript": "^5.9.3"
   }
