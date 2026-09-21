@@ -7,6 +7,10 @@ updates:
     target-branch: "main"
     labels:
       - "nodejs"
+    ignore:
+      # Upgrade Node types to a new major only alongside the runtime in mise.toml.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       aws-sdk:
         patterns:
