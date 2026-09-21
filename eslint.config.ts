@@ -1,6 +1,6 @@
 // Shared ESLint flat config for every package under packages/.
 // Uses typescript-eslint's recommended rules with Prettier compatibility.
-// Run from the repo root via `packages/justfile`'s `lint`.
+// Run from the repo root via `mise run //packages:lint`.
 import { defineConfig, globalIgnores } from "eslint/config";
 import type { Linter } from "eslint";
 
