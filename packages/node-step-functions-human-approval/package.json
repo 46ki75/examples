@@ -12,8 +12,8 @@
     "cli": "tsx src/cli.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-sfn": "^3.1132.0",
-    "@aws-sdk/client-sqs": "^3.1132.0"
+    "@aws-sdk/client-sfn": "^3.1135.0",
+    "@aws-sdk/client-sqs": "^3.1135.0"
   },
   "devDependencies": {
     "@types/node": "22.20.4",
