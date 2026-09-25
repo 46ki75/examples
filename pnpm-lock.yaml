@@ -36,8 +36,8 @@ importers:
   packages/cdk:
     dependencies:
       '@aws-sdk/client-dynamodb':
-        specifier: ^3.1136.0
-        version: 3.1136.0
+        specifier: ^3.1137.0
+        version: 3.1137.0
       aws-cdk-lib:
         specifier: 2.270.0
         version: 2.270.0(constructs@10.8.1)
@@ -79,8 +79,8 @@ importers:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.20.4)(typescript@5.9.3)
       tsx:
-        specifier: ^4.23.13
-        version: 4.23.13
+        specifier: ^4.23.15
+        version: 4.23.15
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
@@ -88,15 +88,15 @@ importers:
   packages/node-lambda-durable-function:
     dependencies:
       '@aws-sdk/client-ssm':
-        specifier: ^3.1136.0
-        version: 3.1136.0
+        specifier: ^3.1137.0
+        version: 3.1137.0
       '@aws/durable-execution-sdk-js':
         specifier: ^2.4.0
         version: 2.4.0
     devDependencies:
       '@aws-sdk/client-lambda':
-        specifier: ^3.1136.0
-        version: 3.1136.0
+        specifier: ^3.1137.0
+        version: 3.1137.0
       '@types/archiver':
         specifier: ^7.0.0
         version: 7.0.0
@@ -110,8 +110,8 @@ importers:
         specifier: ^0.28.2
         version: 0.28.2
       tsx:
-        specifier: ^4.23.13
-        version: 4.23.13
+        specifier: ^4.23.15
+        version: 4.23.15
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -154,19 +154,19 @@ importers:
         version: 19.3.0(@types/react@19.3.0)
       '@vitejs/plugin-react':
         specifier: ^6.1.1
-        version: 6.1.1(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4))
+        version: 6.1.1(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4))
       tsx:
-        specifier: ^4.23.13
-        version: 4.23.13
+        specifier: ^4.23.15
+        version: 4.23.15
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
         specifier: ^8.3.0
-        version: 8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4)
+        version: 8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4)
       vite-plugin-singlefile:
         specifier: ^2.3.0
-        version: 2.3.3(rollup@4.60.2)(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4))
+        version: 2.3.3(rollup@4.60.2)(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4))
 
   packages/node-mcp-apps-wordle:
     dependencies:
@@ -209,35 +209,35 @@ importers:
         version: 19.3.0(@types/react@19.3.0)
       '@vitejs/plugin-react':
         specifier: ^6.1.1
-        version: 6.1.1(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4))
+        version: 6.1.1(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4))
       tsx:
-        specifier: ^4.23.13
-        version: 4.23.13
+        specifier: ^4.23.15
+        version: 4.23.15
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
         specifier: ^8.3.0
-        version: 8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4)
+        version: 8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4)
       vite-plugin-singlefile:
         specifier: ^2.3.0
-        version: 2.3.3(rollup@4.60.2)(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4))
+        version: 2.3.3(rollup@4.60.2)(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4))
 
   packages/node-step-functions-human-approval:
     dependencies:
       '@aws-sdk/client-sfn':
-        specifier: ^3.1136.0
-        version: 3.1136.0
+        specifier: ^3.1137.0
+        version: 3.1137.0
       '@aws-sdk/client-sqs':
-        specifier: ^3.1136.0
-        version: 3.1136.0
+        specifier: ^3.1137.0
+        version: 3.1137.0
     devDependencies:
       '@types/node':
         specifier: 22.20.4
         version: 22.20.4
       tsx:
-        specifier: ^4.23.13
-        version: 4.23.13
+        specifier: ^4.23.15
+        version: 4.23.15
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -257,24 +257,24 @@ packages:
       - jsonschema
       - semver
 
-  '@aws-sdk/client-dynamodb@3.1136.0':
-    resolution: {integrity: sha512-EEgixP37uQV7UqFxl1JaWGYA7QQeeP0yKSN5uCkAbNw9gBifGGk2cqm8qt1Mz+kzw0OwpL8W445R1UT+RTRBhA==}
+  '@aws-sdk/client-dynamodb@3.1137.0':
+    resolution: {integrity: sha512-KBSA5fw7cJaEiTOQem4NF0StMf8tSIt40uMqmTtW39JOTKvXG851FSXLLNnsN+xupnrFt6LMUKErOtUY3Ip2FA==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-lambda@3.1136.0':
-    resolution: {integrity: sha512-vrXo4EWXyN7JOzuMXV2WdWTQbXiD6zfet2dVlJhPyh3xV2eVeeVKnduxhpSU9763gctIGM8wAulzzQXfIObQAw==}
+  '@aws-sdk/client-lambda@3.1137.0':
+    resolution: {integrity: sha512-cjLGN5PpmR6Me9cseKvP17qWxvG36TXh5x/l7R07kXfJqUQ8U917DRius//A64x7lEEL4nep8BkNslIR/D/dAQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-sfn@3.1136.0':
-    resolution: {integrity: sha512-OAiVg4N3KuVmq6cT/xQ0VaLVBGly17ja7ph8Wt0hB677X9J42dxMiPYIb0DcQ5VjX7r94ImU+lpxHGPpo2f37Q==}
+  '@aws-sdk/client-sfn@3.1137.0':
+    resolution: {integrity: sha512-+RhDdFqIoCksnk1oi6ddJ2b0sispycC8Mmo91SetQdvAxbZI340XnmKqLCbcCwyqeLWlTPKb0MRHNVmmwTbQoQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-sqs@3.1136.0':
-    resolution: {integrity: sha512-m3Nadi9aqXnc0c879465tV5sn/z0lSdjMZ/ijxRREO5v0qwygPHzsWdcjkqGnVmngDPr4VqmxqIGBS+yJ9cTkA==}
+  '@aws-sdk/client-sqs@3.1137.0':
+    resolution: {integrity: sha512-OVO4H407SrlaP03WqMsoR1T0NmaX33kA3U6uBaB6AZjjVurzy4RNLau7enrLCaBW2nLV8UYbepHIJ4SetvoVfA==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-ssm@3.1136.0':
-    resolution: {integrity: sha512-tMZyh47eKTo6HbHf5Gg8lHaYwowOp77YTMqfmys9ilpd7bQTq8PYH1Oqy4SxAIptcBe71uy1I7q3YziWVZZC6w==}
+  '@aws-sdk/client-ssm@3.1137.0':
+    resolution: {integrity: sha512-VQRVjFI19duBKtX8IUuT3QQI1kPiYShlpDjTJzKj091HkJ3jmAUpC8hnhUluKzbtYgL9cx79wJJ6FNcArWSiYQ==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.978.0':
@@ -3133,8 +3133,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  tsx@4.23.13:
-    resolution: {integrity: sha512-BL5MGkRln6aDYhb0xbQlEAGw743BaZYWdbWtdJOBriYJboKgUUYCadFp2/FpBBZquBC/ezNBn7wMMPx7FDZUDw==}
+  tsx@4.23.15:
+    resolution: {integrity: sha512-Yiex1Ovn8z2xPpOWckIiysV1SSyRMY9BkLF++q0yKiDxCqRhosKfMg3janKkiLBwZ5c/YryloKwGZcrEmtwxKw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3343,7 +3343,7 @@ snapshots:
 
   '@aws-cdk/cloud-assembly-schema@54.24.0': {}
 
-  '@aws-sdk/client-dynamodb@3.1136.0':
+  '@aws-sdk/client-dynamodb@3.1137.0':
     dependencies:
       '@aws-sdk/core': 3.978.0
       '@aws-sdk/credential-provider-node': 3.972.83
@@ -3356,7 +3356,7 @@ snapshots:
       '@smithy/types': 4.18.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-lambda@3.1136.0':
+  '@aws-sdk/client-lambda@3.1137.0':
     dependencies:
       '@aws-sdk/core': 3.978.0
       '@aws-sdk/credential-provider-node': 3.972.83
@@ -3367,7 +3367,7 @@ snapshots:
       '@smithy/types': 4.18.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-sfn@3.1136.0':
+  '@aws-sdk/client-sfn@3.1137.0':
     dependencies:
       '@aws-sdk/core': 3.978.0
       '@aws-sdk/credential-provider-node': 3.972.83
@@ -3378,7 +3378,7 @@ snapshots:
       '@smithy/types': 4.18.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-sqs@3.1136.0':
+  '@aws-sdk/client-sqs@3.1137.0':
     dependencies:
       '@aws-sdk/core': 3.978.0
       '@aws-sdk/credential-provider-node': 3.972.83
@@ -3390,7 +3390,7 @@ snapshots:
       '@smithy/types': 4.18.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-ssm@3.1136.0':
+  '@aws-sdk/client-ssm@3.1137.0':
     dependencies:
       '@aws-sdk/core': 3.978.0
       '@aws-sdk/credential-provider-node': 3.972.83
@@ -3562,7 +3562,7 @@ snapshots:
 
   '@aws/durable-execution-sdk-js@2.4.0':
     dependencies:
-      '@aws-sdk/client-lambda': 3.1136.0
+      '@aws-sdk/client-lambda': 3.1137.0
 
   '@aws/lambda-invoke-store@0.3.0': {}
 
@@ -4708,10 +4708,10 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
     optional: true
 
-  '@vitejs/plugin-react@6.1.1(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4))':
+  '@vitejs/plugin-react@6.1.1(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: 8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4)
+      vite: 8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4)
 
   abort-controller@3.0.0:
     dependencies:
@@ -6445,7 +6445,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsx@4.23.13:
+  tsx@4.23.15:
     dependencies:
       esbuild: 0.28.2
     optionalDependencies:
@@ -6541,14 +6541,14 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
 
-  vite-plugin-singlefile@2.3.3(rollup@4.60.2)(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4)):
+  vite-plugin-singlefile@2.3.3(rollup@4.60.2)(vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4)):
     dependencies:
       micromatch: 4.0.8
-      vite: 8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4)
+      vite: 8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4)
     optionalDependencies:
       rollup: 4.60.2
 
-  vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.13)(yaml@2.8.4):
+  vite@8.3.0(@types/node@22.20.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.1)(tsx@4.23.15)(yaml@2.8.4):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -6561,7 +6561,7 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.7.0
       terser: 5.46.1
-      tsx: 4.23.13
+      tsx: 4.23.15
       yaml: 2.8.4
 
   watchpack@2.4.4:

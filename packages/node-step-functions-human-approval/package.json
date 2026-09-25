@@ -12,12 +12,12 @@
     "cli": "tsx src/cli.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-sfn": "^3.1136.0",
-    "@aws-sdk/client-sqs": "^3.1136.0"
+    "@aws-sdk/client-sfn": "^3.1137.0",
+    "@aws-sdk/client-sqs": "^3.1137.0"
   },
   "devDependencies": {
     "@types/node": "22.20.4",
-    "tsx": "^4.23.13",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3"
   }
 }
