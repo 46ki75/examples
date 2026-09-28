@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",
-    "@modelcontextprotocol/client": "^2.0.0",
+    "@modelcontextprotocol/client": "^2.1.0",
     "@modelcontextprotocol/ext-apps": "^2.0.0",
-    "@modelcontextprotocol/server": "^2.0.0",
+    "@modelcontextprotocol/server": "^2.1.0",
     "hono": "^4.13.9",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
