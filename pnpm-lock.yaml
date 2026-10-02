@@ -36,8 +36,8 @@ importers:
   packages/cdk:
     dependencies:
       '@aws-sdk/client-dynamodb':
-        specifier: ^3.1141.0
-        version: 3.1141.0
+        specifier: ^3.1142.0
+        version: 3.1142.0
       aws-cdk-lib:
         specifier: 2.271.0
         version: 2.271.0(constructs@10.8.1)
@@ -88,15 +88,15 @@ importers:
   packages/node-lambda-durable-function:
     dependencies:
       '@aws-sdk/client-ssm':
-        specifier: ^3.1141.0
-        version: 3.1141.0
+        specifier: ^3.1142.0
+        version: 3.1142.0
       '@aws/durable-execution-sdk-js':
         specifier: ^2.4.0
         version: 2.4.0
     devDependencies:
       '@aws-sdk/client-lambda':
-        specifier: ^3.1141.0
-        version: 3.1141.0
+        specifier: ^3.1142.0
+        version: 3.1142.0
       '@types/archiver':
         specifier: ^7.0.0
         version: 7.0.0
@@ -226,11 +226,11 @@ importers:
   packages/node-step-functions-human-approval:
     dependencies:
       '@aws-sdk/client-sfn':
-        specifier: ^3.1141.0
-        version: 3.1141.0
+        specifier: ^3.1142.0
+        version: 3.1142.0
       '@aws-sdk/client-sqs':
-        specifier: ^3.1141.0
-        version: 3.1141.0
+        specifier: ^3.1142.0
+        version: 3.1142.0
     devDependencies:
       '@types/node':
         specifier: 22.20.4
@@ -257,24 +257,24 @@ packages:
       - jsonschema
       - semver
 
-  '@aws-sdk/client-dynamodb@3.1141.0':
-    resolution: {integrity: sha512-R36EN5Ti01NtoJrgR5ryM+3msAmxob4s+xHKsJRbTwQUO5xQf1Hs8lKQ/QEuiQOG445UCwZbTjBUhekSmk1cyg==}
+  '@aws-sdk/client-dynamodb@3.1142.0':
+    resolution: {integrity: sha512-/p+qS8o18FMVlGQmA85zeUtG+vw1vN1TjfOoQzvD1VvZXWgicp2D771mlvuMdQ/QBVPcjwHbYD3e2TBefw6FSw==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-lambda@3.1141.0':
-    resolution: {integrity: sha512-xp/96eYrHkWVQbgEuDii170j7Kv397NYYv55sX99VV1M676rpl6MlbatRkdPZX7iV3M7ICm2fuSgR2n1bFNKaw==}
+  '@aws-sdk/client-lambda@3.1142.0':
+    resolution: {integrity: sha512-ghWus+szEAkqCAHELHLRmev/k8EaTIhuSStsqcGIugHgPy6wePMS5OC+jkC1JBTLb9CooMEzAt6MLYLc/EvnIg==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-sfn@3.1141.0':
-    resolution: {integrity: sha512-24iTaV35AkPYpPZs5F1dRoWGtTvCrp17esj/LSFZZTRGfhB6NX8vuHW9PxF4TuNNavae4I03zZnScswYBDFTuw==}
+  '@aws-sdk/client-sfn@3.1142.0':
+    resolution: {integrity: sha512-1wwqkoZH39crlOYlzyUkxCPVo/Gs7Gsua/jAvTBr3FJt7vuxu0tBNGeculnR0qPr4I0jIoT/6BPPf+ZKQItvRg==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-sqs@3.1141.0':
-    resolution: {integrity: sha512-97MRJvJi3H5BFXc673JvlNekbogdPPbaAFo4JH16wQcnrIEibsCAeMqk3A4rej0Ufv6p9SgQjbiCZHB7sUYZzA==}
+  '@aws-sdk/client-sqs@3.1142.0':
+    resolution: {integrity: sha512-NPuhwE5gd9I7DhK0TXxsakWwBBgzYxcB3XJ7ZopXunT2FaI5njCg/viydDsWwlZxhdsCCYZJbFpHHZqMDWksZQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-ssm@3.1141.0':
-    resolution: {integrity: sha512-zMGUGocXCtUYThen14djmU0c4BjHEpSeQIm/dhzZPN4Zr7ipogSTnpmZOlMv5zvOcmDwSlEGwCWbYjqZUhUEuw==}
+  '@aws-sdk/client-ssm@3.1142.0':
+    resolution: {integrity: sha512-Z1OHRppaMMVVqLsg2+fzCTw7WtEWcusvUh1RKnHfFWjazMC8VBqbJmewtGFXO14w5oq7ruaygWcFHRltCkZhLQ==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.978.1':
@@ -3343,7 +3343,7 @@ snapshots:
 
   '@aws-cdk/cloud-assembly-schema@54.25.0': {}
 
-  '@aws-sdk/client-dynamodb@3.1141.0':
+  '@aws-sdk/client-dynamodb@3.1142.0':
     dependencies:
       '@aws-sdk/core': 3.978.1
       '@aws-sdk/credential-provider-node': 3.972.84
@@ -3356,7 +3356,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-lambda@3.1141.0':
+  '@aws-sdk/client-lambda@3.1142.0':
     dependencies:
       '@aws-sdk/core': 3.978.1
       '@aws-sdk/credential-provider-node': 3.972.84
@@ -3367,7 +3367,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-sfn@3.1141.0':
+  '@aws-sdk/client-sfn@3.1142.0':
     dependencies:
       '@aws-sdk/core': 3.978.1
       '@aws-sdk/credential-provider-node': 3.972.84
@@ -3378,7 +3378,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-sqs@3.1141.0':
+  '@aws-sdk/client-sqs@3.1142.0':
     dependencies:
       '@aws-sdk/core': 3.978.1
       '@aws-sdk/credential-provider-node': 3.972.84
@@ -3390,7 +3390,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-ssm@3.1141.0':
+  '@aws-sdk/client-ssm@3.1142.0':
     dependencies:
       '@aws-sdk/core': 3.978.1
       '@aws-sdk/credential-provider-node': 3.972.84
@@ -3562,7 +3562,7 @@ snapshots:
 
   '@aws/durable-execution-sdk-js@2.4.0':
     dependencies:
-      '@aws-sdk/client-lambda': 3.1141.0
+      '@aws-sdk/client-lambda': 3.1142.0
 
   '@aws/lambda-invoke-store@0.3.0': {}
 
