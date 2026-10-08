@@ -15,7 +15,7 @@
     "@modelcontextprotocol/client": "^2.3.0",
     "@modelcontextprotocol/ext-apps": "^2.0.3",
     "@modelcontextprotocol/server": "^2.3.0",
-    "hono": "^4.13.12",
+    "hono": "^4.13.13",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "zod": "^4.6.5"
