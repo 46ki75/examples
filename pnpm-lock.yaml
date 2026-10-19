@@ -119,8 +119,8 @@ importers:
   packages/node-mcp-apps:
     dependencies:
       '@hono/node-server':
-        specifier: ^2.1.4
-        version: 2.1.4(hono@4.13.13)
+        specifier: ^2.1.5
+        version: 2.1.5(hono@4.13.13)
       '@modelcontextprotocol/client':
         specifier: ^2.3.1
         version: 2.3.1
@@ -171,8 +171,8 @@ importers:
   packages/node-mcp-apps-wordle:
     dependencies:
       '@hono/node-server':
-        specifier: ^2.1.4
-        version: 2.1.4(hono@4.13.13)
+        specifier: ^2.1.5
+        version: 2.1.5(hono@4.13.13)
       '@modelcontextprotocol/client':
         specifier: ^2.3.1
         version: 2.3.1
@@ -735,8 +735,8 @@ packages:
     resolution: {integrity: sha512-IkO+/KEUvwbVpiURZg+P7zF74z5Jxe0UgJxVni+RtoHQ6IZieXaO02kmadomap/q+l6bc/jdPGGqTjhuZnuz1Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@hono/node-server@2.1.4':
-    resolution: {integrity: sha512-2g1qeHl4BduwDn6L8nkAvDrPUWPMlkQ//a5NhP/zIyaXKMjZNRV+cG9Csu+BiJFf6+68pqzjf4Hi5sJGKHuS1g==}
+  '@hono/node-server@2.1.5':
+    resolution: {integrity: sha512-MgP/I06GdvsilDspMk/qmRzpk8LOUStP6jFAbSRi40W09DhoyUn+Mj7eyKICPqeYKybOjVFLVIAQzvu1bfIa7Q==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4 || ^5.0.0-0
@@ -2903,8 +2903,8 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-is@19.3.0:
-    resolution: {integrity: sha512-UpMYezM4v5/18F28aC66AEsjXIgE02kyEMH6yLdgLXu/UTfa1Ntwck/nNLrbqJsEXW7gPb0coNO9FQse9WTovA==}
+  react-is@19.3.1:
+    resolution: {integrity: sha512-RRieF6IyxQBkcK6pP8xOHprLTPW6QjRkbGdImtqNme+/hYVwCZkLQLdlZGOhUqXwkS9IEynaGvPJtv6XB/cz0Q==}
 
   react@19.3.0:
     resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
@@ -3908,7 +3908,7 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@hono/node-server@2.1.4(hono@4.13.13)':
+  '@hono/node-server@2.1.5(hono@4.13.13)':
     dependencies:
       hono: 4.13.13
 
@@ -6133,7 +6133,7 @@ snapshots:
   pretty-format@30.5.1:
     dependencies:
       '@jest/react-is-18': react-is@18.3.1
-      '@jest/react-is-19': react-is@19.3.0
+      '@jest/react-is-19': react-is@19.3.1
       '@jest/schemas': 30.5.0
       ansi-styles: 5.2.0
 
@@ -6160,7 +6160,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-is@19.3.0: {}
+  react-is@19.3.1: {}
 
   react@19.3.0: {}
 
