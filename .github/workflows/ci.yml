@@ -96,3 +96,19 @@ jobs:
           version: "2026.9.9"
           install_args: terraform
       - run: mise run //stacks:ci
+
+  ecs-alb:
+    name: ECS ALB (offline checks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v3
+        with:
+          version: "2026.9.9"
+          install_args: terraform caddy python uv node
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ hashFiles('mise.toml', 'uv.lock') }}
+      - run: mise exec -- uv sync --frozen --only-group dev
+      - run: mise run //terraform/aws-ecs-alb:ci

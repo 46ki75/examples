@@ -1,0 +1,53 @@
+[tasks.init]
+description = "Initialize Terraform providers and independent local state"
+run = "terraform init -input=false"
+
+[tasks.fmt]
+description = "Format Terraform, Caddy, and Python checks"
+run = ["terraform fmt -recursive", "caddy fmt --overwrite Caddyfile", "uv run --no-sync ruff format scripts"]
+
+[tasks.fmt-check]
+run = ["terraform fmt -check -recursive", "caddy fmt --diff Caddyfile", "uv run --no-sync ruff format --check scripts"]
+
+[tasks.lint]
+description = "Validate configuration and check Python without provisioning"
+run = [
+  "terraform validate",
+  "caddy validate --config Caddyfile --adapter caddyfile",
+  "uv run --no-sync ruff check scripts",
+  "uv run --no-sync pyright scripts",
+]
+
+[tasks.test]
+description = "Run offline Terraform mock apply/plans and Python unit tests"
+run = ["terraform test", "python -m unittest discover -s scripts -p 'test_*.py' -v"]
+
+[tasks.check]
+description = "All local quality gates (run init first); no AWS resources"
+run = [{ task = ":fmt-check" }, { task = ":lint" }, { task = ":test" }]
+
+[tasks.ci]
+run = [{ task = ":init" }, { task = ":check" }]
+
+[tasks.plan]
+run = "terraform plan"
+
+[tasks.apply]
+run = "terraform apply"
+raw = true
+
+[tasks.smoke]
+description = "Read-only live check of release, routing, target health, and private tasks"
+run = "python scripts/operations.py smoke"
+
+[tasks.status]
+description = "Show actual ECS deployment status and production/test target weights"
+run = "python scripts/operations.py status"
+
+[tasks.rollback]
+description = "Roll back the in-progress ECS deployment (requires --confirm)"
+run = "python scripts/operations.py rollback"
+
+[tasks.destroy]
+run = "terraform destroy"
+raw = true

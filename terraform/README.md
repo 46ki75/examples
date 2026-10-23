@@ -1,5 +1,14 @@
 # Terraform
 
+## ECS examples
+
+- [API Gateway → Cloud Map → ECS](aws-ecs-cloudmap/README.md): direct service
+  discovery with rolling deployments.
+- [ALB → ECS](aws-ecs-alb/README.md): native ECS blue/green deployments, test
+  traffic routing, and rollback. Uses independent local state by default.
+
+Read each example's contribution guide before making changes.
+
 ## Global Configuration
 
 First, create a cache directory to store terraform providers (plugins):
