@@ -51,6 +51,7 @@ mise run //java:ci
 mise run //stacks:ci
 mise run //pulumi/aws-ec2-public:ci   # separate Pulumi/Go pipeline
 mise run //terraform/aws-ecs-cloudmap:check
+mise run //terraform/aws-ecs-alb:check
 ```
 
 Tasks live in each group's or stack's `mise.toml`. Workspace tasks run from the

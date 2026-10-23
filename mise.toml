@@ -2,7 +2,7 @@ min_version = "2026.9.9"
 monorepo_root = true
 
 [monorepo]
-config_roots = ["crates", "python", "packages", "java", "stacks", "stacks/*", "pulumi/aws-ec2-public", "terraform/aws-ecs-cloudmap"]
+config_roots = ["crates", "python", "packages", "java", "stacks", "stacks/*", "pulumi/aws-ec2-public", "terraform/aws-ecs-cloudmap", "terraform/aws-ecs-alb"]
 
 [vars]
 python_version = "3.13.15"
@@ -48,4 +48,5 @@ run = [
   { task = "//packages:ci" },
   { task = "//java:ci" },
   { task = "//stacks:ci" },
+  { task = "//terraform/aws-ecs-alb:ci" },
 ]
