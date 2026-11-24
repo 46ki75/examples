@@ -13,7 +13,7 @@ caddy = "2.11.4"
 cargo-llvm-cov = "0.9.1"
 dotnet = "10.0.401"
 go = "1.26.6"
-java = "temurin-21.0.12+101.0.LTS"
+java = "temurin-21.0.12.1+1.0.LTS"
 node = "22.23.2"
 # Keep this in sync with packageManager in package.json.
 pnpm = "10.33.0"

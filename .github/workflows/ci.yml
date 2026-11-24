@@ -111,4 +111,7 @@ jobs:
           path: ~/.cache/uv
           key: uv-${{ runner.os }}-${{ hashFiles('mise.toml', 'uv.lock') }}
       - run: mise exec -- uv sync --frozen --only-group dev
+        env:
+          # The setup action already installed the tools this job needs.
+          MISE_EXEC_AUTO_INSTALL: "false"
       - run: mise run //terraform/aws-ecs-alb:ci
